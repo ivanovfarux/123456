@@ -9,14 +9,12 @@
         type: 'pie',
         data: {
           datasets: [{
-            data: [20, 34, 42, 34, 89],
             data: {{ data|safe }},
             backgroundColor:[
                 'red', 'orange', 'blue', 'yellow', 'green'
                 ],
                 label: 'Label'
               }],
-              labels: ['One', 'Two', 'Three', 'Four', 'Five']
               labels: {{ labels|safe }}
             },
             options: {
