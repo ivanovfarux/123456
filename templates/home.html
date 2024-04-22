@@ -1,10 +1,17 @@
-{% extends 'base.html' %}
+{% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Postlar! {% endblock title %}
 {% block content %}
+    {% for problems in problems_list %}
+         <div class="card" style="width: 50rem;">
 
-{% for problem in problems %}
-        <h2> <a href="{% url 'problem_detail' problem.pk %}"> {{ problem.name }} </a> </h2>
-        <p>{{ problem.creatorId }}</p>
-
-{% endfor %}
-
+             <div class="card-body">
+              {{ problems.name }}...
+             </div>
+            <div class="card-footer text-left text-muted">
+                <span class="text-muted">muallif {{ problems.creatorId | title }} &middot; {{ problems.created }}</span>
+            </div>
+        <br />
+    {% endfor %}
+    </div>
 {% endblock content %}

@@ -1,10 +1,9 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-
-class PublishedManager(models.Manager):
+class ActivManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(status=Problem.Status.Published)
+        return super().get_queryset().filter(status=Problem.Status.Activ)
 
 
 class Problem(models.Model):
@@ -18,6 +17,10 @@ class Problem(models.Model):
                               default=Status.Activ
                               )
     creatorId = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    objects = models.Manager()
+    Activ = ActivManager()
+
 
     def __str__(self):
         return self.name
@@ -78,7 +81,7 @@ class Partnyor(models.Model):
     image = models.ImageField(upload_to='ticket/images')
     contacts = models.CharField(max_length=10)
     companyId = models.ForeignKey(Company, on_delete=models.CASCADE)
-
+    age = models.PositiveIntegerField()
     class Meta:
         ordering = ["-created"]
 
@@ -163,3 +166,14 @@ class Navbatchilik(models.Model):
 
     def __str__(self):
         return self.kun
+
+
+class Students(models.Model):
+    firstname = models.CharField(max_length=100)
+    lastname = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    course = models.CharField(max_length=100)
+    gender = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.firstname
