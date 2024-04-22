@@ -6,7 +6,7 @@ from .models import Problem, Compleks, Company, Partnyor, Tickets, Navbatchilik,
 # admin.site.register(Problem)
 # admin.site.register(Company)
 # admin.site.register(Compleks)
-# admin.site.register(Partnyor)
+admin.site.register(Partnyor)
 # admin.site.register(Tickets)
 
 @admin.register(Tickets)
@@ -46,14 +46,14 @@ class CompanyAdmin(admin.ModelAdmin):
     search_fields = ['name']
     ordering = ['status', 'created']
 
-@admin.register(Partnyor)
-class PartnyorAdmin(admin.ModelAdmin):
-    list_display = ['fio', 'login', 'created', 'status', 'creatorId', 'image', 'contacts', 'companyId']
-    list_filter = ['status', 'created', 'creatorId']
-    # prepopulated_fields = {"slug": ('title',)}
-    date_hierarchy = 'created'
-    search_fields = ['fio']
-    ordering = ['status', 'created']
+# @admin.register(Partnyor)
+# class PartnyorAdmin(admin.ModelAdmin):
+#     list_display = ['fio', 'login', 'created', 'status', 'creatorId', 'image', 'contacts', 'companyId']
+#     list_filter = ['status', 'created', 'creatorId']
+#     # prepopulated_fields = {"slug": ('title',)}
+#     date_hierarchy = 'created'
+#     search_fields = ['fio']
+#     ordering = ['status', 'created']
 
 
 

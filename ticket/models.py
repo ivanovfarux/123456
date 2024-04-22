@@ -66,6 +66,7 @@ class Company(models.Model):
         return self.name
 
 class Partnyor(models.Model):
+
     class Status(models.TextChoices):
         Activ = "1", "Activ"
         Noactiv = "0", "Noactiv"

@@ -3,7 +3,7 @@ from django.views.generic import ListView
 from django_filters.views import FilterView
 
 from django_filters import FilterSet
-from ticket.models import Problem, Compleks, Company, Partnyor
+from ticket.models import Problem, Compleks, Company, Partnyor as partnyorModel
 
 
 class ProblemListView(ListView, FilterView):
@@ -29,15 +29,16 @@ class CompanyListView(ListView, FilterView):
     template_name = 'company.html'
 
 class PartnyorListView(ListView, FilterView):
-    model = Partnyor
-    template_name = 'partnyor.html'
+    model = partnyorModel
+    template_name = 'partnyor1.html'
 
-def index(request):
+def chart_view(request):
     labels = []
     data = []
-    queryset = Partnyor.objects.order_by('-age')[:5]
+
+    queryset = partnyorModel.objects.order_by('-age')[:5]
     for part in queryset:
-        labels.append(part.fio)
+        labels.append(part.login)
         data.append(part.age)
     return render(request, 'partyor.html', {
         'labels': labels,

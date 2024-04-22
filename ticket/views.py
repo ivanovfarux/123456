@@ -2,7 +2,7 @@ from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, TemplateView
 
-from .models import Problem
+from .models import Problem, Partnyor
 
 
 def problemListView(request):
@@ -38,3 +38,5 @@ class ProblemListView(ListView):
 class ProblemDetailView(DetailView):
     model = Problem
     template_name = 'problem_detail.html'
+
+
