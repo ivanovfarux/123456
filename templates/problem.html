@@ -1,0 +1,88 @@
+{% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %} Postlar! {% endblock title %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js "> </script>
+
+
+
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+
+
+
+
+   <script>
+
+   $(document).ready(function() {
+    $('#example').DataTable();
+      } );
+
+   </script>
+
+{% block content %}
+ <h1>All Problem list</h1>
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-12">
+<div class="card">
+<div class="card-header">
+<h3 class="card-title">DataTable with minimal features & hover style</h3>
+</div>
+<!-- /.card-header -->
+<div class="card-body">
+<table id="example" class="table table-bordered table-hover">
+  <thead>
+      <tr>
+          <th>name</th>
+          <th>date</th>
+          <th>author</th>
+          <th>status</th>
+          <th>deystviya</th>
+      </tr>
+   </thead>
+
+    {% for problem in problem_list %}
+      <tr>
+            <td>{{ problem.name }}</td>
+            <td>{{ problem.created }}</td>
+            <td>{{ problem.creatorId }}</td>
+            <td style="font-family: Calibri" >
+                    {% if problem.status == '1'  %}
+                    Activ
+                    {% else %}
+                        Noactiv
+                    {% endif %}
+            </td>
+          <td></td>
+    <x-adminlte-button class="btn-lg" type="reset" label="Reset" theme="outline-danger" icon="fas fa-lg fa-trash"/>
+
+
+      </tr>
+{% endfor %}
+    <tfoot>
+    <tr>
+         <th>name</th>
+          <th>date</th>
+          <th>author</th>
+          <th>status</th>
+        <th>dfdsfd</th>
+    </tr>
+    </tfoot>
+</table>
+</div><!-- /.box-body -->
+</div>
+</div>
+</div>
+</div>
+
+</section>
+{% endblock content %}

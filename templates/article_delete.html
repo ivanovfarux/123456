@@ -1,0 +1,11 @@
+{% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Article o'chirish {% endblock title %}
+{% block content %}
+   <h2>Maqolani o'chirish!</h2>
+   <form method="post"> {% csrf_token %}
+       {{ form|crispy }}
+       <p>"{{ article.title }}" nomli postni o'chirishni xoxlaysizmi?</p>
+       <button type="submit" class="btn btn-danger ml-2">Ha</button>
+   </form>
+{% endblock content %}

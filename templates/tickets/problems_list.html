@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>All problem list</h1>
+{% for problems in problems_list %}
+    <a href="{% url 'problem_detail_page' problems.id %}">
+<li>{{ problems.name }}</li>
+</a>
+{% endfor %}
+</body>
+</html>
