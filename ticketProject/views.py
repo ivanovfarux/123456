@@ -11,7 +11,6 @@ class ProblemListView(ListView, FilterView):
     template_name = 'problem.html'
 
 
-
 class CompleksFilter(FilterSet):
     class Meta:
         model = Compleks
@@ -36,11 +35,12 @@ def chart_view(request):
     labels = []
     data = []
 
-    queryset = partnyorModel.objects.order_by('-age')[:5]
+    queryset = partnyorModel.objects.order_by('-age')[:3]
     for part in queryset:
         labels.append(part.login)
         data.append(part.age)
-    return render(request, 'partyor.html', {
+
+    return render(request, 'partnyor.html', {
         'labels': labels,
         'data': data
-    })
+        })

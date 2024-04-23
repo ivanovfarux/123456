@@ -8,7 +8,7 @@ from ticketProject.views import *
 
 urlpatterns = [
     # path('', admin.site.urls),
-    # path('ticket', include("ticket.urls")),
+    path('ticket', include("ticket.urls")),
     # path("", homeView, name="home"),
 
     path('admin/', admin.site.urls),

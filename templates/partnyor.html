@@ -2,33 +2,30 @@
 {% load crispy_forms_tags %}
 
 {% block title %} Partnyor! {% endblock title %}
-
-   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
- <script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+   <script>
       var config ={
         type: 'pie',
         data: {
           datasets: [{
-            data: {{ data|safe }},
+            data: {{data|safe}},
             backgroundColor:[
                 'red', 'orange', 'blue', 'yellow', 'green'
                 ],
                 label: 'Label'
               }],
-              labels: {{ labels|safe }}
+              labels: {{labels|safe}}
             },
             options: {
               responsive: true
             }
         };
  </script>
-
-
-
-
 {% block content %}
-  <div id="container" style="width: 75%;">
-        <canvas id="pie-chart" ></canvas>
+
+
+  <div id="container" style="width: 100%;">
+        <canvas id="chart" ></canvas>
 </div>
 
 {% endblock content %}
