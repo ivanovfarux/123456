@@ -1,0 +1,11 @@
+ {% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %} Problem CREATE! {% endblock title %}
+{% block content %}
+     <h2 class="text-center">Problem qo'shish</h2>
+    <form method="post" enctype="multipart/form-data">{% csrf_token %}
+        {{ form.as_p }}
+    <button type="submit" class="btn btn-info ml-2">Problem qo'shish</button>
+    </form>
+{% endblock %}

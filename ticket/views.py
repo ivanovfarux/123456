@@ -1,42 +1,80 @@
 from django.http import Http404
-from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView, TemplateView
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic import ListView, DetailView, TemplateView, UpdateView, CreateView
 
+from .forms import ProblemForm
 from .models import Problem, Partnyor
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, DeleteView
+from django_filters.views import FilterView
+
+from django_filters import FilterSet
+from ticket.models import Problem, Compleks, Company, Partnyor as partnyorModel
 
 
-def problemListView(request):
-    # problems_list = Problem.objects.all()
-    problems_list = Problem.Activ.all()
-    # problems_list = Problem.objects.filter(status=Problem.Status.Activ)
-    context = {
-        "problems_list": problems_list,
-    }
-    return render(request, "home.html", context=context)
-
-
-
-class HomePageView(TemplateView):
+class ProblemListView(ListView, FilterView):
     model = Problem
-    template_name = 'home.html'
+    template_name = 'problem.html'
 
-def problem_detail(request, id):
-    problems = get_object_or_404(Problem, id=id, status=Problem.Status.Activ)
-    context = {
-        "problems": problems,
-    }
-    return render(request, "tickets/problem_detail.html", context=context)
-
-
-
-class ProblemListView(ListView):
+class ProblemDetail(DetailView):
     model = Problem
-    template_name = 'home.html'
-    context_object_name = 'problems'
+    template_name = "problems/problem_detail.html"
 
-
-class ProblemDetailView(DetailView):
+class ProblemUpdateView(UpdateView):
     model = Problem
-    template_name = 'problem_detail.html'
+    fields = ('name', 'created', 'status', 'creatorId')
+    template_name = 'problems/problemEdit.html'
+
+
+
+class ProblemDelete(DeleteView):
+    model = Problem
+    template_name = 'problems/problemDelete.html'
+    success_url = reverse_lazy('problem_list')
+
+class ProblemCreateView(CreateView):
+    model = Problem
+    template_name = 'problems/problemCreate.html'
+    fields = ('name', 'created', 'status', 'creatorId')
+
+class CompleksFilter(FilterSet):
+    class Meta:
+        model = Compleks
+        fields = {"name": ["exact", "contains"], "status": ["exact"]}
+
+
+class CompleksListView(ListView, FilterView):
+    model = Compleks
+    template_name = 'compleks.html'
+    filterset_class = CompleksFilter
+
+class CompanyListView(ListView, FilterView):
+    model = Company
+    template_name = 'company.html'
+
+class PartnyorListView(ListView, FilterView):
+    model = partnyorModel
+    template_name = 'partnyor1.html'
+
+def Partnyor(request):
+    labels = []
+    data = []
+
+    queryset = partnyorModel.objects.order_by('-age')[:3]
+    for part in queryset:
+        labels.append(part.login)
+        data.append(part.age)
+    return render(request, 'partnyor.html', {
+        'labels': labels,
+        'data': data
+        })
+
+
+
+
+
+
+
+
 
 

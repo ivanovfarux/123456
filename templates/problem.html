@@ -1,6 +1,5 @@
 {% extends 'adminlte/base.html' %}
 {% load crispy_forms_tags %}
-
 {% block title %} Postlar! {% endblock title %}
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -13,18 +12,6 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-
-
-
-
-
-   <script>
-
-   $(document).ready(function() {
-    $('#example').DataTable();
-      } );
-
-   </script>
 
 {% block content %}
  <h1>All Problem list</h1>
@@ -39,6 +26,11 @@
 </div>
 <!-- /.card-header -->
 <div class="card-body">
+    <ul class="list-inline">
+        <li class="list-inline-item">
+            <a href="{%url 'problem_create'%}" class="btn btn-primary"><i class="fa-sharp fa-solid fa-plus"></i>&nbsp;Add Problems</a>
+        </li>
+    </ul>
 <table id="example" class="table table-bordered table-hover">
   <thead>
       <tr>
@@ -46,6 +38,7 @@
           <th>date</th>
           <th>author</th>
           <th>status</th>
+          <th>deystviya</th>
           <th>deystviya</th>
       </tr>
    </thead>
@@ -62,8 +55,12 @@
                         Noactiv
                     {% endif %}
             </td>
-          <td></td>
-    <x-adminlte-button class="btn-lg" type="reset" label="Reset" theme="outline-danger" icon="fas fa-lg fa-trash"/>
+          <td><a href="{% url 'problem_edit' problem.id %}">Detail</a>
+
+          </td>
+          <td>
+              <a href="{% url 'problem_delete' problem.id %}">delete</a>
+          </td>
 
 
       </tr>
@@ -74,6 +71,7 @@
           <th>date</th>
           <th>author</th>
           <th>status</th>
+        <th>dfdsfd</th>
         <th>dfdsfd</th>
     </tr>
     </tfoot>

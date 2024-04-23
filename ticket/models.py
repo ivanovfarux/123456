@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
+
 
 class ActivManager(models.Manager):
     def get_queryset(self):
@@ -21,10 +23,11 @@ class Problem(models.Model):
     objects = models.Manager()
     Activ = ActivManager()
 
-
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('problem_edit', kwargs={'pk': self.pk})
 
 class Compleks(models.Model):
     class Status(models.TextChoices):

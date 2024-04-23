@@ -3,7 +3,6 @@ from .models import Problem, Compleks, Company, Partnyor, Tickets, Navbatchilik,
 
 
 
-# admin.site.register(Problem)
 # admin.site.register(Company)
 # admin.site.register(Compleks)
 admin.site.register(Partnyor)
@@ -34,7 +33,7 @@ class ProblemAdmin(admin.ModelAdmin):
     list_filter = ['status', 'created', 'creatorId']
     # prepopulated_fields = {"slug": ('title',)}
     date_hierarchy = 'created'
-    search_fields = ['name']
+    # search_fields = ['name']
     ordering = ['status', 'created']
 
 @admin.register(Company)
