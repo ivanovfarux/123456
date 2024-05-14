@@ -1,0 +1,24 @@
+ {% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %} Problem CREATE! {% endblock title %}
+{% block content %}
+     <h2 class="text-center">Company qo'shish</h2>
+    <form method="POST" class="row gy-2 gx-3 align-items-center">{% csrf_token %}
+        <div class="col-auto">
+         <div data-mdb-input-init class="form-outline">
+           <label class="form-label" for="name">Name</label>
+             <input type="text" id="name" value="{{ company.name }}" class="form-control" name="name" />
+         </div>
+        </div>
+      <div class="form-check form-switch">
+        <label  class="form-label" >Status</label>
+          <div data-mdb-input-init class="form-outline">
+            <label for="l_box1"><input type="radio" name="status" value="1" id="l_box1">Activ</label>
+            <label for="d_box2"><input type="radio" name="status" value="0" id="d_box2"> Noactiv</label>
+          </div>
+     </div>
+ <button type="submit" class="btn btn-primary">Problem +</button>
+  </div>
+</form>
+{% endblock%}

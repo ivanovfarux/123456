@@ -1,0 +1,69 @@
+{% extends 'adminlte/base.html' %}
+{% block title %} Postlar! {% endblock title %}
+
+{% block content %}
+ <h1>All Problem list</h1>
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-12">
+<div class="card">
+<div class="card-header">
+<h3 class="card-title">DataTable with minimal features & hover style</h3>
+</div>
+<!-- /.card-header -->
+<div class="card-body">
+    <ul class="list-inline">
+        <li class="list-inline-item">
+            <a href="{%url 'company_create'%}" class="btn btn-primary"><i class="fa-sharp fa-solid fa-plus"></i>&nbsp;Add Problems</a>
+        </li>
+    </ul>
+<table id="example" class="table table-bordered table-hover">
+  <thead>
+      <tr>
+          <th>name</th>
+          <th>createDate</th>
+          <th>status</th>
+          <th>author</th>
+          <th>deystviya</th>
+
+      </tr>
+  </thead>
+  <tbody>
+    {% for company in company_list %}
+      <tr>
+        <td>{{ company.name }}</td>
+        <td>{{ company.createDate }}</td>
+        <td>{{ company.status }}</td>
+        <td>{{ company.author }}</td>
+        <td style="font-family: Calibri" >
+                    {% if company.status is True  %}
+                        Activ
+                    {% else %}
+                        Noactiv
+                    {% endif %}
+            </td>
+          <td><a href="{% url 'company_view' company.id %}"><i style='font-size:24px' class='fas'>&#xf085;</i>Detail</a>
+
+              <a href="{% url 'company_delete' company.id %}"><i class='far fa-trash-alt'></i>Delete</a>
+
+              <a href="{% url 'company_edit' pk=company.id %}">
+                  {% if user.is_authenticated %}
+                  <i style='font-size:24px' class='fas'>&#xf303;</i>Edit
+                  {% else %}
+                <a class="nav-item nav-link" href="{% url 'login' %}">
+                    <i style='font-size:24px' class='fas'>&#xf303;</i>Вход</a>
+                  {% endif %}
+              </a>
+          </td>
+
+
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+
+{% endblock content %}

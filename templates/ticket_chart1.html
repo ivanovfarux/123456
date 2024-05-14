@@ -1,0 +1,40 @@
+{% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Partnyor! {% endblock title %}
+{% block content %}
+ <h1>Ticket Status Chart</h1>
+        <canvas id="problemChart" width="300" height="200"></canvas>
+
+{% endblock content %}
+
+{% block extra_js %}
+<script type="text/javascript" src="/static/js/Chart.min.js"></script>
+<script type="text/javascript" src="/static/js/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/static/js/canvasjs.min.js"></script>
+<script>
+        var ctx = document.getElementById('problemChart').getContext('2d');
+        var complekNames = {{ compleks_names|safe }};
+        var ticketCounts = {{ ticket_counts|safe }};
+        var problemChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: complekNames,
+                datasets: [{
+                    label: 'Ticket Count',
+                    data: ticketCounts,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+{% endblock extra_js %}
