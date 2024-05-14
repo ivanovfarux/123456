@@ -2,14 +2,14 @@
 {% load crispy_forms_tags %}
 
 {% block title %} Partnyor! {% endblock title %}
-% block content %}
+{% block content %}
 
 
-  <div id="container" style="width: 100%;">
+<div id="container" style="width: 100%;">
     <h1>Problem Detail</h1>
     <h3>Name : {{ problem.name }}</h3>
     <h3>Address : {{ problem.created }}</h3>
     <h3>Department : {{ problem.status }}</h3>
 </div>
 
-{% endblock content %}
+{% endblock %}

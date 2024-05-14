@@ -115,7 +115,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+LOGIN_REDIRECT_URL = 'blog-home'
+LOGIN_URL = 'login'
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -133,6 +134,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = ''
 STATICFILES_DIRS = [BASE_DIR / 'static/']
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media/'

@@ -1,6 +1,11 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.shortcuts import render
 from django.urls import reverse
+from django.utils import timezone
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 
 class ActivManager(models.Manager):
@@ -13,18 +18,18 @@ class Problem(models.Model):
         Activ = "1", "Activ"
         Noactiv = "0", "Noactiv"
     name = models.CharField(max_length=200)
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(default=timezone.now)
     status = models.CharField(max_length=2,
                               choices=Status.choices,
                               default=Status.Activ
                               )
     creatorId = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    objects = models.Manager()
-    Activ = ActivManager()
-
     def __str__(self):
         return self.name
+
+    def __str__(self):
+        return str(self.id)
 
     def get_absolute_url(self):
         return reverse('problem_edit', kwargs={'pk': self.pk})
@@ -52,14 +57,13 @@ class Compleks(models.Model):
 
 class Company(models.Model):
     class Status(models.TextChoices):
+
         Activ = "1", "Activ"
         Noactiv = "0", "Noactiv"
 
     name = models.CharField(max_length=200)
     created = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=2,
-                              choices=Status.choices,
-                              default=Status.Activ)
+    status = models.CharField(max_length=2, choices=Status.choices, default=Status.Activ)
     creatorId = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
@@ -86,11 +90,18 @@ class Partnyor(models.Model):
     contacts = models.CharField(max_length=10)
     companyId = models.ForeignKey(Company, on_delete=models.CASCADE)
     age = models.PositiveIntegerField()
+
     class Meta:
         ordering = ["-created"]
 
     def __str__(self):
         return self.fio
+
+    def __str__(self):
+        return self.login
+
+    def __str__(self):
+        return self.age
 
 class Tickets(models.Model):
     class Status(models.TextChoices):
@@ -162,7 +173,6 @@ class Navbatchilik(models.Model):
                               choices=Status.choices,
                               default=Status.Activ)
     creatorId = models.ForeignKey(User, on_delete=models.CASCADE)
-    # user = models.ForeignKey(User, on_delete=models.RESTRICT)
     ticket = models.ForeignKey(Tickets, on_delete=models.CASCADE)
 
     class Meta:
@@ -172,12 +182,4 @@ class Navbatchilik(models.Model):
         return self.kun
 
 
-class Students(models.Model):
-    firstname = models.CharField(max_length=100)
-    lastname = models.CharField(max_length=100)
-    email = models.CharField(max_length=100)
-    course = models.CharField(max_length=100)
-    gender = models.CharField(max_length=100)
 
-    def __str__(self):
-        return self.firstname

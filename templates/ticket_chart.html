@@ -1,0 +1,50 @@
+{% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Partnyor! {% endblock title %}
+{% block content %}
+ <canvas id="ticketChart" width="400" height="400"></canvas>
+gvfhghf
+{% endblock content %}
+
+{% block extra_js %}
+<script type="text/javascript" src="/static/js/Chart.min.js"></script>
+<script type="text/javascript" src="/static/js/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/static/js/canvasjs.min.js"></script>
+<script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Получаем данные из Django view
+            var labels = JSON.parse('{{ chart_data.labels|escapejs }}');
+            var data = JSON.parse('{{ chart_data.data|escapejs }}');
+
+            // Создаем график
+            var ctx = document.getElementById('ticketChart').getContext('2d');
+            var ticketChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Ticket Status',
+                        data: data,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock extra_js %}
