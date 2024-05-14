@@ -1,19 +1,19 @@
 from django.contrib import admin
-from .models import Problem, Compleks, Company, Partnyor, Tickets, Navbatchilik, Education
+from .models import Problem, Compleks, Company, Partnyor,  Navbatchilik, Education
 
 # admin.site.register(Company)
 admin.site.register(Compleks)
-admin.site.register(Tickets)
+# admin.site.register(Tickets)
 
 # @admin.register(Tickets)
-class TicketsAdmin(admin.ModelAdmin):
-    list_display = ['name', 'note', 'status', 'createDate', 'file',
-                    'endDate', 'problem', 'compleks', 'partnyor', 'company', 'update_Time']
-    # list_filter = ["__all__"]
-    # prepopulated_fields = {"slug": ('title',)}
-    date_hierarchy = 'createDate'
-    search_fields = ['name', 'note']
-    ordering = ['status', 'createDate']
+# class TicketsAdmin(admin.ModelAdmin):
+#     list_display = ['name', 'note', 'status', 'createDate', 'file',
+#                     'endDate', 'problem', 'compleks', 'partnyor', 'company', 'update_Time']
+#     # list_filter = ["__all__"]
+#     # prepopulated_fields = {"slug": ('title',)}
+#     date_hierarchy = 'createDate'
+#     search_fields = ['name', 'note']
+#     ordering = ['status', 'createDate']
 
 
 # class CompleksAdmin(admin.ModelAdmin):
@@ -54,14 +54,14 @@ class PartnyorAdmin(admin.ModelAdmin):
 
 
 
-@admin.register(Navbatchilik)
-class NavbatchiAdmin(admin.ModelAdmin):
-    list_display = ['kun', 'oy', 'yil',  'created', 'status', 'creatorId', 'ticket']
-    list_filter = ['status', 'created', 'creatorId']
-    # prepopulated_fields = {"slug": ('title',)}
-    date_hierarchy = 'created'
-    search_fields = ['fio']
-    ordering = ['status', 'created']
+# @admin.register(Navbatchilik)
+# class NavbatchiAdmin(admin.ModelAdmin):
+#     list_display = ['kun', 'oy', 'yil',  'created', 'status', 'creatorId', 'ticket']
+#     list_filter = ['status', 'created', 'creatorId']
+#     # prepopulated_fields = {"slug": ('title',)}
+#     date_hierarchy = 'created'
+#     search_fields = ['fio']
+#     ordering = ['status', 'created']
 
 @admin.register(Education)
 class EducationAdmin(admin.ModelAdmin):

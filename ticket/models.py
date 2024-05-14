@@ -103,38 +103,38 @@ class Partnyor(models.Model):
     def __str__(self):
         return self.age
 
-class Tickets(models.Model):
-    class Status(models.TextChoices):
-        Activ = "1", "Activ"
-        Noactiv = "0", "Noactiv"
-
-    name = models.CharField(max_length=250)
-    note = models.CharField(max_length=250)
-    status = models.CharField(max_length=2,
-                              choices=Status.choices,
-                              default=Status.Activ
-                              )
-    createDate = models.DateTimeField(auto_now_add=True)
-    file = models.ImageField(upload_to='ticket/images')
-    endDate = models.DateTimeField()
-    problem = models.ForeignKey(Problem,
-                                on_delete=models.CASCADE)
-    compleks = models.ForeignKey(Compleks,
-                                 on_delete=models.CASCADE)
-    user = models.ForeignKey(User,
-                             on_delete=models.CASCADE,
-                             related_name='comments')
-    partnyor = models.ForeignKey(Partnyor,
-                                 on_delete=models.CASCADE)
-    company = models.ForeignKey(Company,
-                                on_delete=models.CASCADE)
-    update_Time = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        ordering = ["-createDate"]
-
-    def __str__(self):
-        return self.name
+# class Ticket(models.Model):
+#     class Status(models.TextChoices):
+#         Activ = "1", "Activ"
+#         Noactiv = "0", "Noactiv"
+#
+#     name = models.CharField(max_length=250)
+#     note = models.CharField(max_length=250)
+#     status = models.CharField(max_length=2,
+#                               choices=Status.choices,
+#                               default=Status.Activ
+#                               )
+#     createDate = models.DateTimeField(auto_now_add=True)
+#     file = models.ImageField(upload_to='ticket/images')
+#     endDate = models.DateTimeField()
+#     problem = models.ForeignKey(Problem,
+#                                 on_delete=models.CASCADE)
+#     compleks = models.ForeignKey(Compleks,
+#                                  on_delete=models.CASCADE)
+#     user = models.ForeignKey(User,
+#                              on_delete=models.CASCADE,
+#                              related_name='comments')
+#     partnyor = models.ForeignKey(Partnyor,
+#                                  on_delete=models.CASCADE)
+#     company = models.ForeignKey(Company,
+#                                 on_delete=models.CASCADE)
+#     update_Time = models.DateTimeField(auto_now=True)
+#
+#     class Meta:
+#         ordering = ["-createDate"]
+#
+#     def __str__(self):
+#         return self.name
 
 class Education(models.Model):
     class Status(models.TextChoices):
@@ -173,7 +173,7 @@ class Navbatchilik(models.Model):
                               choices=Status.choices,
                               default=Status.Activ)
     creatorId = models.ForeignKey(User, on_delete=models.CASCADE)
-    ticket = models.ForeignKey(Tickets, on_delete=models.CASCADE)
+    # ticket = models.ForeignKey(Tickets, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ["-created"]

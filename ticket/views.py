@@ -10,8 +10,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, DeleteView
 from django_filters.views import FilterView
 from django_filters import FilterSet
-from ticket.models import Problem, Compleks, Company, Partnyor as partnyorModel, Partnyor, \
-    Tickets
+from ticket.models import Problem, Compleks, Company, Partnyor as partnyorModel, Partnyor
 from django.contrib.auth.views import LoginView
 import json
 from django.db.models import Count

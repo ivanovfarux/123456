@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'django_tables2',
     'django_htmx',
     'ticket',
-    'articles',
     'pages',
 ]
 
