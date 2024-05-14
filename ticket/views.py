@@ -10,11 +10,12 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, DeleteView
 from django_filters.views import FilterView
 from django_filters import FilterSet
-from ticket.models import Problem, Compleks, Company, Partnyor as partnyorModel, Partnyor
+from ticket.models import Problem, Compleks, Company, Partnyor as partnyorModel, Partnyor, Ticket
 from django.contrib.auth.views import LoginView
 import json
 from django.db.models import Count
 from django.db.models.functions import ExtractMonth
+
 
 class CustomLoginView(LoginView):
     template_name = 'base/login.html'
@@ -39,9 +40,9 @@ def edit(request, pk):
         problem = Problem.objects.get(id=pk)
         if request.method == "POST":
             problem.name = request.POST.get("name")
-            problem.created = timezone.now()
+            problem.createDate = timezone.now()
             problem.status = request.POST.get("status")
-            problem.creatorId = request.user
+            problem.author = request.user
             problem.save()
             return HttpResponseRedirect("../.")
         else:
@@ -55,9 +56,9 @@ def ProblemNew(request):
         if request.method == "POST":
             problem = Problem()
             problem.name = request.POST.get("name")
-            problem.created = timezone.now()
+            problem.createDate = timezone.now()
             problem.status = request.POST.get("status")
-            problem.creatorId = request.user
+            problem.author = request.user
             problem.save()
             return HttpResponseRedirect("../problems")
         else:
@@ -70,6 +71,52 @@ class ProblemDelete(DeleteView):
     template_name = 'problems/problemDelete.html'
     success_url = reverse_lazy('problem_list')
 
+class CompanyListView(ListView, FilterView):
+    model = Company
+    template_name = 'company/company.html'
+
+
+class CompanyDetail(DetailView):
+    model = Company
+    template_name = "company/company_detail.html"
+
+class CompanyDelete(DeleteView):
+    model = Company
+    template_name = 'company/companyDelete.html'
+    success_url = reverse_lazy('company_list')
+
+@login_required(login_url='/accounts/login/')
+def Companyedit(request, pk):
+    post = get_object_or_404(Company, pk=pk)
+    try:
+        company = Company.objects.get(id=pk)
+        if request.method == "POST":
+            company.name = request.POST.get("name")
+            company.createDate = timezone.now()
+            company.status = request.POST.get("status")
+            company.author = request.user
+            company.save()
+            return HttpResponseRedirect("../.")
+        else:
+            return render(request, "company/companyEdit.html", {"company": company})
+    except Company.DoesNotExist:
+        return HttpResponseNotFound("<h2>Person not found</h2>")
+
+def CompanyNew(request):
+    try:
+        if request.method == "POST":
+            company = Company()
+            company.name = request.POST.get("name")
+            company.createDate = timezone.now()
+            company.status = request.POST.get("status")
+            company.author = request.user
+            company.save()
+            return HttpResponseRedirect("../company")
+        else:
+            return render(request, "company/companyCreate.html")
+    except Company.DoesNotExist:
+        return HttpResponseNotFound("<h2>Person not found</h2>")
+
 class CompleksFilter(FilterSet):
     class Meta:
         model = Compleks
@@ -79,10 +126,6 @@ class CompleksListView(ListView, FilterView):
     model = Compleks
     template_name = 'compleks.html'
     filterset_class = CompleksFilter
-
-class CompanyListView(ListView, FilterView):
-    model = Company
-    template_name = 'company.html'
 
 class PartnyorListView(ListView, FilterView):
     model = partnyorModel
@@ -121,7 +164,7 @@ def ticket_class_view(request):
 
 def chart_view(request):
     # Получаем данные из модели
-    chart_data = Company.objects.annotate(month=ExtractMonth('created')).values('month').annotate(count=Count('id'))
+    chart_data = Company.objects.annotate(month=ExtractMonth('createDate')).values('month').annotate(count=Count('id'))
 
     # Разделяем данные на месяцы и количество записей
     months = [data['month'] for data in chart_data]
@@ -136,13 +179,24 @@ def chart_view(request):
     return render(request, 'chart.html', context)
 
 def ticket_chart(request):
-    # Получаем данные для графика
-    ticket_counts = Problem.objects.values('status').annotate(total=Count('status'))
+    problems = Problem.objects.all()
+    problem_names = [problem.name for problem in problems]
+    ticket_counts = [Ticket.objects.filter(problem=problem).count() for problem in problems]
 
-    # Формируем данные для передачи в шаблон
-    chart_data = {
-        'labels': [item['status'] for item in ticket_counts],
-        'data': [item['total'] for item in ticket_counts],
+    context = {
+        'problem_names': json.dumps(problem_names),
+        'ticket_counts': json.dumps(ticket_counts),
     }
+    return render(request, 'ticket_chart.html', context)
 
-    return render(request, 'ticket_chart.html', {'chart_data': chart_data})
+def ticket_Compleks_chart(request):
+    complekss = Compleks.objects.all()
+    complek_names = [complek.name for complek in complekss]
+    ticket_counts = [Ticket.objects.filter(compleks=compleks).count() for compleks in complekss]
+
+    context = {
+        'compleks_names': json.dumps(complek_names),
+        'ticket_counts': json.dumps(ticket_counts),
+    }
+    return render(request, 'ticket_chart1.html', context)
+

@@ -2,13 +2,9 @@
 {% load crispy_forms_tags %}
 {% block title %} Postlar! {% endblock title %}
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js "> </script>
-
-
-
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
@@ -45,11 +41,11 @@
     {% for problem in problem_list %}
       <tr>
             <td>{{ problem.name }}</td>
-            <td>{{ problem.created }}</td>
-            <td>{{ problem.creatorId }}</td>
+            <td>{{ problem.createDate }}</td>
+            <td>{{ problem.author }}</td>
             <td style="font-family: Calibri" >
-                    {% if problem.status == '1'  %}
-                    Activ
+                    {% if problem.status is True  %}
+                        Activ
                     {% else %}
                         Noactiv
                     {% endif %}
