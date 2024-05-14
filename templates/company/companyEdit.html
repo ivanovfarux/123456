@@ -1,0 +1,30 @@
+ {% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %} Problem Edit! {% endblock title %}
+{% block content %}
+    <h2 class="text-center">Joriy Companyni tahrirlash</h2>
+    <form  class="row gy-2 gx-3 align-items-center" method="post" enctype="multipart/form-data"
+           action="{% url 'company_edit' pk=company.id %}">
+        {% csrf_token %}
+      <div class="form-group col-md-3">
+  <div class="container special-box">
+    <div data-mdb-input-init class="form-outline">
+      <label class="form-label" for="name">Name</label>
+        <input type="text" id="name" value="{{ company.name }}" class="form-control form-control-lg" name="name" />
+    </div>
+  </div>
+
+  <div class="form-check form-switch">
+        <label  class="form-label" >Status</label>
+          <div data-mdb-input-init class="form-outline">
+    <label for="l_box1"><input type="radio" name="status" value="1" id="l_box1">Activ</label>
+    <label for="d_box2"><input type="radio" name="status" value="0" id="d_box2"> Noactiv</label>
+          </div>
+    </div>
+    </div>
+  <div class="container special-box">
+    <button type="submit" class="btn btn-primary">Tahrirlash</button>
+  </div>
+</form>
+{% endblock  %}
