@@ -107,7 +107,7 @@ class Education(models.Model):
     def __str__(self):
         return self.name
 
-class Navbatchilik(models.Model):
+class Duty(models.Model):
     kun = models.CharField(max_length=200)
     oy = models.CharField(max_length=200)
     yil = models.CharField(max_length=200)
@@ -116,6 +116,7 @@ class Navbatchilik(models.Model):
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE)
     description = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+    duty = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_duty')
 
     class Meta:
         ordering = ["-createDate"]
@@ -123,5 +124,8 @@ class Navbatchilik(models.Model):
     def __str__(self):
         return self.kun
 
+    def __str__(self):
+        return str(self.id)
 
-
+    def get_absolute_url(self):
+        return reverse('duty_edit', kwargs={'pk': self.pk})

@@ -27,9 +27,9 @@
             <a href="{%url 'problem_create'%}" class="btn btn-primary"><i class="fa-sharp fa-solid fa-plus"></i>&nbsp;Add Problems</a>
         </li>
     </ul>
-<table id="example" class="table table-bordered table-hover">
+<table class="table table-bordered table-hover">
   <thead>
-      <tr>
+      <tr data-widget="expandable-table" aria-expanded="true">
           <th>name</th>
           <th>date</th>
           <th>author</th>
@@ -39,7 +39,7 @@
    </thead>
 
     {% for problem in problem_list %}
-      <tr>
+      <tr class="expandable-body">
             <td>{{ problem.name }}</td>
             <td>{{ problem.createDate }}</td>
             <td>{{ problem.author }}</td>

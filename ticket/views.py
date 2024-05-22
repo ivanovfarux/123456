@@ -1,20 +1,22 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import render, get_object_or_404
-from django.core import serializers
 from django.utils import timezone
-from datetime import datetime
 from django.db.models import Count, Q
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, DeleteView
 from django_filters.views import FilterView
 from django_filters import FilterSet
-from ticket.models import Problem, Compleks, Company, Partnyor as partnyorModel, Partnyor, Ticket
+from rest_framework import viewsets
+from rest_framework.response import Response
+
+from ticket.models import Problem, Compleks, Company, Partnyor as partnyorModel, Partnyor, Ticket, Duty
 from django.contrib.auth.views import LoginView
 import json
 from django.db.models import Count
 from django.db.models.functions import ExtractMonth
+from ticket.serializer import ProblemSerializer, DutySerializer
 
 
 class CustomLoginView(LoginView):
@@ -24,6 +26,18 @@ class CustomLoginView(LoginView):
 
     def get_success_url(self):
         return reverse_lazy('tasks')
+
+class ProblemViewSet(viewsets.ViewSet):
+    def list(self, request):
+        stu = Problem.objects.all()
+        serializer = ProblemSerializer(stu, many=True)
+        return Response(serializer.data)
+
+class DutyViewSet(viewsets.ViewSet):
+    def list(self, request):
+        duty = Duty.objects.all()
+        serializer = DutySerializer(duty, many=True)
+        return Response(serializer.data)
 
 class ProblemListView(ListView, FilterView):
     model = Problem
@@ -132,6 +146,63 @@ class PartnyorListView(ListView, FilterView):
     template_name = 'partnyor1.html'
 
 
+class DutyListView(ListView, FilterView):
+    model = Duty
+    template_name = 'duty/duty.html'
+
+class DutyDetail(DetailView):
+    model = Duty
+    template_name = "duty/duty_detail.html"
+
+class DutyDelete(DeleteView):
+    model = Duty
+    template_name = 'duty/dutyDelete.html'
+    success_url = reverse_lazy('duty_list')
+
+def DutyNew(request):
+    try:
+        if request.method == "POST":
+            duty = Duty()
+            duty.duty = request.POST.get("duty")
+            duty.kun = request.POST.get("kun")
+            duty.oy = request.POST.get("oy")
+            duty.yil = request.POST.get("yil")
+            duty.createDate = timezone.now()
+            duty.status = request.POST.get("status")
+            duty.ticket = request.POST.get("ticket")
+            duty.description = request.POST.get("description")
+            duty.author = request.user
+            duty.save()
+            return HttpResponseRedirect("../duty")
+        else:
+            return render(request, "duty/dutyCreate.html")
+    except Duty.DoesNotExist:
+        return HttpResponseNotFound("<h2>Person not found</h2>")
+
+@login_required(login_url='/accounts/login/')
+def Dutyedit(request, pk):
+    post = get_object_or_404(Duty, pk=pk)
+    try:
+        duty = Duty.objects.get(id=pk)
+        if request.method == "POST":
+            duty = Duty()
+            duty.duty = request.POST.get("duty")
+            duty.kun = request.POST.get("kun")
+            duty.oy = request.POST.get("oy")
+            duty.yil = request.POST.get("yil")
+            duty.createDate = timezone.now()
+            duty.status = request.POST.get("status")
+            duty.ticket = request.POST.get("1")
+            duty.description = request.POST.get("description")
+            duty.author = request.user
+            duty.save()
+            return HttpResponseRedirect("../.")
+        else:
+            return render(request, "duty/dutyEdit.html", {"duty": duty})
+    except Duty.DoesNotExist:
+        return HttpResponseNotFound("<h2>Person not found</h2>")
+
+#chart
 def chart_view(request):
 
     partnyor_data = Partnyor.objects.all()
@@ -143,7 +214,9 @@ def pie_chart(request):
     data = []
 
     queryset = Partnyor.objects.order_by('-age')[:5]
+
     for partnyorModel in queryset:
+
         labels.append(partnyorModel.fio)
         data.append(partnyorModel.age)
 
@@ -199,4 +272,3 @@ def ticket_Compleks_chart(request):
         'ticket_counts': json.dumps(ticket_counts),
     }
     return render(request, 'ticket_chart1.html', context)
-

@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Problem, Compleks, Company, Partnyor, Navbatchilik, Education, Ticket
+from .models import Problem, Compleks, Company, Partnyor, Duty, Education, Ticket
 
-admin.site.register(Company)
+admin.site.register(Education)
 admin.site.register(Compleks)
-# admin.site.register(Ticket)
+admin.site.register(Duty)
 
 @admin.register(Ticket)
 class TicketsAdmin(admin.ModelAdmin):
@@ -33,14 +33,14 @@ class ProblemAdmin(admin.ModelAdmin):
     ordering = ['status', 'createDate']
     readonly_fields = ['createDate']
 
-# @admin.register(Company)
-# class CompanyAdmin(admin.ModelAdmin):
-#     list_display = ['name', 'createDate', 'status', 'author']
-#     list_filter = ['status', 'createDate', 'author']
-#     # prepopulated_fields = {"slug": ('title',)}
-#     date_hierarchy = 'createDate'
-#     search_fields = ['name']
-#     ordering = ['status', 'createDate']
+@admin.register(Company)
+class CompanyAdmin(admin.ModelAdmin):
+    list_display = ['name', 'createDate', 'status', 'author']
+    list_filter = ['status', 'createDate', 'author']
+    # prepopulated_fields = {"slug": ('title',)}
+    date_hierarchy = 'createDate'
+    search_fields = ['name']
+    ordering = ['status', 'createDate']
 #
 @admin.register(Partnyor)
 class PartnyorAdmin(admin.ModelAdmin):

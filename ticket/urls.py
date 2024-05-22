@@ -1,5 +1,14 @@
-from .views import *
 from django.urls import path, include
+from ticket.views import *
+
+from rest_framework.routers import DefaultRouter, SimpleRouter
+
+router = DefaultRouter()
+
+router.register(r"problemlist", ProblemViewSet, basename="problem")
+router.register(r"dutylist", DutyViewSet, basename="duty")
+
+urlpatterns = router.urls
 
 urlpatterns = [
     path('', include('pages.urls')),
@@ -14,6 +23,12 @@ urlpatterns = [
     path('company/delete/<int:pk>', CompanyDelete.as_view(), name='company_delete'),
     path("company/edit/<int:pk>", Companyedit, name='company_edit'),
     path("company/create", CompanyNew, name='company_create'),
+
+    path("duty/", DutyListView.as_view(), name="duty_list"),
+    path('duty/view/<int:pk>', DutyDetail.as_view(), name='duty_view'),
+    path('duty/delete/<int:pk>', DutyDelete.as_view(), name='duty_delete'),
+    path("duty/edit/<int:pk>", Dutyedit, name='duty_edit'),
+    path("duty/create", DutyNew, name='duty_create'),
 
     # path('problems/edit/<int:pk>', problem_update, name='problem_edit'),
     # path('problems/create', ProblemCreateView.as_view(), name='problem_create'),
