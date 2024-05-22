@@ -1,0 +1,81 @@
+{% extends 'adminlte/base.html' %}
+{% block title %} Navbatchilar! {% endblock title %}
+
+{% block content %}
+ <h1>All Duty list</h1>
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-12">
+<div class="card">
+<div class="card-header">
+<h3 class="card-title">DataTable with minimal features & hover style</h3>
+</div>
+<!-- /.card-header -->
+<div class="card-body">
+    <ul class="list-inline">
+        <li class="list-inline-item">
+            <a href="{%url 'duty_create'%}" class="btn btn-primary"><i class="fa-sharp fa-solid fa-plus"></i>&nbsp;Add Duty</a>
+        </li>
+    </ul>
+<table id="example" class="table table-bordered table-hover">
+  <thead>
+      <tr>
+          <th>Fio</th>
+          <th>kun</th>
+          <th>oy</th>
+          <th>yil</th>
+          <th>createDate</th>
+          <th>status</th>
+          <th>ticket</th>
+          <th>description</th>
+          <th>author</th>
+     </tr>
+  </thead>
+  <tbody>
+    {% for duty in duty_list %}
+      <tr>
+        <td>{{ duty.duty }}</td>
+          <td>{{ duty.kun }}</td>
+        <td>{{ duty.oy }}</td>
+        <td>{{ duty.yil }}</td>
+        <td>{{ duty.createDate }}</td>
+        <td>{{ duty.status }}</td>
+        <td>{{ duty.ticket }}</td>
+        <td>{{ duty.description }}</td>
+        <td>{{ duty.author }}</td>
+        <td style="font-family: Calibri" >
+                    {% if duty.status is True  %}
+                        Activ
+                    {% else %}
+                        Noactiv
+                    {% endif %}
+            </td>
+          <td>
+              <a href="{% url 'duty_view' duty.id %}"><i style='font-size:24px' class='fas'>&#xf085;</i>Detail</a>
+
+              <a href="{% url 'duty_delete' duty.id %}"><i class='far fa-trash-alt'></i>Delete</a>
+
+              <a href="{% url 'duty_edit' pk=duty.id %}">
+                  {% if user.is_authenticated %}
+                  <i style='font-size:24px' class='fas'>&#xf303;</i>Edit
+                  {% else %}
+                <a class="nav-item nav-link" href="{% url 'login' %}">
+                    <i style='font-size:24px' class='fas'>&#xf303;</i>Вход</a>
+                  {% endif %}
+              </a>
+          </td>
+
+
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock content %}
+</div>
+</div>
+</div>
+</div>
+</section>

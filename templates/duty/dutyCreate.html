@@ -1,0 +1,58 @@
+ {% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %} Problem CREATE! {% endblock title %}
+{% block content %}
+     <h2 class="text-center">Duty qo'shish</h2>
+    <form method="POST" class="row gy-2 gx-3 align-items-center">{% csrf_token %}
+  <div class="form-group col-md-3">
+      <div class="container special-box">
+        <div data-mdb-input-init class="form-outline">
+          <label class="form-label" for="duty">FIO</label>
+            <input type="text" id="duty" value="{{ duty.duty }}" class="form-control form-control-lg" name="duty" />
+        </div>
+      </div>
+      <div class="container special-box">
+            <div data-mdb-input-init class="form-outline">
+              <label class="form-label" for="kun">Kun</label>
+                <input type="text" id="kun" value="{{ duty.kun }}" class="form-control form-control-lg" name="kun" />
+            </div>
+      </div>
+       <div class="container special-box">
+            <div data-mdb-input-init class="form-outline">
+              <label class="form-label" for="oy">Oy</label>
+                <input type="text" id="oy" value="{{ duty.oy }}" class="form-control form-control-lg" name="oy" />
+            </div>
+        </div>
+        <div class="container special-box">
+            <div data-mdb-input-init class="form-outline">
+              <label class="form-label" for="yil">Yil</label>
+                <input type="text" id="yil" value="{{ duty.yil }}" class="form-control form-control-lg" name="yil" />
+            </div>
+       </div>
+       <div class="container special-box">
+            <div data-mdb-input-init class="form-outline">
+            <label class="form-label" for="ticket">ticket</label>
+            <input type="text" id="ticket" value="{{ duty.ticket }}" class="form-control form-control-lg" name="ticket" />
+            </div>
+      </div>
+      <div class="container special-box">
+            <div data-mdb-input-init class="form-outline">
+             <label class="form-label" for="description">Description</label>
+             <input type="text" id="description" value="{{ duty.description }}" class="form-control form-control-lg" name="description" />
+            </div>
+      </div>
+      <div class="form-check form-switch">
+        <label  class="form-label" >Status</label>
+        <div data-mdb-input-init class="form-outline">
+        <label for="l_box1"><input type="radio" name="status" value="1" id="l_box1">Activ</label>
+        <label for="d_box2"><input type="radio" name="status" value="0" id="d_box2"> Noactiv</label>
+        </div>
+      </div>
+
+ <div class="form-check form-switch">
+ <button type="submit" class="btn btn-primary">Problem +</button>
+  </div>
+  </div>
+</form>
+{% endblock%}

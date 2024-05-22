@@ -1,0 +1,21 @@
+{% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %} Duty! {% endblock title %}
+{% block content %}
+
+
+<div id="container" style="width: 100%;">
+    <h1>Duty Detail</h1>
+    <h3>kun : {{ duty.duty }}</h3>
+    <h3>kun : {{ duty.kun }}</h3>
+    <h3>oy : {{ duty.oy }}</h3>
+    <h3>Year : {{ duty.yil }}</h3>
+    <h3>Date :{{ duty.createDate }}</h3>
+    <h3>Status :{{ duty.status }}</h3>
+    <h3>Ticket :{{ duty.ticket }}</h3>
+    <h3>Description :{{ duty.description }}</h3>
+    <h3>Author : {{ duty.author }}</h3>
+</div>
+
+{% endblock %}
