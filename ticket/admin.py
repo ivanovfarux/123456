@@ -1,9 +1,10 @@
 from django.contrib import admin
-from .models import Problem, Compleks, Company, Partnyor, Duty, Education, Ticket
+from .models import Problem, Compleks, Company, Partnyor, Duty, Education, Ticket, Events
 
 admin.site.register(Education)
 admin.site.register(Compleks)
 admin.site.register(Duty)
+admin.site.register(Events)
 
 @admin.register(Ticket)
 class TicketsAdmin(admin.ModelAdmin):

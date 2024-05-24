@@ -40,4 +40,9 @@ urlpatterns = [
     path('ticket_chart/', ticket_chart, name='problem_chart'),
     path('ticket_chart1/', ticket_Compleks_chart, name='compleks_chart'),
 
+    path('calendar1/',  index, name='index'),
+    path('all_events/',  all_events, name='all_events'),
+    path('add_event/',  add_event, name='add_event'),
+    path('update/',  update, name='update'),
+    path('remove/',  remove, name='remove'),
 ]

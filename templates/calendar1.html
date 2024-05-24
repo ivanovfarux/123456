@@ -1,0 +1,18 @@
+{% extends 'adminlte/base.html' %}
+{% block title %}Python Django Ajax FullCalender CRUD (Create, Read, Update and Delete){% endblock title %}
+
+{% block extra_head %}
+    {% include '_calendar_styles.html' %}
+{% endblock %}
+
+{% block content %}
+<h1>Calendar</h1>
+<div class="col-md-12">
+    <div id='calendar'></div>
+</div>
+
+{% endblock content %}
+
+{% block extra_js %}
+    {% include '_calendar_scripts.html' %}
+{% endblock %}
