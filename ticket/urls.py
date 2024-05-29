@@ -13,11 +13,13 @@ urlpatterns = router.urls
 urlpatterns = [
     path('', include('pages.urls')),
     path('admin/login/', CustomLoginView.as_view(), name='login'),
+
     path("problems/", ProblemListView.as_view(), name="problem_list"),
     path('problems/view/<int:pk>',  ProblemDetail.as_view(), name='problem_view'),
     path("problems/edit/<int:pk>", edit, name='problem_edit'),
     path("problems/create", ProblemNew, name='problem_create'),
     path('problem/delete/<int:pk>', ProblemDelete.as_view(), name='problem_delete'),
+
     path("company/", CompanyListView.as_view(), name="company_list"),
     path('company/view/<int:pk>', CompanyDetail.as_view(), name='company_view'),
     path('company/delete/<int:pk>', CompanyDelete.as_view(), name='company_delete'),
@@ -30,11 +32,13 @@ urlpatterns = [
     path("duty/edit/<int:pk>", Dutyedit, name='duty_edit'),
     path("duty/create", DutyNew, name='duty_create'),
 
-    # path('problems/edit/<int:pk>', problem_update, name='problem_edit'),
-    # path('problems/create', ProblemCreateView.as_view(), name='problem_create'),
-    # path('problems/edit/<int:pk>', TodoUpdateView.as_view(), name='problem_edit'),
-    path("partnyor1/", PartnyorListView.as_view(), name="partnyor_list"),
-    path("partnyor/", pie_chart, name="pie-chart"),
+    path("partnyor/", PartnyorListView.as_view(), name="partnyor_list"),
+    path('partnyor/view/<int:pk>', PartnyorDetail.as_view(), name='partnyor_view'),
+    path('partnyor/delete/<int:pk>', PartnyorDelete.as_view(), name='partnyor_delete'),
+    path("partnyor/edit/<int:pk>", PartnyorEdit, name='partnyor_edit'),
+    path("partnyor/create", PartnyorNew, name='partnyor_create'),
+
+    path("partnyor1/", pie_chart, name="pie-chart"),
     path("compleks/", CompleksListView.as_view(), name="compleks_list"),
     path('chart/',  chart_view, name='chart_view'),
     path('ticket_chart/', ticket_chart, name='problem_chart'),
@@ -45,4 +49,6 @@ urlpatterns = [
     path('add_event/',  add_event, name='add_event'),
     path('update/',  update, name='update'),
     path('remove/',  remove, name='remove'),
+    path('chart1/',  chart_data, name='chart_data'),
+    path('chart2/',  chart_view, name='chart_view'),
 ]

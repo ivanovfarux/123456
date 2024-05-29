@@ -54,10 +54,10 @@ class Partnyor(models.Model):
     createDate = models.DateTimeField(auto_now_add=True)
     status = models.BooleanField(default=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='ticket/images')
+    image = models.ImageField(upload_to='ticket/images', blank=True)
     contacts = models.CharField(max_length=10)
     status = models.BooleanField(default=False)
-    companyId = models.ForeignKey(Company, on_delete=models.CASCADE)
+    companyId = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='company')
     age = models.IntegerField()
 
     def __str__(self):
@@ -66,8 +66,8 @@ class Partnyor(models.Model):
     def __str__(self):
         return self.login
 
-    # def __str__(self):
-    #     return self.age
+    def __str__(self):
+        return self.companyId
 
 class Ticket(models.Model):
     name = models.CharField(max_length=250)
@@ -78,7 +78,7 @@ class Ticket(models.Model):
     endDate = models.DateTimeField()
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
     compleks = models.ForeignKey(Compleks, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE,   related_name='comments')
+    user = models.ForeignKey(User, on_delete=models.CASCADE,   related_name='user')
     partnyor = models.ForeignKey(Partnyor,  on_delete=models.CASCADE)
     company = models.ForeignKey(Company,  on_delete=models.CASCADE)
     updatedDate = models.DateTimeField(auto_now=True)

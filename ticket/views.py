@@ -28,7 +28,9 @@ def index(request):
 
 
 def all_events(request):
+
     all_events = Events.objects.all()
+
     out = []
     for event in all_events:
         out.append({
@@ -183,6 +185,65 @@ def CompanyNew(request):
     except Company.DoesNotExist:
         return HttpResponseNotFound("<h2>Person not found</h2>")
 
+class PartnyorListView(ListView, FilterView):
+    model = Partnyor
+    template_name = 'partnyor/partnyor.html'
+
+class PartnyorDetail(DetailView):
+    model = Partnyor
+    template_name = "partnyor/partnyor_detail.html"
+
+class PartnyorDelete(DeleteView):
+    model = Partnyor
+    template_name = 'partnyor/partnyorDelete.html'
+    success_url = reverse_lazy('partnyor_list')
+
+def PartnyorNew(request):
+    companys = Company.objects.all()
+    try:
+        if request.method == "POST":
+            partnyor = Partnyor()
+            partnyor.fio = request.POST.get("fio")
+            partnyor.login = request.POST.get("login")
+            partnyor.password = request.POST.get("password")
+            partnyor.createDate = request.POST.get("date")
+            partnyor.status = timezone.now()
+            partnyor.author = request.user
+            partnyor.image = request.FILES.get("image")
+            partnyor.contacts = request.POST.get("contacts")
+            partnyor.status = request.POST.get("status")
+            company_id = request.POST.get("company_id")
+            partnyor.companyId = Company.objects.get(id=company_id)
+            partnyor.age = request.POST.get("age")
+            partnyor.save()
+            return HttpResponseRedirect("../partnyor")
+        else:
+            return render(request, "partnyor/partnyorCreate.html", {"companys": companys})
+    except Duty.DoesNotExist:
+        return HttpResponseNotFound("<h2>Person not found</h2>")
+
+@login_required(login_url='/accounts/login/')
+def PartnyorEdit(request, pk):
+        partnyors = Partnyor.objects.get(pk=pk)
+        companys = Company.objects.all()
+        if request.method == "POST":
+            partnyors.fio = request.POST.get("fio")
+            partnyors.login = request.POST.get("login")
+            partnyors.password = request.POST.get("password")
+            partnyors.createDate = timezone.now()
+            partnyors.status = request.POST.get("status")
+            partnyors.author = request.user
+            partnyors.image = request.FILES.get("image")
+            partnyors.contacts = request.POST.get("contacts")
+            partnyors.status = request.POST.get("status")
+            company_id = request.POST.get("company_id")
+            partnyors.companyId = Company.objects.get(id=company_id)
+            partnyors.age = request.POST.get("age")
+            partnyors.save()
+            return HttpResponseRedirect("../.")
+        else:
+            return render(request, "partnyor/partnyor_edit.html", {"partnyors": partnyors, "companys": companys})
+
 class CompleksFilter(FilterSet):
     class Meta:
         model = Compleks
@@ -192,11 +253,6 @@ class CompleksListView(ListView, FilterView):
     model = Compleks
     template_name = 'compleks.html'
     filterset_class = CompleksFilter
-
-class PartnyorListView(ListView, FilterView):
-    model = partnyorModel
-    template_name = 'partnyor1.html'
-
 
 class DutyListView(ListView, FilterView):
     model = Duty
@@ -212,47 +268,45 @@ class DutyDelete(DeleteView):
     success_url = reverse_lazy('duty_list')
 
 def DutyNew(request):
+    tickets = Ticket.objects.all()
     try:
         if request.method == "POST":
             duty = Duty()
-            duty.duty = request.POST.get("duty")
+            duty.duty = request.user
             duty.kun = request.POST.get("kun")
             duty.oy = request.POST.get("oy")
             duty.yil = request.POST.get("yil")
             duty.createDate = timezone.now()
             duty.status = request.POST.get("status")
-            duty.ticket = request.POST.get("ticket")
+            ticket_id = request.POST.get("ticket_id")
+            duty.ticket = Ticket.objects.get(id=ticket_id)
             duty.description = request.POST.get("description")
             duty.author = request.user
             duty.save()
             return HttpResponseRedirect("../duty")
         else:
-            return render(request, "duty/dutyCreate.html")
+            return render(request, "duty/dutyCreate.html", {"tickets": tickets})
     except Duty.DoesNotExist:
         return HttpResponseNotFound("<h2>Person not found</h2>")
 
-@login_required(login_url='/accounts/login/')
+
 def Dutyedit(request, pk):
-    post = get_object_or_404(Duty, pk=pk)
-    try:
-        duty = Duty.objects.get(id=pk)
-        if request.method == "POST":
-            duty = Duty()
-            duty.duty = request.POST.get("duty")
-            duty.kun = request.POST.get("kun")
-            duty.oy = request.POST.get("oy")
-            duty.yil = request.POST.get("yil")
-            duty.createDate = timezone.now()
-            duty.status = request.POST.get("status")
-            duty.ticket = request.POST.get("1")
-            duty.description = request.POST.get("description")
-            duty.author = request.user
-            duty.save()
-            return HttpResponseRedirect("../.")
-        else:
-            return render(request, "duty/dutyEdit.html", {"duty": duty})
-    except Duty.DoesNotExist:
-        return HttpResponseNotFound("<h2>Person not found</h2>")
+    duty = get_object_or_404(Duty, pk=pk)
+    tickets = Ticket.objects.all()
+    if request.method == "POST":
+        duty.kun = request.POST.get("kun")
+        duty.oy = request.POST.get("oy")
+        duty.yil = request.POST.get("yil")
+        duty.createDate = timezone.now()
+        duty.status = request.POST.get("status")
+        ticket_id = request.POST.get("ticket_id")
+        duty.ticket = Ticket.objects.get(id=ticket_id)
+        duty.description = request.POST.get("description")
+        duty.author = request.user
+        duty.save()
+        return HttpResponseRedirect("../.")
+    else:
+        return render(request, "duty/dutyEdit.html", {"duty": duty, "tickets": tickets})
 
 #chart
 def chart_view(request):
@@ -276,7 +330,6 @@ def pie_chart(request):
         'labels': labels,
         'data': data,
     })
-
 
 def ticket_class_view(request):
     dataset = Partnyor.objects \
@@ -324,3 +377,16 @@ def ticket_Compleks_chart(request):
         'ticket_counts': json.dumps(ticket_counts),
     }
     return render(request, 'ticket_chart1.html', context)
+
+def chart_data(request):
+    events = Events.objects.all()
+    labels = [event.name for event in events]
+    data = [(event.end - event.start).total_seconds() / 3600 for event in events if event.start and event.end]  # Duration in hours
+
+    return JsonResponse({
+        'labels': labels,
+        'data': data,
+    })
+
+def chart_view(request):
+    return render(request, 'chart1.html')

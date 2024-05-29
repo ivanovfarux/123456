@@ -31,10 +31,12 @@
             </div>
        </div>
        <div class="container special-box">
-            <div data-mdb-input-init class="form-outline">
-            <label class="form-label" for="ticket">ticket</label>
-            <input type="text" id="ticket" value="{{ duty.ticket }}" class="form-control form-control-lg" name="ticket" />
-            </div>
+            <label for="ticket">Select Ticket:</label>
+                <select class="form-control" id="ticket" name="ticket_id">
+                    {% for ticket in tickets %}
+                        <option value="{{ ticket.id }}">{{ ticket.name }}</option>
+                    {% endfor %}
+                </select>
       </div>
       <div class="container special-box">
             <div data-mdb-input-init class="form-outline">
