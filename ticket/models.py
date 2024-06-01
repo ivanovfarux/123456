@@ -3,8 +3,10 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+
 
 class Problem(models.Model):
     name = models.CharField(max_length=200)
@@ -21,6 +23,7 @@ class Problem(models.Model):
     def get_absolute_url(self):
         return reverse('problem_edit', kwargs={'pk': self.pk})
 
+
 class Company(models.Model):
     name = models.CharField(max_length=200)
     createDate = models.DateTimeField(auto_now_add=True)
@@ -32,6 +35,7 @@ class Company(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Compleks(models.Model):
     name = models.CharField(max_length=200)
@@ -46,6 +50,7 @@ class Compleks(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Partnyor(models.Model):
     fio = models.CharField(max_length=200)
@@ -69,6 +74,7 @@ class Partnyor(models.Model):
     def __str__(self):
         return self.companyId
 
+
 class Ticket(models.Model):
     name = models.CharField(max_length=250)
     note = models.CharField(max_length=250)
@@ -78,9 +84,9 @@ class Ticket(models.Model):
     endDate = models.DateTimeField(null=True)
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
     compleks = models.ForeignKey(Compleks, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE,   related_name='user')
-    partnyor = models.ForeignKey(Partnyor,  on_delete=models.CASCADE)
-    company = models.ForeignKey(Company,  on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
+    partnyor = models.ForeignKey(Partnyor, on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
     updatedDate = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE,   related_name='user1')
     class Meta:
@@ -88,6 +94,7 @@ class Ticket(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Education(models.Model):
     name = models.CharField(max_length=200)

@@ -1,108 +1,183 @@
 {% load static %}
 
-{% block script  %}
-<script type="text/javascript" src="/static/js/jquery.min.js"></script>
-<script type="text/javascript" src="/static/js/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
-<script type="text/javascript">
-   $(document).ready(function () {
-       console.log("123")
+{% block script %}
+    <script src="{% static 'admin-lte/plugins/moment/moment.min.js' %}"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.13/index.global.min.js'></script>
+    <script src="{% static 'admin-lte/plugins/fullcalendar-interaction/main.min.js' %}"></script>
+    <script>
+        $(function () {
+            const Calendar = FullCalendar.Calendar;
+            const Draggable = FullCalendar.Draggable;
 
-       var calendar = $('#calendar').fullCalendar({
-           header: {
-               left: 'prev,next today',
-               center: 'title',
-               right: 'month,agendaWeek,agendaDay'
-           },
-           events: '/all_events',
-           selectable: true,
-           selectHelper: true,
-           editable: true,
-           eventLimit: true,
-           select: function (start, end, allDay) {
-               var title = prompt("Enter Event Title");
-               if (title) {
-                   var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
-                   var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
-                   $.ajax({
-                       type: "GET",
-                       url: '/add_event',
-                       data: {'title': title, 'start': start, 'end': end},
-                       dataType: "json",
-                       success: function (data) {
-                           calendar.fullCalendar('refetchEvents');
-                           alert("Added Successfully");
-                       },
-                       error: function (data) {
-                           alert('There is a problem!!!');
-                       }
-                   });
-               }
-           },
-           eventResize: function (event) {
-               var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
-               var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
-               var title = event.title;
-               var id = event.id;
-               $.ajax({
-                   type: "GET",
-                   url: '/update',
-                   data: {'title': title, 'start': start, 'end': end, 'id': id},
-                   dataType: "json",
-                   success: function (data) {
-                       calendar.fullCalendar('refetchEvents');
-                       alert('Event Update');
-                   },
-                   error: function (data) {
-                       alert('There is a problem!!!');
-                   }
-               });
-           },
+            const containerEl = document.getElementById('external-events');
+            const checkbox = document.getElementById('drop-remove');
+            const calendarEl = document.getElementById('calendar');
 
-           eventDrop: function (event) {
-               var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
-               var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
-               var title = event.title;
-               var id = event.id;
-               $.ajax({
-                   type: "GET",
-                   url: '/update',
-                   data: {'title': title, 'start': start, 'end': end, 'id': id},
-                   dataType: "json",
-                   success: function (data) {
-                       calendar.fullCalendar('refetchEvents');
-                       alert('Event Update');
-                   },
-                   error: function (data) {
-                       alert('There is a problem!!!');
-                   }
-               });
-           },
+            // initialize the external events
+            // -----------------------------------------------------------------
 
-           eventClick: function (event) {
-               if (confirm("Are you sure you want to remove it?")) {
-                   var id = event.id;
-                   $.ajax({
-                       type: "GET",
-                       url: '/remove',
-                       data: {'id': id},
-                       dataType: "json",
-                       success: function (data) {
-                           calendar.fullCalendar('refetchEvents');
-                           alert('Event Removed');
-                       },
-                       error: function (data) {
-                           alert('There is a problem!!!');
-                       }
-                   });
-               }
-           },
+            new Draggable(containerEl, {
+                itemSelector: '.external-event',
+                eventData: function (eventEl) {
+                    return {
+                        title: eventEl.innerText,
+                        backgroundColor: window.getComputedStyle(eventEl, null).getPropertyValue('background-color'),
+                        borderColor: window.getComputedStyle(eventEl, null).getPropertyValue('background-color'),
+                        textColor: window.getComputedStyle(eventEl, null).getPropertyValue('color'),
+                    };
+                }
+            });
 
-       });
-   });
+            function addEvent(title, start, end) {
+                $.ajax({
+                    type: "GET",
+                    url: '/add_event',
+                    data: {title, start, end},
+                    dataType: "json",
+                    error: function (data) {
+                        alert('There is a problem!!!');
+                    }
+                });
+            }
 
+            const calendar = new Calendar(calendarEl, {
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                //Random default events
+                events: '/all_events',
+                selectable: true,
+                selectHelper: true,
+                editable: true,
+                droppable: true, // this allows things to be dropped onto the calendar
+                drop: function (info) {
+                    console.log(info)
+                    const title = info.draggedEl.innerText
+                    const startStr = info.dateStr;
+                    const endStr = moment(info.date).add(1, 'days').format('Y-MM-DD');
+                    addEvent(title, startStr, endStr)
+                    calendar.refetchEvents()
 
+                    // is the "remove after drop" checkbox checked?
+                    if (checkbox.checked) {
+                        // if so, remove the element from the "Draggable Events" list
+                        info.draggedEl.parentNode.removeChild(info.draggedEl);
+                    }
+                },
 
+                select: function (date) {
+                    const title = prompt("Enter Event Title");
+                    console.log('date', date)
+                    if (title) {
+                        addEvent(title, date.startStr, date.endStr);
+                        calendar.refetchEvents()
 
-</script>
+                    }
+                },
+                eventResize: function (_event) {
+                    const event = _event.event
+                    const start = event.startStr;
+                    const end = event.endStr;
+                    const title = event.title;
+                    const id = event.id;
+                    const data = {'title': title, 'start': start, 'end': end, 'id': id};
+                    $.ajax({
+                        type: "GET",
+                        url: '/update',
+                        data,
+                        dataType: "json",
+                        success: function () {
+                            calendar.refetchEvents()
+                            alert('Event Update');
+                        },
+                        error: function (data) {
+                            alert('There is a problem!!!');
+                        }
+                    });
+                },
+
+                eventDrop: function (_event) {
+                    const event = _event.event
+                    const start = event.startStr
+                    const end = event.endStr
+                    const title = event.title;
+                    const id = event.id;
+                    $.ajax({
+                        type: "GET",
+                        url: '/update',
+                        data: {'title': title, 'start': start, 'end': end, 'id': id},
+                        dataType: "json",
+                        success: function (data) {
+                            calendar.refetchEvents()
+                            alert('Event Update');
+                        },
+                        error: function (data) {
+                            alert('There is a problem!!!');
+                        }
+                    });
+                },
+
+                eventClick: function (_event) {
+                    if (confirm("Are you sure you want to remove it?")) {
+                        const id = _event.event.id;
+                        $.ajax({
+                            type: "GET",
+                            url: '/remove',
+                            data: {'id': id},
+                            dataType: "json",
+                            success: function (data) {
+                                calendar.refetchEvents()
+                            },
+                            error: function (data) {
+                                alert('There is a problem!!!');
+                            }
+                        });
+                    }
+                },
+            });
+
+            calendar.render();
+            // $('#calendar').fullCalendar()
+
+            /* ADDING EVENTS */
+            let currColor = '#3c8dbc'; //Red by default
+            // Color chooser button
+            $('#color-chooser > li > a').click(function (e) {
+                e.preventDefault()
+                // Save color
+                currColor = $(this).css('color')
+                // Add color effect to button
+                $('#add-new-event').css({
+                    'background-color': currColor,
+                    'border-color': currColor
+                })
+            })
+            $('#add-new-event').click(function (e) {
+                e.preventDefault()
+                // Get value and make sure it is not null
+                const val = $('#new-event').val();
+                if (val.length == 0) {
+                    return
+                }
+
+                // Create events
+                const event = $('<div />');
+                event.css({
+                    'background-color': currColor,
+                    'border-color': currColor,
+                    'color': '#fff'
+                }).addClass('external-event')
+                event.text(val)
+                $('#external-events').prepend(event)
+
+                // Add draggable funtionality
+                ini_events(event)
+
+                // Remove event from text input
+                $('#new-event').val('')
+            })
+        })
+    </script>
 {% endblock %}

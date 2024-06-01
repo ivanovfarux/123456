@@ -22,15 +22,16 @@ from ticket.serializer import ProblemSerializer, DutySerializer
 
 
 def index(request):
-    all_events = Events.objects.all()
+    duties = Duty.objects.all()
+    users = User.objects.all()
     context = {
-        "events": all_events,
+        "duties": duties,
+        "users": users,
     }
     return render(request, 'calendar1.html', context)
 
 
 def all_events(request):
-
     all_events = Events.objects.all()
 
     out = []
@@ -38,8 +39,8 @@ def all_events(request):
         out.append({
             'title': event.name,
             'id': event.id,
-            'start': event.start.strftime("%m/%d/%Y, %H:%M:%S"),
-            'end': event.end.strftime("%m/%d/%Y, %H:%M:%S"),
+            'start': event.start.strftime("%Y-%m-%d"),
+            'end': event.end.strftime("%Y-%m-%d"),
         })
 
     return JsonResponse(out, safe=False)
@@ -75,6 +76,7 @@ def remove(request):
     data = {}
     return JsonResponse(data)
 
+
 class CustomLoginView(LoginView):
     template_name = 'base/login.html'
     fields = '__all__'
@@ -83,11 +85,13 @@ class CustomLoginView(LoginView):
     def get_success_url(self):
         return reverse_lazy('tasks')
 
+
 class DutyViewSet(viewsets.ViewSet):
     def list(self, request):
         duty = Duty.objects.all()
         serializer = DutySerializer(duty, many=True)
         return Response(serializer.data)
+
 
 class ProblemViewSet(viewsets.ViewSet):
     def list(self, request):
@@ -95,18 +99,22 @@ class ProblemViewSet(viewsets.ViewSet):
         serializer = ProblemSerializer(stu, many=True)
         return Response(serializer.data)
 
+
 class ProblemListView(ListView, FilterView):
     model = Problem
     template_name = 'problems/problem.html'
+
 
 class ProblemDetail(DetailView):
     model = Problem
     template_name = "problems/problem_detail.html"
 
+
 class ProblemDelete(DeleteView):
     model = Problem
     template_name = 'problems/problemDelete.html'
     success_url = reverse_lazy('problem_list')
+
 
 @login_required(login_url='/accounts/login/')
 def edit(request, pk):
@@ -125,6 +133,7 @@ def edit(request, pk):
     except Problem.DoesNotExist:
         return HttpResponseNotFound("<h2>Person not found</h2>")
 
+
 def ProblemNew(request):
     try:
         if request.method == "POST":
@@ -140,6 +149,7 @@ def ProblemNew(request):
     except Problem.DoesNotExist:
         return HttpResponseNotFound("<h2>Person not found</h2>")
 
+
 class CompanyListView(ListView, FilterView):
     model = Company
     template_name = 'company/company.html'
@@ -149,10 +159,12 @@ class CompanyDetail(DetailView):
     model = Company
     template_name = "company/company_detail.html"
 
+
 class CompanyDelete(DeleteView):
     model = Company
     template_name = 'company/companyDelete.html'
     success_url = reverse_lazy('company_list')
+
 
 @login_required(login_url='/accounts/login/')
 def Companyedit(request, pk):
@@ -171,6 +183,7 @@ def Companyedit(request, pk):
     except Company.DoesNotExist:
         return HttpResponseNotFound("<h2>Person not found</h2>")
 
+
 def CompanyNew(request):
     try:
         if request.method == "POST":
@@ -186,18 +199,22 @@ def CompanyNew(request):
     except Company.DoesNotExist:
         return HttpResponseNotFound("<h2>Person not found</h2>")
 
+
 class PartnyorListView(ListView, FilterView):
     model = Partnyor
     template_name = 'partnyor/partnyor.html'
+
 
 class PartnyorDetail(DetailView):
     model = Partnyor
     template_name = "partnyor/partnyor_detail.html"
 
+
 class PartnyorDelete(DeleteView):
     model = Partnyor
     template_name = 'partnyor/partnyorDelete.html'
     success_url = reverse_lazy('partnyor_list')
+
 
 @login_required(login_url='/accounts/login/')
 def PartnyorNew(request):
@@ -224,46 +241,52 @@ def PartnyorNew(request):
     except Duty.DoesNotExist:
         return HttpResponseNotFound("<h2>Person not found</h2>")
 
+
 @login_required(login_url='/accounts/login/')
 def PartnyorEdit(request, pk):
-        partnyors = Partnyor.objects.get(pk=pk)
-        companys = Company.objects.all()
-        if request.method == "POST":
-            partnyors.fio = request.POST.get("fio")
-            partnyors.login = request.POST.get("login")
-            partnyors.password = request.POST.get("password")
-            partnyors.createDate = timezone.now()
-            partnyors.status = request.POST.get("status")
-            partnyors.author = request.user
-            partnyors.image = request.FILES.get("image")
-            partnyors.contacts = request.POST.get("contacts")
-            partnyors.status = request.POST.get("status")
-            company_id = request.POST.get("company_id")
-            partnyors.companyId = Company.objects.get(id=company_id)
-            partnyors.age = request.POST.get("age")
-            partnyors.save()
-            return HttpResponseRedirect("../.")
-        else:
-            return render(request, "partnyor/partnyor_edit.html", {"partnyors": partnyors, "companys": companys})
+    partnyors = Partnyor.objects.get(pk=pk)
+    companys = Company.objects.all()
+    if request.method == "POST":
+        partnyors.fio = request.POST.get("fio")
+        partnyors.login = request.POST.get("login")
+        partnyors.password = request.POST.get("password")
+        partnyors.createDate = timezone.now()
+        partnyors.status = request.POST.get("status")
+        partnyors.author = request.user
+        partnyors.image = request.FILES.get("image")
+        partnyors.contacts = request.POST.get("contacts")
+        partnyors.status = request.POST.get("status")
+        company_id = request.POST.get("company_id")
+        partnyors.companyId = Company.objects.get(id=company_id)
+        partnyors.age = request.POST.get("age")
+        partnyors.save()
+        return HttpResponseRedirect("../.")
+    else:
+        return render(request, "partnyor/partnyor_edit.html", {"partnyors": partnyors, "companys": companys})
+
 
 class CompleksFilter(FilterSet):
     class Meta:
         model = Compleks
         fields = {"name": ["exact", "contains"], "status": ["exact"]}
 
+
 class CompleksListView(ListView, FilterView):
     model = Compleks
     template_name = 'compleks/compleks.html'
     filterset_class = CompleksFilter
 
+
 class CompleksDetail(DetailView):
     model = Compleks
     template_name = "compleks/compleks_detail.html"
+
 
 class CompleksDelete(DeleteView):
     model = Compleks
     template_name = 'compleks/compleksDelete.html'
     success_url = reverse_lazy('compleks_list')
+
 
 def Compleksedit(request, pk):
     compleks = get_object_or_404(Compleks, pk=pk)
@@ -279,6 +302,7 @@ def Compleksedit(request, pk):
     else:
         return render(request, "compleks/compleks_edit.html", {"compleks": compleks})
 
+
 def Compleks_New(request):
     if request.method == "POST":
         compleks = Compleks()
@@ -293,24 +317,29 @@ def Compleks_New(request):
     else:
         return render(request, "compleks/compleksCreate.html")
 
+
 class DutyFilter(FilterSet):
     class Meta:
         model = Compleks
         fields = {"name": ["exact", "contains"], "status": ["exact"]}
+
 
 class DutyListView(ListView, FilterView):
     model = Duty
     template_name = 'duty/duty.html'
     filterset_class = DutyFilter
 
+
 class DutyDetail(DetailView):
     model = Duty
     template_name = "duty/duty_detail.html"
+
 
 class DutyDelete(DeleteView):
     model = Duty
     template_name = 'duty/dutyDelete.html'
     success_url = reverse_lazy('duty_list')
+
 
 def DutyNew(request):
     tickets = Ticket.objects.all()
@@ -372,10 +401,12 @@ class TicketDetail(DetailView):
     model = Ticket
     template_name = "ticket/ticket_detail.html"
 
+
 class TicketDelete(DeleteView):
     model = Ticket
     template_name = 'ticket/ticketDelete.html'
     success_url = reverse_lazy('ticket_list')
+
 
 @login_required(login_url='/accounts/login/')
 def TicketEdit(request, pk):
@@ -407,8 +438,9 @@ def TicketEdit(request, pk):
         return HttpResponseRedirect("../.")
     else:
         return render(request, "ticket/ticket_edit.html", {"ticket": ticket, "users": users,
-                                                          "compleks": compleks, "partnyors": partnyors,
+                                                           "compleks": compleks, "partnyors": partnyors,
                                                            "companys": companys, "problems": problems})
+
 
 def TicketNew(request):
     users = User.objects.all()
@@ -445,9 +477,8 @@ def TicketNew(request):
         return HttpResponseRedirect("../ticket")
     else:
         return render(request, "ticket/ticketCreate.html", {"users": users, "complekss": complekss,
-                                                                 "companys": companys, "problems": problems,
-                                                                 "partnyors": partnyors})
-
+                                                            "companys": companys, "problems": problems,
+                                                            "partnyors": partnyors})
 
 
 class EducationListView(ListView, FilterView):
@@ -464,6 +495,7 @@ class EducationDelete(DeleteView):
     model = Education
     template_name = 'education/educationDelete.html'
     success_url = reverse_lazy('education_list')
+
 
 @login_required(login_url='/accounts/login/')
 def EducationNew(request):
@@ -490,33 +522,36 @@ def EducationNew(request):
     except Duty.DoesNotExist:
         return HttpResponseNotFound("<h2>Person not found</h2>")
 
+
 @login_required(login_url='/accounts/login/')
 def EducationEdit(request, pk):
-        partnyors = Partnyor.objects.get(pk=pk)
-        companys = Company.objects.all()
-        if request.method == "POST":
-            partnyors.fio = request.POST.get("fio")
-            partnyors.login = request.POST.get("login")
-            partnyors.password = request.POST.get("password")
-            partnyors.createDate = timezone.now()
-            partnyors.status = request.POST.get("status")
-            partnyors.author = request.user
-            partnyors.image = request.FILES.get("image")
-            partnyors.contacts = request.POST.get("contacts")
-            partnyors.status = request.POST.get("status")
-            company_id = request.POST.get("company_id")
-            partnyors.companyId = Company.objects.get(id=company_id)
-            partnyors.age = request.POST.get("age")
-            partnyors.save()
-            return HttpResponseRedirect("../.")
-        else:
-            return render(request, "partnyor/partnyor_edit.html", {"partnyors": partnyors, "companys": companys})
-#chart
-def chart_view(request):
+    partnyors = Partnyor.objects.get(pk=pk)
+    companys = Company.objects.all()
+    if request.method == "POST":
+        partnyors.fio = request.POST.get("fio")
+        partnyors.login = request.POST.get("login")
+        partnyors.password = request.POST.get("password")
+        partnyors.createDate = timezone.now()
+        partnyors.status = request.POST.get("status")
+        partnyors.author = request.user
+        partnyors.image = request.FILES.get("image")
+        partnyors.contacts = request.POST.get("contacts")
+        partnyors.status = request.POST.get("status")
+        company_id = request.POST.get("company_id")
+        partnyors.companyId = Company.objects.get(id=company_id)
+        partnyors.age = request.POST.get("age")
+        partnyors.save()
+        return HttpResponseRedirect("../.")
+    else:
+        return render(request, "partnyor/partnyor_edit.html", {"partnyors": partnyors, "companys": companys})
 
+
+# chart
+def chart_view(request):
     partnyor_data = Partnyor.objects.all()
 
-    return render(request, 'partnyor.html',  {'partnyor_data': partnyor_data})
+    return render(request, 'partnyor.html', {'partnyor_data': partnyor_data})
+
 
 def pie_chart(request):
     labels = []
@@ -525,7 +560,6 @@ def pie_chart(request):
     queryset = Partnyor.objects.order_by('-age')[:5]
 
     for partnyorModel in queryset:
-
         labels.append(partnyorModel.fio)
         data.append(partnyorModel.age)
 
@@ -534,6 +568,7 @@ def pie_chart(request):
         'data': data,
     })
 
+
 def ticket_class_view(request):
     dataset = Partnyor.objects \
         .values('age') \
@@ -541,6 +576,7 @@ def ticket_class_view(request):
                   not_status_count=Count('age', filter=Q(status=0))) \
         .order_by('age')
     return render(request, 'chart.html', {'dataset': dataset})
+
 
 def chart_view(request):
     # Получаем данные из модели
@@ -558,6 +594,7 @@ def chart_view(request):
 
     return render(request, 'chart.html', context)
 
+
 def ticket_chart(request):
     problems = Problem.objects.all()
     problem_names = [problem.name for problem in problems]
@@ -569,6 +606,7 @@ def ticket_chart(request):
     }
     return render(request, 'ticket_chart.html', context)
 
+
 def ticket_Compleks_chart(request):
     complekss = Compleks.objects.all()
     complek_names = [complek.name for complek in complekss]
@@ -579,14 +617,17 @@ def ticket_Compleks_chart(request):
     }
     return render(request, 'ticket_chart1.html', context)
 
+
 def chart_data(request):
     events = Events.objects.all()
     labels = [event.name for event in events]
-    data = [(event.end - event.start).total_seconds() / 3600 for event in events if event.start and event.end]  # Duration in hours
+    data = [(event.end - event.start).total_seconds() / 3600 for event in events if
+            event.start and event.end]  # Duration in hours
     return JsonResponse({
         'labels': labels,
         'data': data,
     })
+
 
 def chart_view(request):
     return render(request, 'chart1.html')
