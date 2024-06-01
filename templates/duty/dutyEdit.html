@@ -35,14 +35,14 @@
             </div>
        </div>
     <div class="form-group">
-        <select class="form-control" id="ticket" name="ticket_id">
+       <select class="form-control" id="ticket" name="ticket">
             {% if tickets %}
                 {% for ticket in tickets %}
                      <option value="{{ ticket.id }}" {% if duty.ticket == ticket %} selected {% endif %}>
                          {{ ticket.name }}</option>
                 {% endfor %}
             {% else %}
-                <option value=" " disabled selected>sdfsdfsd</option>
+                <option value=" " disabled selected>bazadan topilmadi</option>
             {% endif %}
         </select>
     </div>

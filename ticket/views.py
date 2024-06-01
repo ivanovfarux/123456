@@ -312,7 +312,7 @@ class DutyDelete(DeleteView):
     success_url = reverse_lazy('duty_list')
 
 def DutyNew(request):
-    ticketlar = Ticket.objects.all()
+    tickets = Ticket.objects.all()
     users = User.objects.all()
     try:
         if request.method == "POST":
@@ -325,15 +325,15 @@ def DutyNew(request):
             duty.createDate = timezone.now()
             duty.status = request.POST.get("status")
 
-            ticket_id = request.POST.get("ticket_id")
-            duty.ticketId = Ticket.objects.get(id=ticket_id)
+            ticket = request.POST.get("ticket")
+            duty.ticketId = Ticket.objects.get(id=ticket)
 
             duty.description = request.POST.get("description")
             duty.author = request.user
             duty.save()
             return HttpResponseRedirect("../duty")
         else:
-            return render(request, "duty/dutyCreate.html", {"users": users, "ticket_id": ticketlar})
+            return render(request, "duty/dutyCreate.html", {"users": users, "tickets": tickets})
     except Duty.DoesNotExist:
         return HttpResponseNotFound("<h2>Person not found</h2>")
 
@@ -350,8 +350,10 @@ def Dutyedit(request, pk):
         duty.yil = request.POST.get("yil")
         duty.createDate = timezone.now()
         duty.status = request.POST.get("status")
-        ticket = request.POST.get("ticket_id")
-        duty.ticket = Ticket.objects.get(id=ticket)
+
+        ticket = request.POST.get("ticket")
+        duty.ticketId = Ticket.objects.get(id=ticket)
+
         duty.description = request.POST.get("description")
         duty.author = request.user
         duty.save()
