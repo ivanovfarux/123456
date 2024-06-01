@@ -1,0 +1,68 @@
+{% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %} Problem CREATE! {% endblock title %}
+{% block content %}
+     <h2 class="text-center">Partnyor qo'shish</h2>
+    <form method="POST" enctype="multipart/form-data" class="row gy-2 gx-3 align-items-center">{% csrf_token %}
+
+<div class="col-auto">
+          <div data-mdb-input-init class="form-outline">
+         <label class="form-label" for="fio">FIO</label>
+        <input type="text" id="fio" value="{{ partnyor.fio }}" class="form-control form-control-lg" name="fio"/>
+     </div>
+
+     <div class="container special-box">
+       <div data-mdb-input-init class="form-outline">
+         <label class="form-label" for="login">LOGIN</label>
+        <input type="text" id="login" value="{{ partnyor.login }}" class="form-control form-control-lg" name="login"/>
+       </div>
+     </div>
+
+    <div class="container special-box">
+       <div data-mdb-input-init class="form-outline">
+         <label class="form-label" for="password">PASSWORD</label>
+        <input type="text" id="password" value="{{ partnyor.password }}" class="form-control form-control-lg" name="password"/>
+       </div>
+     </div>
+
+       <div class="container special-box">
+            <label for="image">Upload New Image:</label><br>
+            <input type="file" id="image" class="form-control form-control-lg" value="{{ partnyor.image }}" name="image"><br>
+
+      </div>
+
+     <div class="container special-box">
+       <div data-mdb-input-init class="form-outline">
+         <label class="form-label" for="contacts">CONTACT</label>
+        <input type="text" id="contacts" value="{{ partnyor.contacts }}" class="form-control form-control-lg" name="contacts"/>
+       </div>
+     </div>
+       <div class="container special-box">
+            <label for="company">Select Company:</label>
+                <select class="form-control" id="company" name="company_id">
+                    {% for company in companys %}
+                        <option value="{{ company.id }}">{{ company.name }}</option>
+                    {% endfor %}
+                </select>
+      </div>
+
+     <div class="container special-box">
+       <div data-mdb-input-init class="form-outline">
+         <label class="form-label" for="age">AGE</label>
+        <input type="text" id="age" value="{{ partnyor.age }}" class="form-control form-control-lg" name="age"/>
+       </div>
+     </div>
+
+    <div class="form-check form-switch">
+        <label  class="form-label" >Status</label>
+      <div data-mdb-input-init class="form-outline">
+        <label for="l_box1"><input type="radio" name="status" value="1" id="l_box1">Activ</label>
+        <label for="d_box2"><input type="radio" name="status" value="0" id="d_box2"> Noactiv</label>
+      </div>
+    </div>
+
+ <button type="submit" class="btn btn-primary">Partnyor +</button>
+  </div>
+</form>
+{% endblock%}

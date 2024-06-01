@@ -1,0 +1,18 @@
+{% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %} Compleks! {% endblock title %}
+{% block content %}
+
+
+<div id="container" style="width: 100%;">
+    <h1>Compleks Detail</h1>
+    <h3>Name: {{ compleks.name }}</h3>
+    <h3>Schema_net: {{ compleks.schema_net }}</h3>
+    <h3>Documents: {{ compleks.documents }}</h3>
+    <h3>Date: {{ compleks.createDate }}</h3>
+    <h3>Author: {{ compleks.author }}</h3>
+    <h3>Status: {{ compleks.status }}</h3>
+</div>
+
+{% endblock %}

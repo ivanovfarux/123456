@@ -7,10 +7,13 @@
     <form method="POST" class="row gy-2 gx-3 align-items-center">{% csrf_token %}
   <div class="form-group col-md-3">
       <div class="container special-box">
-        <div data-mdb-input-init class="form-outline">
-          <label class="form-label" for="duty">FIO</label>
-            <input type="text" id="duty" value="{{ duty.duty }}" class="form-control form-control-lg" name="duty" />
-        </div>
+            <label for="user">Select User:</label>
+                <select class="form-control" id="user" name="user_id">
+                    {% for user in users %}
+                        <option value="{{ user.id }}"> {{user.last_name}} {{user.first_name}}</option>
+                    {% endfor %}
+                </select>
+
       </div>
       <div class="container special-box">
             <div data-mdb-input-init class="form-outline">
@@ -30,14 +33,20 @@
                 <input type="text" id="yil" value="{{ duty.yil }}" class="form-control form-control-lg" name="yil" />
             </div>
        </div>
-       <div class="container special-box">
-            <label for="ticket">Select Ticket:</label>
-                <select class="form-control" id="ticket" name="ticket_id">
-                    {% for ticket in tickets %}
-                        <option value="{{ ticket.id }}">{{ ticket.name }}</option>
-                    {% endfor %}
-                </select>
+
+
+    <div class="container special-box">
+    <label for="ticket">Select Ticket:</label>
+        <select class="form-control" id="ticket" name="ticket">
+            {% for ticket in tickets %}
+                <option value="{{ ticket.id }}"> {{ticket.name}} </option>
+            {% endfor %}
+    </select>
+
       </div>
+
+
+
       <div class="container special-box">
             <div data-mdb-input-init class="form-outline">
              <label class="form-label" for="description">Description</label>
@@ -53,7 +62,7 @@
       </div>
 
  <div class="form-check form-switch">
- <button type="submit" class="btn btn-primary">Problem +</button>
+ <button type="submit" class="btn btn-primary">Duty +</button>
   </div>
   </div>
 </form>

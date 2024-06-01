@@ -1,0 +1,48 @@
+ {% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %} Compleks Edit! {% endblock title %}
+{% block content %}
+    <h2 class="text-center">Joriy Compleksni tahrirlash</h2>
+    <form  class="row gy-2 gx-3 align-items-center" method="post" enctype="multipart/form-data"
+           action="{% url 'compleks_edit' pk=compleks.id %}">
+        {% csrf_token %}
+ <div class="form-group col-md-3">
+     <div data-mdb-input-init class="form-outline">
+         <label class="form-label" for="name">Name</label>
+        <input type="text" id="name" value="{{ compleks.name }}" class="form-control form-control-lg" name="name"/>
+     </div>
+
+      <div class="container special-box">
+       <div data-mdb-input-init class="form-outline">
+        <label for="documents">Current Image:</label><br>
+        <img src="{{ partnyors.schema_net.url }}" alt="Current Image" width="200"><br>
+         <label class="form-label" for="schema_net">Upload New documents</label>
+        <input type="file" id="documents" value="{{ compleks.documents.url }}" class="form-control form-control-lg" name="documents"/>
+       </div>
+     </div>
+
+    <div class="container special-box">
+       <div data-mdb-input-init class="form-outline">
+        <label for="schema_net">Current Image:</label><br>
+        <img src="{{ partnyors.schema_net.url }}" alt="Current Image" width="200"><br>
+         <label class="form-label" for="schema_net">Upload New SXEMA_NET</label>
+        <input type="file" id="schema_net" value="{{ compleks.schema_net.url }}" class="form-control form-control-lg" name="schema_net"/>
+       </div>
+     </div>
+
+
+    <div class="form-check form-switch">
+        <label  class="form-label" >Status</label>
+      <div data-mdb-input-init class="form-outline">
+        <label for="l_box1"><input type="radio" name="status" value="1" id="l_box1">Activ</label>
+        <label for="d_box2"><input type="radio" name="status" value="0" id="d_box2"> Noactiv</label>
+      </div>
+    </div>
+</div>
+
+  <div class="container special-box">
+    <button type="submit" class="btn btn-primary">Tahrirlash</button>
+  </div>
+</form>
+{% endblock  %}

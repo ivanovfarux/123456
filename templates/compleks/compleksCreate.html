@@ -1,0 +1,37 @@
+{% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %} Compleks CREATE! {% endblock title %}
+{% block content %}
+     <h2 class="text-center">Compleks qo'shish</h2>
+<form method="POST" enctype="multipart/form-data" class="row gy-2 gx-3 align-items-center">{% csrf_token %}
+    <div class="form-group col-md-3">
+         <div data-mdb-input-init class="form-outline">
+             <label class="form-label" for="name">Name</label>
+            <input type="text" id="name" value="{{ compleks.name }}" class="form-control form-control-lg" name="name"/>
+         </div>
+
+         <div class="container special-box">
+            <label for="documents">Upload New documents:</label><br>
+            <input type="file" id="documents" class="form-control form-control-lg"
+                   value="{{ compleks.documents }}" name="documents"><br>
+         </div>
+
+         <div class="container special-box">
+                <label for="schema_net">Upload New schema_net:</label><br>
+                <input type="file" id="schema_net" class="form-control form-control-lg"
+                   value="{{ compleks.schema_net }}" name="schema_net"><br>
+         </div>
+
+         <div class="form-check form-switch">
+            <label  class="form-label" >Status</label>
+            <div data-mdb-input-init class="form-outline">
+            <label for="l_box1"><input type="radio" name="status" value="1" id="l_box1">Activ</label>
+            <label for="d_box2"><input type="radio" name="status" value="0" id="d_box2"> Noactiv</label>
+            </div>
+         </div>
+
+        <button type="submit" class="btn btn-primary">Partnyor +</button>
+    </div>
+</form>
+{% endblock %}

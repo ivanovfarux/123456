@@ -1,0 +1,42 @@
+{% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Chart! {% endblock title %}
+{% block content %}
+ <h1>Ticket Status Chart</h1>
+    <canvas id="myChart" width="400" height="200"></canvas>
+
+{% endblock content %}
+
+{% block extra_js %}
+    <script type="text/javascript" src="/static/js/Chart.min.js"></script>
+    <script type="text/javascript" src="/static/js/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/static/js/canvasjs.min.js"></script>
+    <script>
+        fetch("{% url 'chart_data' %}")
+            .then(response => response.json())
+            .then(data => {
+                var ctx = document.getElementById('myChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: 'Event Duration (hours)',
+                            data: data.data,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            });
+    </script>
+{% endblock extra_js %}

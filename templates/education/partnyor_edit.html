@@ -1,0 +1,73 @@
+ {% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %} Problem Edit! {% endblock title %}
+{% block content %}
+    <h2 class="text-center">Joriy Partnyorni tahrirlash</h2>
+    <form  class="row gy-2 gx-3 align-items-center" method="post" enctype="multipart/form-data"
+           action="{% url 'partnyor_edit' pk=partnyors.id %}">
+        {% csrf_token %}
+ <div class="form-group col-md-3">
+     <div data-mdb-input-init class="form-outline">
+         <label class="form-label" for="fio">FIO</label>
+        <input type="text" id="fio" value="{{ partnyors.fio }}" class="form-control form-control-lg" name="fio"/>
+     </div>
+
+     <div class="container special-box">
+       <div data-mdb-input-init class="form-outline">
+         <label class="form-label" for="login">LOGIN</label>
+        <input type="text" id="login" value="{{ partnyors.login }}" class="form-control form-control-lg" name="login"/>
+       </div>
+     </div>
+
+    <div class="container special-box">
+       <div data-mdb-input-init class="form-outline">
+         <label class="form-label" for="password">PASSWORD</label>
+        <input type="text" id="password" value="{{ partnyors.password }}" class="form-control form-control-lg" name="password"/>
+       </div>
+     </div>
+
+       <div class="container special-box">
+          <label for="image">Current Image:</label><br>
+            <img src="{{ partnyor.image.url }}" alt="Current Image" width="200"><br>
+            <label for="image">Upload New Image:</label><br>
+            <input type="file" id="image" class="form-control form-control-lg" value="{{ partnyor.image.url }}" name="image"><br>
+
+      </div>
+
+     <div class="container special-box">
+       <div data-mdb-input-init class="form-outline">
+         <label class="form-label" for="contacts">CONTACT</label>
+        <input type="text" id="contacts" value="{{ partnyors.contacts }}" class="form-control form-control-lg" name="contacts"/>
+       </div>
+     </div>
+     <div class="container special-box">
+            <label for="company">Select Company:</label>
+                <select class="form-control" id="company" name="company_id">
+                    {% for company in companys %}
+                        <option value="{{ company.id }}">{{ company.name }}</option>
+                    {% endfor %}
+                </select>
+      </div>
+
+     <div class="container special-box">
+       <div data-mdb-input-init class="form-outline">
+         <label class="form-label" for="age">AGE</label>
+        <input type="text" id="age" value="{{ partnyors.age }}" class="form-control form-control-lg" name="age"/>
+       </div>
+     </div>
+
+    <div class="form-check form-switch">
+        <label  class="form-label" >Status</label>
+      <div data-mdb-input-init class="form-outline">
+        <label for="l_box1"><input type="radio" name="status" value="1" id="l_box1">Activ</label>
+        <label for="d_box2"><input type="radio" name="status" value="0" id="d_box2"> Noactiv</label>
+      </div>
+    </div>
+</div>
+
+  <div class="container special-box">
+    <button type="submit" class="btn btn-primary">Tahrirlash</button>
+  </div>
+</form>
+{% endblock  %}

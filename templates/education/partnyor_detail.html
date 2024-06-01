@@ -1,0 +1,22 @@
+{% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %} Partnyor! {% endblock title %}
+{% block content %}
+
+
+<div id="container" style="width: 100%;">
+    <h1>Partnyor Detail</h1>
+    <h3>FIO: {{ partnyor.fio }}</h3>
+    <h3>Login: {{ partnyor.login }}</h3>
+    <h3>Password: {{ partnyor.password }}</h3>
+    <h3>Date: {{ partnyor.createDate }}</h3>
+    <h3>Author: {{ partnyor.author }}</h3>
+    <h3>Image: {{ partnyor.image }}</h3>
+    <h3>Contacts: {{ partnyor.contacts }}</h3>
+    <h3>Status: {{ partnyor.status }}</h3>
+    <h3>Company: {{ partnyor.companyId }}</h3>
+    <h3>Yoshi: {{ partnyor.age }}</h3>
+</div>
+
+{% endblock %}

@@ -38,7 +38,7 @@ class Compleks(models.Model):
     createDate = models.DateTimeField(auto_now_add=True)
     status = models.BooleanField(default=False)
     schema_net = models.ImageField(upload_to='ticket/images')
-    documents = models.FileField(upload_to='ticket/images')
+    documents = models.ImageField(upload_to='ticket/images')
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
@@ -75,14 +75,14 @@ class Ticket(models.Model):
     status = models.BooleanField(default=False)
     createDate = models.DateTimeField(auto_now_add=True)
     file = models.ImageField(upload_to='ticket/images')
-    endDate = models.DateTimeField()
+    endDate = models.DateTimeField(null=True)
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
     compleks = models.ForeignKey(Compleks, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE,   related_name='user')
     partnyor = models.ForeignKey(Partnyor,  on_delete=models.CASCADE)
     company = models.ForeignKey(Company,  on_delete=models.CASCADE)
     updatedDate = models.DateTimeField(auto_now=True)
-
+    author = models.ForeignKey(User, on_delete=models.CASCADE,   related_name='user1')
     class Meta:
         ordering = ["-createDate"]
 
@@ -113,7 +113,7 @@ class Duty(models.Model):
     yil = models.CharField(max_length=200)
     createDate = models.DateTimeField(auto_now_add=True)
     status = models.BooleanField(default=False)
-    ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE)
+    ticketId = models.ForeignKey(Ticket, on_delete=models.CASCADE)
     description = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     duty = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_duty')

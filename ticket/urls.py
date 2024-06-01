@@ -16,9 +16,9 @@ urlpatterns = [
 
     path("problems/", ProblemListView.as_view(), name="problem_list"),
     path('problems/view/<int:pk>',  ProblemDetail.as_view(), name='problem_view'),
+    path('problem/delete/<int:pk>', ProblemDelete.as_view(), name='problem_delete'),
     path("problems/edit/<int:pk>", edit, name='problem_edit'),
     path("problems/create", ProblemNew, name='problem_create'),
-    path('problem/delete/<int:pk>', ProblemDelete.as_view(), name='problem_delete'),
 
     path("company/", CompanyListView.as_view(), name="company_list"),
     path('company/view/<int:pk>', CompanyDetail.as_view(), name='company_view'),
@@ -38,8 +38,22 @@ urlpatterns = [
     path("partnyor/edit/<int:pk>", PartnyorEdit, name='partnyor_edit'),
     path("partnyor/create", PartnyorNew, name='partnyor_create'),
 
-    path("partnyor1/", pie_chart, name="pie-chart"),
     path("compleks/", CompleksListView.as_view(), name="compleks_list"),
+    path('compleks/view/<int:pk>', CompleksDetail.as_view(), name='compleks_view'),
+    path('compleks/delete/<int:pk>/', CompleksDelete.as_view(), name='compleks_delete'),
+    path("compleks/edit/<int:pk>", Compleksedit, name='compleks_edit'),
+    path("compleks/create", Compleks_New, name='compleks_create'),
+
+    path("ticket/", TicketListView.as_view(), name="ticket_list"),
+    path('ticket/view/<int:pk>', TicketDetail.as_view(), name='ticket_view'),
+    path('ticket/delete/<int:pk>', TicketDelete.as_view(), name='ticket_delete'),
+    path("ticket/edit/<int:pk>", TicketEdit, name='ticket_edit'),
+    path("ticket/create", TicketNew, name='ticket_create'),
+
+
+
+    path("partnyor1/", pie_chart, name="pie-chart"),
+
     path('chart/',  chart_view, name='chart_view'),
     path('ticket_chart/', ticket_chart, name='problem_chart'),
     path('ticket_chart1/', ticket_Compleks_chart, name='compleks_chart'),

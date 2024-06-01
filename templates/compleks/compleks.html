@@ -1,0 +1,115 @@
+{% extends 'adminlte/base.html' %}
+{% block title %} Complekslar! {% endblock title %}
+{% block extra_js %}
+   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js "> </script>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable({
+                searching: true,
+                paging: true
+            });
+        });
+    </script>
+{% endblock extra_js %}
+{% block content %}
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-12">
+<div class="card">
+<div class="card-header">
+
+</div>
+<!-- /.card-header -->
+<div class="card-body">
+
+    <ul class="list-inline">
+        <li class="list-inline-item">
+            <a href="{%url 'compleks_create'%}" class="btn btn-primary"><i class="fa-sharp fa-solid fa-plus"></i>&nbsp;Add Compleks</a>
+        </li>
+    </ul>
+     <table id="example" class="table table-bordered table-hover">
+  <thead>
+      <tr>
+          <th>name</th>
+          <th>createDate</th>
+          <th>author</th>
+          <th>schema_net</th>
+          <th>documents</th>
+          <th>status</th>
+          <th>deystviya</th>
+
+      </tr>
+  </thead>
+  <tbody>
+    {% for compleks in compleks_list %}
+      <tr>
+        <td>{{ compleks.name }}</td>
+        <td>{{ compleks.createDate }}</td>
+        <td>{{ compleks.author }}</td>
+        <td>{{ compleks.schema_net }}</td>
+        <td>{{ compleks.documents }}</td>
+        <td style="font-family: Calibri" >
+                    {% if compleks.status is True  %}
+                        Activ
+                    {% else %}
+                        Noactiv
+                    {% endif %}
+        </td>
+        <td><a href="{% url 'compleks_view' compleks.id %}"><i style='font-size:24px' class='fas'>&#xf085;</i>Detail</a>
+
+              <a href="{% url 'compleks_delete' compleks.id %}"><i class='far fa-trash-alt'></i>Delete</a>
+
+              <a href="{% url 'compleks_edit' pk=compleks.id %}">
+                  {% if user.is_authenticated %}
+                  <i style='font-size:24px' class='fas'>&#xf303;</i>Edit
+                  {% else %}
+                <a class="nav-item nav-link" href="{% url 'login' %}">
+                    <i style='font-size:24px' class='fas'>&#xf303;</i>Вход</a>
+                  {% endif %}
+              </a>
+          </td>
+    <x-adminlte-button class="btn-lg" type="reset" label="Reset" theme="outline-danger" icon="fas fa-lg fa-trash"/>
+
+
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+      <nav aria-label="Page navigation">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1" tabindex="-1" aria-disabled="true">First</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                </li>
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="#">{{ page_obj.number }}</a></li>
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+</div>
+
+</div>
+    </div>
+</div>
+</div>
+</section>
+{% endblock content %}
