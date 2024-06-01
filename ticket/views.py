@@ -350,8 +350,8 @@ def Dutyedit(request, pk):
         duty.yil = request.POST.get("yil")
         duty.createDate = timezone.now()
         duty.status = request.POST.get("status")
-        ticket_id = request.POST.get("ticket_id")
-        duty.ticket = Ticket.objects.get(id=ticket_id)
+        ticket = request.POST.get("ticket_id")
+        duty.ticket = Ticket.objects.get(id=ticket)
         duty.description = request.POST.get("description")
         duty.author = request.user
         duty.save()

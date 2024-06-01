@@ -38,12 +38,17 @@
     <div class="container special-box">
     <label for="ticket">Select Ticket:</label>
         <select class="form-control" id="ticket" name="ticket">
-            {% for ticket in tickets %}
-                <option value="{{ ticket.id }}"> {{ticket.name}} </option>
-            {% endfor %}
-    </select>
+            {% if tickets %}
+                {% for ticket in tickets %}
+                     <option value="{{ ticket.id }}" {% if duty.ticket.id == ticket.id %} selected {% endif %}>
+                         {{ duty.ticket.id }}</option>
+                {% endfor %}
+            {% else %}
+                <option value=" " disabled selected>sdfsdfsd</option>
+            {% endif %}
+        </select>
 
-      </div>
+    </div>
 
 
 
