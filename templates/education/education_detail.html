@@ -1,0 +1,20 @@
+{% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %} Partnyor! {% endblock title %}
+{% block content %}
+
+
+<div id="container" style="width: 100%;">
+    <h1>Education Detail</h1>
+    <h3>Name:       {{ education.name }}</h3>
+    <h3>Info:       {{ education.info }}</h3>
+    <h3>Date:       {{ education.date }}</h3>
+    <h3>CreateDate: {{ education.createDate }}</h3>
+    <h3>Status:     {{ education.status }}</h3>
+    <h3>Author:     {{ partnyor.author }}</h3>
+    <h3>Image:      {{ education.file.url }}</h3>
+    <h3>Read:       {{  education.read }}</h3>
+    <h3>toDate:     {{ education.toDate  }}</h3>
+    <h3>endDate:    {{ education.endDate  }}</h3>
+</div>

@@ -12,7 +12,8 @@ from django_filters import FilterSet
 from rest_framework import viewsets
 from rest_framework.response import Response
 from django.http import JsonResponse
-from ticket.models import Problem, Compleks, Company, Partnyor as partnyorModel, Partnyor, Ticket, Duty, Events
+from ticket.models import Problem, Compleks, Company, Partnyor as partnyorModel, Partnyor, Ticket, Duty, Events, \
+    Education
 from django.contrib.auth.views import LoginView
 import json
 from django.db.models import Count
@@ -371,7 +372,6 @@ class TicketDetail(DetailView):
     model = Ticket
     template_name = "ticket/ticket_detail.html"
 
-
 class TicketDelete(DeleteView):
     model = Ticket
     template_name = 'ticket/ticketDelete.html'
@@ -400,6 +400,7 @@ def TicketEdit(request, pk):
         ticket.partnyor = Partnyor.objects.get(id=partnyor_id)
         ticket.name = request.POST.get("name")
         ticket.createDate = timezone.now()
+        ticket.file = request.FILES.get("file")
         ticket.status = request.POST.get("status")
         ticket.author = request.user
         ticket.save()
@@ -435,7 +436,7 @@ def TicketNew(request):
 
         partnyor_id = request.POST.get("partnyor_id")
         ticket.partnyor = Partnyor.objects.get(id=partnyor_id)
-
+        ticket.file = request.FILES.get("file")
         ticket.name = request.POST.get("name")
         ticket.createDate = timezone.now()
         ticket.status = request.POST.get("status")
@@ -447,6 +448,69 @@ def TicketNew(request):
                                                                  "companys": companys, "problems": problems,
                                                                  "partnyors": partnyors})
 
+
+
+class EducationListView(ListView, FilterView):
+    model = Education
+    template_name = 'education/education.html'
+
+
+class EducationDetail(DetailView):
+    model = Education
+    template_name = "education/education_detail.html"
+
+
+class EducationDelete(DeleteView):
+    model = Education
+    template_name = 'education/educationDelete.html'
+    success_url = reverse_lazy('education_list')
+
+@login_required(login_url='/accounts/login/')
+def EducationNew(request):
+    companys = Company.objects.all()
+    try:
+        if request.method == "POST":
+            partnyor = Partnyor()
+            partnyor.fio = request.POST.get("fio")
+            partnyor.login = request.POST.get("login")
+            partnyor.password = request.POST.get("password")
+            partnyor.createDate = request.POST.get("date")
+            partnyor.status = timezone.now()
+            partnyor.author = request.user
+            partnyor.image = request.FILES.get("image")
+            partnyor.contacts = request.POST.get("contacts")
+            partnyor.status = request.POST.get("status")
+            company_id = request.POST.get("company_id")
+            partnyor.companyId = Company.objects.get(id=company_id)
+            partnyor.age = request.POST.get("age")
+            partnyor.save()
+            return HttpResponseRedirect("../partnyor")
+        else:
+            return render(request, "partnyor/partnyorCreate.html", {"companys": companys})
+    except Duty.DoesNotExist:
+        return HttpResponseNotFound("<h2>Person not found</h2>")
+
+@login_required(login_url='/accounts/login/')
+def EducationEdit(request, pk):
+        partnyors = Partnyor.objects.get(pk=pk)
+        companys = Company.objects.all()
+        if request.method == "POST":
+            partnyors.fio = request.POST.get("fio")
+            partnyors.login = request.POST.get("login")
+            partnyors.password = request.POST.get("password")
+            partnyors.createDate = timezone.now()
+            partnyors.status = request.POST.get("status")
+            partnyors.author = request.user
+            partnyors.image = request.FILES.get("image")
+            partnyors.contacts = request.POST.get("contacts")
+            partnyors.status = request.POST.get("status")
+            company_id = request.POST.get("company_id")
+            partnyors.companyId = Company.objects.get(id=company_id)
+            partnyors.age = request.POST.get("age")
+            partnyors.save()
+            return HttpResponseRedirect("../.")
+        else:
+            return render(request, "partnyor/partnyor_edit.html", {"partnyors": partnyors, "companys": companys})
 #chart
 def chart_view(request):
 

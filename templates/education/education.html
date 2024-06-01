@@ -1,7 +1,7 @@
 {% extends 'adminlte/base.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %} Partnyor! {% endblock title %}
+{% block title %} Education! {% endblock title %}
 {% block extra_js %}
    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -36,44 +36,44 @@
 
     <ul class="list-inline">
         <li class="list-inline-item">
-            <a href="{%url 'partnyor_create'%}" class="btn btn-primary"><i class="fa-sharp fa-solid fa-plus"></i>&nbsp;Add Partnyor</a>
+            <a href="{%url 'education_create'%}" class="btn btn-primary"><i class="fa-sharp fa-solid fa-plus"></i>&nbsp;Add Partnyor</a>
         </li>
     </ul>
 <table id="example" class="table table-bordered table-hover">
   <thead>
       <tr>
-          <th>FIO</th>
-          <th>login</th>
-          <th>password</th>
-          <th>date</th>
-          <th>author</th>
-          <th>image</th>
-          <th>contacts</th>
+          <th>Name</th>
+          <th>Info</th>
+          <th>Date</th>
+          <th>CreateDate</th>
           <th>status</th>
-          <th>companyId</th>
-          <th>age</th>
+          <th>author</th>
+          <th>file</th>
+          <th>read</th>
+          <th>toDate</th>
+          <th>endDate</th>
           <th>deystviya</th>
       </tr>
    </thead>
-    {% for partnyor in partnyor_list %}
+    {% for education in education_list %}
       <tr>
-            <td>{{ partnyor.fio }}</td>
-            <td>{{ partnyor.login }}</td>
-            <td>{{ partnyor.password }}</td>
-            <td>{{ partnyor.createDate }}</td>
-            <td>{{ partnyor.author }}</td>
-            <td><img src="{{ partnyor.image.url }}"alt="Description of the image" width="100" height="100"></td>
-            <td>{{ partnyor.contacts }}</td>
-            <td>{{ partnyor.status }}</td>
-            <td>{{ partnyor.companyId }}</td>
-            <td>{{ partnyor.age }}</td>
+            <td>{{ education.name }}</td>
+            <td>{{ education.info }}</td>
+            <td>{{ education.date }}</td>
+            <td>{{ education.createDate }}</td>
+            <td>{{ education.status }}</td>
+            <td>{{ education.author }}</td>
+            <td><img src="{{ education.file.url }}"alt="Description of the image" width="100" height="100"></td>
+            <td>{{ education.read }}</td>
+            <td>{{ education.toDate }}</td>
+            <td>{{ education.endDate }}</td>
 
 
-           <td><a href="{% url 'partnyor_view' partnyor.id %}"><i style='font-size:24px' class='fas'>&#xf085;</i>Detail</a>
+           <td><a href="{% url 'education_view' education.id %}"><i style='font-size:24px' class='fas'>&#xf085;</i>Detail</a>
 
-              <a href="{% url 'partnyor_delete' partnyor.id %}"><i class='far fa-trash-alt'></i>Delete</a>
+              <a href="{% url 'education_delete' education.id %}"><i class='far fa-trash-alt'></i>Delete</a>
 
-              <a href="{% url 'partnyor_edit' pk=partnyor.id %}">
+              <a href="{% url 'education_edit' pk=education.id %}">
                   {% if user.is_authenticated %}
                   <i style='font-size:24px' class='fas'>&#xf303;</i>Edit
                   {% else %}

@@ -65,9 +65,13 @@
                      name="endDate"/>
              </div>
       </div>
-      <div class="container special-box">
+
+        <div class="container special-box">
+          <label for="file">Current Image:</label><br>
+            <img src="{{ ticket.file.url }}" alt="Current Image" width="200"><br>
             <label for="file">Upload New Image:</label><br>
-            <input type="file" id="file" class="form-control form-control-lg" value="{{ ticket.file }}" name="file"><br>
+            <input type="file" id="file" class="form-control form-control-lg" value="{{ ticket.file.url }}" name="file"><br>
+
       </div>
       <div class="form-check form-switch">
       <label  class="form-label" >Status</label>

@@ -51,6 +51,13 @@ urlpatterns = [
     path("ticket/create", TicketNew, name='ticket_create'),
 
 
+    path("education/", EducationListView.as_view(), name="education_list"),
+    path('education/view/<int:pk>', EducationDetail.as_view(), name='education_view'),
+    path('education/delete/<int:pk>', EducationDelete.as_view(), name='education_delete'),
+    path("education/edit/<int:pk>", EducationEdit, name='education_edit'),
+    path("education/create", EducationNew, name='education_create'),
+
+
 
     path("partnyor1/", pie_chart, name="pie-chart"),
 
