@@ -1,59 +1,61 @@
 {% extends 'adminlte/base.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %} Problem CREATE! {% endblock title %}
+{% block title %} Education CREATE! {% endblock title %}
 {% block content %}
-     <h2 class="text-center">Partnyor qo'shish</h2>
+     <h2 class="text-center">Education ADD </h2>
     <form method="POST" enctype="multipart/form-data" class="row gy-2 gx-3 align-items-center">{% csrf_token %}
 
 <div class="col-auto">
-          <div data-mdb-input-init class="form-outline">
-         <label class="form-label" for="fio">FIO</label>
-        <input type="text" id="fio" value="{{ partnyor.fio }}" class="form-control form-control-lg" name="fio"/>
-     </div>
-
-     <div class="container special-box">
-       <div data-mdb-input-init class="form-outline">
-         <label class="form-label" for="login">LOGIN</label>
-        <input type="text" id="login" value="{{ partnyor.login }}" class="form-control form-control-lg" name="login"/>
-       </div>
-     </div>
-
-    <div class="container special-box">
-       <div data-mdb-input-init class="form-outline">
-         <label class="form-label" for="password">PASSWORD</label>
-        <input type="text" id="password" value="{{ partnyor.password }}" class="form-control form-control-lg" name="password"/>
-       </div>
-     </div>
-
-       <div class="container special-box">
-            <label for="image">Upload New Image:</label><br>
-            <input type="file" id="image" class="form-control form-control-lg" value="{{ partnyor.image }}" name="image"><br>
-
-      </div>
-
-     <div class="container special-box">
-       <div data-mdb-input-init class="form-outline">
-         <label class="form-label" for="contacts">CONTACT</label>
-        <input type="text" id="contacts" value="{{ partnyor.contacts }}" class="form-control form-control-lg" name="contacts"/>
-       </div>
-     </div>
-       <div class="container special-box">
-            <label for="company">Select Company:</label>
-                <select class="form-control" id="company" name="company_id">
-                    {% for company in companys %}
-                        <option value="{{ company.id }}">{{ company.name }}</option>
+            <div data-mdb-input-init class="form-outline">
+             <label class="form-label" for="name">Name</label>
+            <input type="text" id="name" value="{{ education.name }}" class="form-control form-control-lg" name="name"/>
+          </div>
+            <div class="container special-box">
+            <label for="user">Select Teacher:</label>
+                <select class="form-control" id="user" name="user_id">
+                    {% for user in users %}
+                        <option value="{{ user.id }}"> {{user.last_name}} {{user.first_name}}</option>
                     {% endfor %}
                 </select>
+
+           </div>
+            <div class="container special-box">
+                 <label class="form-label" for="info">Info</label>
+                <input type="text" id="info" value="{{ education.info }}" class="form-control form-control-lg" name="info"/>
+            </div>
+            <div class="container special-box">
+               <div data-mdb-input-init class="form-outline">
+                 <label class="form-label" for="date">Date to spend</label>
+                <input type="datetime-local" id="date" value="{{ education.date }}" class="form-control form-control-lg" name="date"/>
+               </div>
+            </div>
+            <div class="container special-box">
+                <label for="file">Upload New File:</label><br>
+                <input type="file" id="file" class="form-control form-control-lg" value="{{ education.file }}" name="file"><br>
+
+            </div>
+            <div class="container special-box">
+               <div data-mdb-input-init class="form-outline">
+                 <label class="form-label" for="read">READ Users</label>
+                <input type="text" id="read" value="{{ education.read }}" class="form-control form-control-lg" name="read"/>
+                </div>
+            </div>
+
+    <div class="container special-box">
+             <div data-mdb-input-init class="form-outline">
+              <label class="form-label" for="toDate">ToDate</label>
+              <input type="datetime-local" id="toDate" value="{{ education.toDate }}" class="form-control form-control-lg"
+                     name="toDate"/>
+             </div>
       </div>
-
-     <div class="container special-box">
-       <div data-mdb-input-init class="form-outline">
-         <label class="form-label" for="age">AGE</label>
-        <input type="text" id="age" value="{{ partnyor.age }}" class="form-control form-control-lg" name="age"/>
-       </div>
-     </div>
-
+    <div class="container special-box">
+             <div data-mdb-input-init class="form-outline">
+              <label class="form-label" for="endDate">EndDate</label>
+              <input type="datetime-local" id="endDate" value="{{ education.endDate }}" class="form-control form-control-lg"
+                     name="endDate"/>
+             </div>
+      </div>
     <div class="form-check form-switch">
         <label  class="form-label" >Status</label>
       <div data-mdb-input-init class="form-outline">
@@ -62,7 +64,7 @@
       </div>
     </div>
 
- <button type="submit" class="btn btn-primary">Partnyor +</button>
+ <button type="submit" class="btn btn-primary">Education +</button>
   </div>
 </form>
 {% endblock%}

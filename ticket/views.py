@@ -317,29 +317,18 @@ def Compleks_New(request):
     else:
         return render(request, "compleks/compleksCreate.html")
 
-
-class DutyFilter(FilterSet):
-    class Meta:
-        model = Compleks
-        fields = {"name": ["exact", "contains"], "status": ["exact"]}
-
-
 class DutyListView(ListView, FilterView):
     model = Duty
     template_name = 'duty/duty.html'
-    filterset_class = DutyFilter
-
 
 class DutyDetail(DetailView):
     model = Duty
     template_name = "duty/duty_detail.html"
 
-
 class DutyDelete(DeleteView):
     model = Duty
     template_name = 'duty/dutyDelete.html'
     success_url = reverse_lazy('duty_list')
-
 
 def DutyNew(request):
     tickets = Ticket.objects.all()
@@ -359,6 +348,7 @@ def DutyNew(request):
             duty.ticketId = Ticket.objects.get(id=ticket)
 
             duty.description = request.POST.get("description")
+            duty.date_duty = request.POST.get("date_duty")
             duty.author = request.user
             duty.save()
             return HttpResponseRedirect("../duty")
@@ -386,6 +376,7 @@ def Dutyedit(request, pk):
 
         duty.description = request.POST.get("description")
         duty.author = request.user
+        duty.date_duty = request.POST.get("date_duty")
         duty.save()
         return HttpResponseRedirect("../.")
     else:
@@ -406,7 +397,6 @@ class TicketDelete(DeleteView):
     model = Ticket
     template_name = 'ticket/ticketDelete.html'
     success_url = reverse_lazy('ticket_list')
-
 
 @login_required(login_url='/accounts/login/')
 def TicketEdit(request, pk):
@@ -440,7 +430,6 @@ def TicketEdit(request, pk):
         return render(request, "ticket/ticket_edit.html", {"ticket": ticket, "users": users,
                                                            "compleks": compleks, "partnyors": partnyors,
                                                            "companys": companys, "problems": problems})
-
 
 def TicketNew(request):
     users = User.objects.all()
@@ -499,51 +488,51 @@ class EducationDelete(DeleteView):
 
 @login_required(login_url='/accounts/login/')
 def EducationNew(request):
-    companys = Company.objects.all()
+    users = User.objects.all()
     try:
         if request.method == "POST":
-            partnyor = Partnyor()
-            partnyor.fio = request.POST.get("fio")
-            partnyor.login = request.POST.get("login")
-            partnyor.password = request.POST.get("password")
-            partnyor.createDate = request.POST.get("date")
-            partnyor.status = timezone.now()
-            partnyor.author = request.user
-            partnyor.image = request.FILES.get("image")
-            partnyor.contacts = request.POST.get("contacts")
-            partnyor.status = request.POST.get("status")
-            company_id = request.POST.get("company_id")
-            partnyor.companyId = Company.objects.get(id=company_id)
-            partnyor.age = request.POST.get("age")
-            partnyor.save()
-            return HttpResponseRedirect("../partnyor")
+            education = Education()
+            education.name = request.POST.get("name")
+            education.info = request.POST.get("info")
+            education.date = request.POST.get("date")
+            education.createDate = timezone.now()
+            education.status = request.POST.get("status")
+            education.author = request.user
+            education.file = request.FILES.get("file")
+            education.read = request.POST.get("read")
+            education.toDate = request.POST.get("toDate")
+            education.endDate = request.POST.get("endDate")
+            user_id = request.POST.get("user_id")
+            education.teacher = User.objects.get(id=user_id)
+            education.save()
+            return HttpResponseRedirect("../education")
         else:
-            return render(request, "partnyor/partnyorCreate.html", {"companys": companys})
-    except Duty.DoesNotExist:
-        return HttpResponseNotFound("<h2>Person not found</h2>")
+            return render(request, "education/educationCreate.html", {"users": users})
+    except Education.DoesNotExist:
+        return HttpResponseNotFound("<h2>education not found</h2>")
 
 
 @login_required(login_url='/accounts/login/')
 def EducationEdit(request, pk):
-    partnyors = Partnyor.objects.get(pk=pk)
-    companys = Company.objects.all()
+    educations = Education.objects.get(pk=pk)
+    users = User.objects.all()
     if request.method == "POST":
-        partnyors.fio = request.POST.get("fio")
-        partnyors.login = request.POST.get("login")
-        partnyors.password = request.POST.get("password")
-        partnyors.createDate = timezone.now()
-        partnyors.status = request.POST.get("status")
-        partnyors.author = request.user
-        partnyors.image = request.FILES.get("image")
-        partnyors.contacts = request.POST.get("contacts")
-        partnyors.status = request.POST.get("status")
-        company_id = request.POST.get("company_id")
-        partnyors.companyId = Company.objects.get(id=company_id)
-        partnyors.age = request.POST.get("age")
-        partnyors.save()
+        educations.name = request.POST.get("name")
+        user_id = request.POST.get("user_id")
+        educations.teacher = User.objects.get(id=user_id)
+        educations.info = request.POST.get("info")
+        educations.date = request.POST.get("date")
+        educations.createDate = timezone.now()
+        educations.status = request.POST.get("status")
+        educations.author = request.user
+        educations.file = request.FILES.get("file")
+        educations.read = request.POST.get("read")
+        educations.toDate = request.POST.get("toDate")
+        educations.endDate = request.POST.get("endDate")
+        educations.save()
         return HttpResponseRedirect("../.")
     else:
-        return render(request, "partnyor/partnyor_edit.html", {"partnyors": partnyors, "companys": companys})
+        return render(request, "education/education_edit.html", {"educations": educations, "users": users})
 
 
 # chart

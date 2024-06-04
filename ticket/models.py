@@ -1,7 +1,10 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.forms import DateField
 from django.urls import reverse
 from django.utils import timezone
+
+from ticketProject import settings
 
 
 class UserProfile(models.Model):
@@ -99,7 +102,7 @@ class Ticket(models.Model):
 class Education(models.Model):
     name = models.CharField(max_length=200)
     info = models.CharField(max_length=220)
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now_add=False, auto_now=False, blank=True)
     createDate = models.DateTimeField(auto_now_add=True)
     status = models.BooleanField(default=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -107,6 +110,7 @@ class Education(models.Model):
     read = models.CharField(max_length=200)
     toDate = models.DateTimeField(auto_now=True)
     endDate = models.DateTimeField()
+    teacher = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_teacher')
 
     class Meta:
         ordering = ["-createDate"]
@@ -124,6 +128,7 @@ class Duty(models.Model):
     description = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     duty = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_duty')
+    date_duty = models.DateField(null=True, blank=False)
 
     class Meta:
         ordering = ["-createDate"]

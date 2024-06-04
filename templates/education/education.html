@@ -36,13 +36,14 @@
 
     <ul class="list-inline">
         <li class="list-inline-item">
-            <a href="{%url 'education_create'%}" class="btn btn-primary"><i class="fa-sharp fa-solid fa-plus"></i>&nbsp;Add Partnyor</a>
+            <a href="{%url 'education_create'%}" class="btn btn-primary"><i class="fa-sharp fa-solid fa-plus"></i>&nbsp;Add Education</a>
         </li>
     </ul>
 <table id="example" class="table table-bordered table-hover">
   <thead>
       <tr>
           <th>Name</th>
+          <th>Teacher</th>
           <th>Info</th>
           <th>Date</th>
           <th>CreateDate</th>
@@ -58,12 +59,21 @@
     {% for education in education_list %}
       <tr>
             <td>{{ education.name }}</td>
+            <td>{{ education.teacher }}</td>
             <td>{{ education.info }}</td>
-            <td>{{ education.date }}</td>
+            {% if education.date == datetime.today %}
+                <td style="background: red;">{{ education.date }}</td>
+            {% elif education.date > datetime.today %}
+                <td style="background: blue;">{{ education.date }}</td>
+            {% elif education.date < datetime.today %}
+                <td style="background: green;">{{ education.date }}</td>
+            {% else %}
+                <td style="background: yellow;">{{ education.date }}</td>
+            {% endif %}
             <td>{{ education.createDate }}</td>
             <td>{{ education.status }}</td>
             <td>{{ education.author }}</td>
-            <td><img src="{{ education.file.url }}"alt="Description of the image" width="100" height="100"></td>
+            <td><a href="{{ education.file.url }}"alt="file teacher">{{ education.file.url }}</td>
             <td>{{ education.read }}</td>
             <td>{{ education.toDate }}</td>
             <td>{{ education.endDate }}</td>

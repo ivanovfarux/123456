@@ -44,6 +44,7 @@
   <thead>
       <tr>
           <th>Fio</th>
+          <th>Date_Duty</th>
           <th>kun</th>
           <th>oy</th>
           <th>yil</th>
@@ -52,17 +53,18 @@
           <th>ticketId</th>
           <th>description</th>
           <th>author</th>
-          <th>deysviya</th>
+          <th>deytsviya</th>
      </tr>
   </thead>
   <tbody>
     {% for duty in duty_list %}
       <tr>
-        <td>{{ duty.duty}} </td>
+        <td>{{ duty.duty }} </td>
+        <td>{{ duty.date_duty }} </td>
         <td>{{ duty.kun }}</td>
         <td>{{ duty.oy }}</td>
         <td>{{ duty.yil }}</td>
-        <td>{{ duty.createDate }}</td>
+        <td>{{ duty.createDate}}</td>
         <td>{{ duty.status }}</td>
         <td>{{ duty.ticketId }}</td>
         <td>{{ duty.description }}</td>
