@@ -1,0 +1,79 @@
+{% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %} ToDo CREATE! {% endblock title %}
+{% block content %}
+     <h2 class="text-center">ToDo qo'shish</h2>
+    <form method="POST" enctype="multipart/form-data" class="row gy-2 gx-3 align-items-center">{% csrf_token %}
+
+  <div class="col-auto">
+      <div class="container special-box">
+      <div data-mdb-input-init class="form-outline">
+                 <label class="form-label" for="name">Name</label>
+                <input type="text" id="name" value="{{ todo.name }}" class="form-control form-control-lg" name="name"/>
+          </div>
+      <div class="container special-box">
+           <div data-mdb-input-init class="form-outline">
+             <label class="form-label" for="note">Note</label>
+            <input type="text" id="note" value="{{ todo.note }}" class="form-control form-control-lg" name="note"/>
+           </div>
+       </div>
+      <div class="container special-box">
+                <label for="company">Select Compleks:</label>
+                    <select class="form-control" id="compleks" name="compleks_id">
+                        {% for compleks in complekss %}
+                            <option value="{{ compleks.id }}">{{ compleks.name }}</option>
+                        {% endfor %}
+                    </select>
+      </div>
+       <div class="container special-box">
+                <label for="user">Select User:</label>
+                    <select class="form-control" id="user" name="user_id">
+                        {% for user in users %}
+                            <option value="{{ user.id }}"> {{user.last_name}} {{user.first_name}}</option>
+                        {% endfor %}
+                    </select>
+      </div>
+      <div class="container special-box">
+                <label for="company">Select Company:</label>
+                    <select class="form-control" id="company" name="company_id">
+                        {% for company in companys %}
+                            <option value="{{ company.id }}">{{ company.name }}</option>
+                        {% endfor %}
+                    </select>
+      </div>
+
+          <div class="container special-box">
+             <div data-mdb-input-init class="form-outline">
+              <label class="form-label" for="start">Start</label>
+              <input type="datetime-local" id="start" value="{{ todo.start }}" class="form-control form-control-lg"
+                     name="start"/>
+             </div>
+          </div>
+          <div class="container special-box">
+             <div data-mdb-input-init class="form-outline">
+              <label class="form-label" for="end">End</label>
+              <input type="datetime-local" id="end" value="{{ todo.end }}" class="form-control form-control-lg"
+                     name="end"/>
+             </div>
+          </div>
+
+        <div class="container special-box">
+          <label for="file">Current Image:</label><br>
+            <img src="{{ todo.file.url }}" alt="Current Image" width="200"><br>
+            <label for="file">Upload New Image:</label><br>
+            <input type="file" id="file" class="form-control form-control-lg" value="{{ todo.file.url }}" name="file"><br>
+
+        </div>
+        <div class="form-check form-switch">
+          <label  class="form-label" >Status</label>
+              <div data-mdb-input-init class="form-outline">
+                <label for="l_box1"><input type="radio" name="status" value="1" id="l_box1">Activ</label>
+                <label for="d_box2"><input type="radio" name="status" value="0" id="d_box2">Noactiv</label>
+              </div>
+        </div>
+         <button type="submit" class="btn btn-primary">Todo +</button>
+      </div>
+  </div>
+</form>
+{% endblock%}
