@@ -84,7 +84,8 @@ class Ticket(models.Model):
     status = models.BooleanField(default=False)
     createDate = models.DateTimeField(auto_now_add=True)
     file = models.ImageField(upload_to='ticket/images')
-    endDate = models.DateTimeField(null=True)
+    start = models.DateTimeField(null=True, blank=True)
+    end = models.DateTimeField(null=True, blank=True)
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
     compleks = models.ForeignKey(Compleks, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
@@ -92,6 +93,7 @@ class Ticket(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     updatedDate = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE,   related_name='user1')
+
     class Meta:
         ordering = ["-createDate"]
 
@@ -119,16 +121,15 @@ class Education(models.Model):
         return self.name
 
 class Duty(models.Model):
-    kun = models.CharField(max_length=200)
-    oy = models.CharField(max_length=200)
-    yil = models.CharField(max_length=200)
-    createDate = models.DateTimeField(auto_now_add=True)
     status = models.BooleanField(default=False)
     ticketId = models.ForeignKey(Ticket, on_delete=models.CASCADE)
     description = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     duty = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_duty')
-    date_duty = models.DateField(null=True, blank=False)
+    date_duty = models.DateTimeField(null=True, blank=True)
+    createDate = models.DateTimeField(auto_now_add=True)
+    start = models.DateTimeField(null=True, blank=True)
+    end = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         ordering = ["-createDate"]
@@ -142,6 +143,29 @@ class Duty(models.Model):
     def get_absolute_url(self):
         return reverse('duty_edit', kwargs={'pk': self.pk})
 
+
+class ToDo(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255, null=True, blank=True)
+    note = models.CharField(max_length=250, null=True, blank=True)
+    compleks = models.ForeignKey(Compleks, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='userTodo')
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    updatedDate = models.DateTimeField(auto_now=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='authorTodo')
+    start = models.DateTimeField(null=True, blank=True)
+    end = models.DateTimeField(null=True, blank=True)
+    status = models.BooleanField(default=False)
+    file = models.FileField(upload_to='ticket/images')
+
+    class Meta:
+        ordering = ["-start"]
+
+    def __str__(self):
+        return self.name
+
+    def __str__(self):
+        return str(self.id)
 
 class Events(models.Model):
     id = models.AutoField(primary_key=True)

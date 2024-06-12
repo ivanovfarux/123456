@@ -18,26 +18,24 @@
       </div>
       <div class="container special-box">
             <div data-mdb-input-init class="form-outline">
-              <label class="form-label" for="kun">Kun</label>
-                <input type="text" id="kun" value="{{ duty.kun }}" class="form-control form-control-lg" name="kun" />
-            </div>
+              <label class="form-label" for="start">Start</label>
+              <input type="datetime-local" id="start" value="{{ duty.start }}" class="form-control form-control-lg"
+                     name="start"/>
+             </div>
       </div>
        <div class="container special-box">
             <div data-mdb-input-init class="form-outline">
-              <label class="form-label" for="oy">Oy</label>
-                <input type="text" id="oy" value="{{ duty.oy }}" class="form-control form-control-lg" name="oy" />
-            </div>
-        </div>
-        <div class="container special-box">
-            <div data-mdb-input-init class="form-outline">
-              <label class="form-label" for="yil">Yil</label>
-                <input type="text" id="yil" value="{{ duty.yil }}" class="form-control form-control-lg" name="yil" />
-            </div>
+              <label class="form-label" for="end">End</label>
+              <input type="datetime-local" id="end" value="{{ duty.end }}" class="form-control form-control-lg"
+                     name="end"/>
+             </div>
        </div>
-      <div class="container special-box">
+
+
+    <div class="container special-box">
              <div data-mdb-input-init class="form-outline">
               <label class="form-label" for="date_duty">ToDate</label>
-              <input type="date" id="date_duty" value="{{ duty.date_duty }}" class="form-control form-control-lg"
+              <input type="datetime-local" id="date_duty" value="{{ duty.date_duty }}" class="form-control form-control-lg"
                      name="date_duty"/>
              </div>
       </div>

@@ -9,7 +9,7 @@ admin.site.register(Events)
 @admin.register(Ticket)
 class TicketsAdmin(admin.ModelAdmin):
     list_display = ['name', 'note', 'status', 'createDate', 'file',
-                    'endDate', 'problem', 'compleks', 'partnyor', 'company', 'updatedDate']
+                    'problem', 'compleks', 'partnyor', 'company', 'updatedDate']
     # list_filter = ["__all__"]
     # prepopulated_fields = {"slug": ('title',)}
     date_hierarchy = 'createDate'

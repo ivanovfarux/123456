@@ -55,7 +55,7 @@
         <td>{{ compleks.name }}</td>
         <td>{{ compleks.createDate }}</td>
         <td>{{ compleks.author }}</td>
-        <td>{{ compleks.schema_net }}</td>
+        <td><a href="{{ compleks.schema_net.url }}"alt="file teacher"/>{{ compleks.schema_net.url }}</td>
         <td>{{ compleks.documents }}</td>
         <td style="font-family: Calibri" >
                     {% if compleks.status is True  %}

@@ -50,6 +50,7 @@
           <th>User</th>
           <th>Partnyor</th>
           <th>CreateDate</th>
+          <th>StartDate</th>
           <th>EndDate</th>
           <th>updatedDate</th>
           <th>File</th>
@@ -68,7 +69,8 @@
             <td>{{ ticket.user }}</td>
             <td>{{ ticket.partnyor.fio }}</td>
             <td>{{ ticket.createDate }}</td>
-            <td>{{ ticket.endDate }}</td>
+            <td>{{ ticket.start }}</td>
+            <td>{{ ticket.end }}</td>
             <td>{{ ticket.updatedDate }}</td>
             <td><img src="{{ ticket.file.url }}"alt="Description of the image" width="100" height="100"></td>
             <td>{{ ticket.status }}</td>

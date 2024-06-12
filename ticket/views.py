@@ -13,7 +13,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from django.http import JsonResponse
 from ticket.models import Problem, Compleks, Company, Partnyor as partnyorModel, Partnyor, Ticket, Duty, Events, \
-    Education
+    Education, ToDo
 from django.contrib.auth.views import LoginView
 import json
 from django.db.models import Count
@@ -316,6 +316,10 @@ def Compleks_New(request):
         return HttpResponseRedirect("../compleks")
     else:
         return render(request, "compleks/compleksCreate.html")
+    
+    
+    
+
 
 class DutyListView(ListView, FilterView):
     model = Duty
@@ -338,12 +342,12 @@ def DutyNew(request):
             duty = Duty()
             user_id = request.POST.get("user_id")
             duty.duty = User.objects.get(id=user_id)
-            duty.kun = request.POST.get("kun")
-            duty.oy = request.POST.get("oy")
-            duty.yil = request.POST.get("yil")
+
             duty.createDate = timezone.now()
             duty.status = request.POST.get("status")
-
+            duty.start = request.POST.get("start")
+            duty.end = request.POST.get("end")
+            duty.date_duty = request.POST.get("date_duty")
             ticket = request.POST.get("ticket")
             duty.ticketId = Ticket.objects.get(id=ticket)
 
@@ -365,9 +369,9 @@ def Dutyedit(request, pk):
     if request.method == "POST":
         user_id = request.POST.get("user_id")
         duty.duty = User.objects.get(id=user_id)
-        duty.kun = request.POST.get("kun")
-        duty.oy = request.POST.get("oy")
-        duty.yil = request.POST.get("yil")
+        duty.start = request.POST.get("start")
+        duty.end = request.POST.get("end")
+        duty.date_duty = request.POST.get("date_duty")
         duty.createDate = timezone.now()
         duty.status = request.POST.get("status")
 
@@ -421,6 +425,8 @@ def TicketEdit(request, pk):
         ticket.partnyor = Partnyor.objects.get(id=partnyor_id)
         ticket.name = request.POST.get("name")
         ticket.createDate = timezone.now()
+        ticket.start = request.POST.get("start")
+        ticket.end = request.POST.get("end")
         ticket.file = request.FILES.get("file")
         ticket.status = request.POST.get("status")
         ticket.author = request.user
@@ -460,6 +466,8 @@ def TicketNew(request):
         ticket.file = request.FILES.get("file")
         ticket.name = request.POST.get("name")
         ticket.createDate = timezone.now()
+        ticket.start = request.POST.get("start")
+        ticket.end = request.POST.get("end")
         ticket.status = request.POST.get("status")
         ticket.author = request.user
         ticket.save()
@@ -520,6 +528,7 @@ def EducationEdit(request, pk):
         educations.name = request.POST.get("name")
         user_id = request.POST.get("user_id")
         educations.teacher = User.objects.get(id=user_id)
+
         educations.info = request.POST.get("info")
         educations.date = request.POST.get("date")
         educations.createDate = timezone.now()
@@ -533,6 +542,85 @@ def EducationEdit(request, pk):
         return HttpResponseRedirect("../.")
     else:
         return render(request, "education/education_edit.html", {"educations": educations, "users": users})
+
+class TodoListView(ListView, FilterView):
+    model = ToDo
+    template_name = 'todo/todo.html'
+
+
+class TodoDetail(DetailView):
+    model = ToDo
+    template_name = "todo/todo_detail.html"
+
+
+class TodoDelete(DeleteView):
+    model = ToDo
+    template_name = 'todo/todoDelete.html'
+    success_url = reverse_lazy('todo_list')
+
+@login_required(login_url='/accounts/login/')
+def ToDoNew(request):
+    users = User.objects.all()
+    complekss = Compleks.objects.all()
+    companys = Company.objects.all()
+    try:
+        if request.method == "POST":
+            todo = ToDo()
+            todo.name = request.POST.get("name")
+            todo.note = request.POST.get("note")
+            compleks_id = request.POST.get("compleks_id")
+            todo.compleks = Compleks.objects.get(id=compleks_id)
+            user_id = request.POST.get("user_id")
+            todo.user = User.objects.get(id=user_id)
+
+            company_id = request.POST.get("company_id")
+            todo.company = Company.objects.get(id=company_id)
+            todo.updatedDate = timezone.now()
+            todo.author = request.user
+            todo.start = request.GET.get("start", None)
+            todo.end = request.GET.get("end", None)
+
+            todo.status = request.POST.get("status")
+            todo.file = request.FILES.get("file", None)
+            todo.save()
+            return HttpResponseRedirect("../todo")
+        else:
+            return render(request, "todo/todoCreate.html", {"users": users, "complekss": complekss,
+                                                            "companys": companys})
+    except ToDo.DoesNotExist:
+        return HttpResponseNotFound("<h2>todo not found</h2>")
+
+
+@login_required(login_url='/accounts/login/')
+def ToDoEdit(request, pk):
+    todo = ToDo.objects.get(pk=pk)
+    users = User.objects.all()
+    complekss = Compleks.objects.all()
+    companys = Company.objects.all()
+
+    if request.method == "POST":
+        todo.name = request.POST.get("name")
+        todo.note = request.POST.get("note")
+        compleks_id = request.POST.get("compleks_id")
+        todo.compleks = Compleks.objects.get(id=compleks_id)
+
+        user_id = request.POST.get("user_id")
+        todo.user = User.objects.get(id=user_id)
+
+        company_id = request.POST.get("company_id")
+        todo.company = Company.objects.get(id=company_id)
+        todo.updatedDate = timezone.now()
+        todo.author = request.user
+        todo.start = request.GET.get("start", None)
+        todo.end = request.GET.get("end", None)
+
+        todo.status = request.POST.get("status")
+        todo.file = request.FILES.get("file", None)
+        todo.save()
+        return HttpResponseRedirect("../.")
+    else:
+        return render(request, "todo/todo_edit.html", {"users": users, "complekss": complekss, "companys": companys, "todo": todo})
+        # return render(request, "education/education_edit.html", {"educations": educations, "users": users})
 
 
 # chart
@@ -620,3 +708,4 @@ def chart_data(request):
 
 def chart_view(request):
     return render(request, 'chart1.html')
+# 

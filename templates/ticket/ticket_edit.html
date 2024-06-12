@@ -59,13 +59,20 @@
                         {% endfor %}
                     </select>
           </div>
-          <div class="container special-box">
-                 <div data-mdb-input-init class="form-outline">
-                  <label class="form-label" for="endDate">EndDate</label>
-                  <input type="datetime-local" id="endDate" value="{{ ticket.endDate }}" class="form-control form-control-lg"
-                         name="endDate"/>
-                 </div>
-          </div>
+      <div class="container special-box">
+            <div data-mdb-input-init class="form-outline">
+              <label class="form-label" for="start">Start</label>
+              <input type="datetime-local" id="start" value="{{ ticket.start }}" class="form-control form-control-lg"
+                     name="start"/>
+             </div>
+      </div>
+       <div class="container special-box">
+            <div data-mdb-input-init class="form-outline">
+              <label class="form-label" for="end">End</label>
+              <input type="datetime-local" id="end" value="{{ ticket.end }}" class="form-control form-control-lg"
+                     name="end"/>
+             </div>
+       </div>
 
          <div class="container special-box">
           <label for="file">Current Image:</label><br>

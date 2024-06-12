@@ -11,7 +11,7 @@ router.register(r"dutylist", DutyViewSet, basename="duty")
 urlpatterns = router.urls
 
 urlpatterns = [
-    path('', include('pages.urls')),
+
     path('admin/login/', CustomLoginView.as_view(), name='login'),
 
     path("problems/", ProblemListView.as_view(), name="problem_list"),
@@ -49,6 +49,12 @@ urlpatterns = [
     path('ticket/delete/<int:pk>', TicketDelete.as_view(), name='ticket_delete'),
     path("ticket/edit/<int:pk>", TicketEdit, name='ticket_edit'),
     path("ticket/create", TicketNew, name='ticket_create'),
+
+    path("todo/", TodoListView.as_view(), name="todo_list"),
+    path('todo/view/<int:pk>', TodoDetail.as_view(), name='todo_view'),
+    path('todo/delete/<int:pk>', TodoDelete.as_view(), name='todo_delete'),
+    path("todo/edit/<int:pk>", ToDoEdit, name='todo_edit'),
+    path("todo/create", ToDoNew, name='todo_create'),
 
 
     path("education/", EducationListView.as_view(), name="education_list"),
