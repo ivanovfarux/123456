@@ -2,7 +2,6 @@
 
 {% block nav_links %}
 
-
 <li class="nav-item">
     <a href="/calendar1" class="nav-link">
         <i class="nav-icon fa fa-address-card"></i>
@@ -93,10 +92,4 @@
     </a>
 </li>
 
-
-<script>
- {% block extra_js %}
-    $('ul').on('expanded.lte.treeview', handleExpandedEvent)
-     {% endblock extra_js %}
-</script>
 {% endblock nav_links %}
