@@ -1,11 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
-from django.forms import DateField
 from django.urls import reverse
 from django.utils import timezone
-
-from ticketProject import settings
-
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -81,18 +77,19 @@ class Partnyor(models.Model):
 class Ticket(models.Model):
     name = models.CharField(max_length=250)
     note = models.CharField(max_length=250)
-    status = models.BooleanField(default=False)
+    compleks = models.ForeignKey(Compleks, on_delete=models.CASCADE)
+    problem = models.ForeignKey(Problem, null=True, on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
+    partnyor = models.ForeignKey(Partnyor, null=True, on_delete=models.CASCADE)
     createDate = models.DateTimeField(auto_now_add=True)
-    file = models.ImageField(upload_to='ticket/images')
     start = models.DateTimeField(null=True, blank=True)
     end = models.DateTimeField(null=True, blank=True)
-    problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
-    compleks = models.ForeignKey(Compleks, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
-    partnyor = models.ForeignKey(Partnyor, on_delete=models.CASCADE)
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
     updatedDate = models.DateTimeField(auto_now=True)
+    file = models.ImageField(upload_to='ticket/images', null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE,   related_name='user1')
+    color = models.CharField(max_length=255, null=True, blank=True)
+    status = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["-createDate"]
@@ -122,15 +119,13 @@ class Education(models.Model):
 
 class Duty(models.Model):
     status = models.BooleanField(default=False)
-    ticketId = models.ForeignKey(Ticket, on_delete=models.CASCADE)
     description = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE) # default  authentifacet user
     duty = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_duty')
-    date_duty = models.DateTimeField(null=True, blank=True)
-    createDate = models.DateTimeField(auto_now_add=True)
+    createDate = models.DateTimeField(auto_now_add=True)  # default sysdate
     start = models.DateTimeField(null=True, blank=True)
     end = models.DateTimeField(null=True, blank=True)
-
+    color = models.CharField(max_length=255, null=True, blank=True)
     class Meta:
         ordering = ["-createDate"]
 
@@ -150,11 +145,11 @@ class ToDo(models.Model):
     note = models.CharField(max_length=250, null=True, blank=True)
     compleks = models.ForeignKey(Compleks, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='userTodo')
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
     updatedDate = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='authorTodo')
     start = models.DateTimeField(null=True, blank=True)
     end = models.DateTimeField(null=True, blank=True)
+    color = models.CharField(max_length=255, null=True, blank=True)
     status = models.BooleanField(default=False)
     file = models.FileField(upload_to='ticket/images')
 

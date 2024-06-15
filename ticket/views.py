@@ -1,9 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponseNotFound
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.utils import timezone
-from django.db.models import Count, Q
+from django.db.models import Q
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, DeleteView
@@ -12,7 +12,7 @@ from django_filters import FilterSet
 from rest_framework import viewsets
 from rest_framework.response import Response
 from django.http import JsonResponse
-from ticket.models import Problem, Compleks, Company, Partnyor as partnyorModel, Partnyor, Ticket, Duty, Events, \
+from ticket.models import Problem, Compleks, Company, Partnyor, Ticket, Duty, Events, \
     Education, ToDo
 from django.contrib.auth.views import LoginView
 import json
@@ -30,7 +30,6 @@ def index(request):
     }
     return render(request, 'calendar1.html', context)
 
-
 def all_events(request):
     all_events = Events.objects.all()
 
@@ -45,7 +44,6 @@ def all_events(request):
 
     return JsonResponse(out, safe=False)
 
-
 def add_event(request):
     start = request.GET.get("start", None)
     end = request.GET.get("end", None)
@@ -53,7 +51,6 @@ def add_event(request):
     event = Events(name=str(title), start=start, end=end)
     event.save()
     return JsonResponse({})
-
 
 def update(request):
     start = request.GET.get("start", None)
@@ -68,14 +65,12 @@ def update(request):
     data = {}
     return JsonResponse(data)
 
-
 def remove(request):
     id = request.GET.get("id", None)
     event = Events.objects.get(id=id)
     event.delete()
     data = {}
     return JsonResponse(data)
-
 
 class CustomLoginView(LoginView):
     template_name = 'base/login.html'
@@ -85,13 +80,11 @@ class CustomLoginView(LoginView):
     def get_success_url(self):
         return reverse_lazy('tasks')
 
-
 class DutyViewSet(viewsets.ViewSet):
     def list(self, request):
         duty = Duty.objects.all()
         serializer = DutySerializer(duty, many=True)
         return Response(serializer.data)
-
 
 class ProblemViewSet(viewsets.ViewSet):
     def list(self, request):
@@ -99,22 +92,18 @@ class ProblemViewSet(viewsets.ViewSet):
         serializer = ProblemSerializer(stu, many=True)
         return Response(serializer.data)
 
-
 class ProblemListView(ListView, FilterView):
     model = Problem
     template_name = 'problems/problem.html'
-
 
 class ProblemDetail(DetailView):
     model = Problem
     template_name = "problems/problem_detail.html"
 
-
 class ProblemDelete(DeleteView):
     model = Problem
     template_name = 'problems/problemDelete.html'
     success_url = reverse_lazy('problem_list')
-
 
 @login_required(login_url='/accounts/login/')
 def edit(request, pk):
@@ -133,7 +122,6 @@ def edit(request, pk):
     except Problem.DoesNotExist:
         return HttpResponseNotFound("<h2>Person not found</h2>")
 
-
 def ProblemNew(request):
     try:
         if request.method == "POST":
@@ -149,22 +137,18 @@ def ProblemNew(request):
     except Problem.DoesNotExist:
         return HttpResponseNotFound("<h2>Person not found</h2>")
 
-
 class CompanyListView(ListView, FilterView):
     model = Company
     template_name = 'company/company.html'
-
 
 class CompanyDetail(DetailView):
     model = Company
     template_name = "company/company_detail.html"
 
-
 class CompanyDelete(DeleteView):
     model = Company
     template_name = 'company/companyDelete.html'
     success_url = reverse_lazy('company_list')
-
 
 @login_required(login_url='/accounts/login/')
 def Companyedit(request, pk):
@@ -183,7 +167,6 @@ def Companyedit(request, pk):
     except Company.DoesNotExist:
         return HttpResponseNotFound("<h2>Person not found</h2>")
 
-
 def CompanyNew(request):
     try:
         if request.method == "POST":
@@ -199,22 +182,18 @@ def CompanyNew(request):
     except Company.DoesNotExist:
         return HttpResponseNotFound("<h2>Person not found</h2>")
 
-
 class PartnyorListView(ListView, FilterView):
     model = Partnyor
     template_name = 'partnyor/partnyor.html'
-
 
 class PartnyorDetail(DetailView):
     model = Partnyor
     template_name = "partnyor/partnyor_detail.html"
 
-
 class PartnyorDelete(DeleteView):
     model = Partnyor
     template_name = 'partnyor/partnyorDelete.html'
     success_url = reverse_lazy('partnyor_list')
-
 
 @login_required(login_url='/accounts/login/')
 def PartnyorNew(request):
@@ -241,7 +220,6 @@ def PartnyorNew(request):
     except Duty.DoesNotExist:
         return HttpResponseNotFound("<h2>Person not found</h2>")
 
-
 @login_required(login_url='/accounts/login/')
 def PartnyorEdit(request, pk):
     partnyors = Partnyor.objects.get(pk=pk)
@@ -264,29 +242,24 @@ def PartnyorEdit(request, pk):
     else:
         return render(request, "partnyor/partnyor_edit.html", {"partnyors": partnyors, "companys": companys})
 
-
 class CompleksFilter(FilterSet):
     class Meta:
         model = Compleks
         fields = {"name": ["exact", "contains"], "status": ["exact"]}
-
 
 class CompleksListView(ListView, FilterView):
     model = Compleks
     template_name = 'compleks/compleks.html'
     filterset_class = CompleksFilter
 
-
 class CompleksDetail(DetailView):
     model = Compleks
     template_name = "compleks/compleks_detail.html"
-
 
 class CompleksDelete(DeleteView):
     model = Compleks
     template_name = 'compleks/compleksDelete.html'
     success_url = reverse_lazy('compleks_list')
-
 
 def Compleksedit(request, pk):
     compleks = get_object_or_404(Compleks, pk=pk)
@@ -302,7 +275,6 @@ def Compleksedit(request, pk):
     else:
         return render(request, "compleks/compleks_edit.html", {"compleks": compleks})
 
-
 def Compleks_New(request):
     if request.method == "POST":
         compleks = Compleks()
@@ -316,10 +288,6 @@ def Compleks_New(request):
         return HttpResponseRedirect("../compleks")
     else:
         return render(request, "compleks/compleksCreate.html")
-    
-    
-    
-
 
 class DutyListView(ListView, FilterView):
     model = Duty
@@ -335,67 +303,52 @@ class DutyDelete(DeleteView):
     success_url = reverse_lazy('duty_list')
 
 def DutyNew(request):
-    tickets = Ticket.objects.all()
     users = User.objects.all()
     try:
         if request.method == "POST":
             duty = Duty()
-            user_id = request.POST.get("user_id")
-            duty.duty = User.objects.get(id=user_id)
-
             duty.createDate = timezone.now()
             duty.status = request.POST.get("status")
+            duty.description = request.POST.get("description")
+            duty.author = request.user
+            user_id = request.POST.get("user_id")
+            duty.duty = User.objects.get(id=user_id)
             duty.start = request.POST.get("start")
             duty.end = request.POST.get("end")
-            duty.date_duty = request.POST.get("date_duty")
-            ticket = request.POST.get("ticket")
-            duty.ticketId = Ticket.objects.get(id=ticket)
-
-            duty.description = request.POST.get("description")
-            duty.date_duty = request.POST.get("date_duty")
-            duty.author = request.user
+            duty.color = request.POST.get("color")
             duty.save()
             return HttpResponseRedirect("../duty")
         else:
-            return render(request, "duty/dutyCreate.html", {"users": users, "tickets": tickets})
+            return render(request, "duty/dutyCreate.html", {"users": users})
     except Duty.DoesNotExist:
         return HttpResponseNotFound("<h2>Person not found</h2>")
 
-
 def Dutyedit(request, pk):
     duty = get_object_or_404(Duty, pk=pk)
-    tickets = Ticket.objects.all()
     users = User.objects.all()
     if request.method == "POST":
-        user_id = request.POST.get("user_id")
-        duty.duty = User.objects.get(id=user_id)
-        duty.start = request.POST.get("start")
-        duty.end = request.POST.get("end")
-        duty.date_duty = request.POST.get("date_duty")
-        duty.createDate = timezone.now()
         duty.status = request.POST.get("status")
-
-        ticket = request.POST.get("ticket")
-        duty.ticketId = Ticket.objects.get(id=ticket)
-
         duty.description = request.POST.get("description")
         duty.author = request.user
-        duty.date_duty = request.POST.get("date_duty")
+        user_id = request.POST.get("user_id")
+        duty.duty = User.objects.get(id=user_id)
+        duty.createDate = timezone.now()
+        duty.start = request.POST.get("start")
+        duty.end = request.POST.get("end")
+        duty.color = request.POST.get("color")
+
         duty.save()
         return HttpResponseRedirect("../.")
     else:
-        return render(request, "duty/dutyEdit.html", {"duty": duty, "tickets": tickets, "users": users})
-
+        return render(request, "duty/dutyEdit.html", {"duty": duty, "users": users})
 
 class TicketListView(ListView, FilterView):
     model = Ticket
     template_name = 'ticket/ticket.html'
 
-
 class TicketDetail(DetailView):
     model = Ticket
     template_name = "ticket/ticket_detail.html"
-
 
 class TicketDelete(DeleteView):
     model = Ticket
@@ -482,17 +435,14 @@ class EducationListView(ListView, FilterView):
     model = Education
     template_name = 'education/education.html'
 
-
 class EducationDetail(DetailView):
     model = Education
     template_name = "education/education_detail.html"
-
 
 class EducationDelete(DeleteView):
     model = Education
     template_name = 'education/educationDelete.html'
     success_url = reverse_lazy('education_list')
-
 
 @login_required(login_url='/accounts/login/')
 def EducationNew(request):
@@ -519,7 +469,6 @@ def EducationNew(request):
     except Education.DoesNotExist:
         return HttpResponseNotFound("<h2>education not found</h2>")
 
-
 @login_required(login_url='/accounts/login/')
 def EducationEdit(request, pk):
     educations = Education.objects.get(pk=pk)
@@ -528,7 +477,6 @@ def EducationEdit(request, pk):
         educations.name = request.POST.get("name")
         user_id = request.POST.get("user_id")
         educations.teacher = User.objects.get(id=user_id)
-
         educations.info = request.POST.get("info")
         educations.date = request.POST.get("date")
         educations.createDate = timezone.now()
@@ -547,11 +495,9 @@ class TodoListView(ListView, FilterView):
     model = ToDo
     template_name = 'todo/todo.html'
 
-
 class TodoDetail(DetailView):
     model = ToDo
     template_name = "todo/todo_detail.html"
-
 
 class TodoDelete(DeleteView):
     model = ToDo
@@ -562,7 +508,7 @@ class TodoDelete(DeleteView):
 def ToDoNew(request):
     users = User.objects.all()
     complekss = Compleks.objects.all()
-    companys = Company.objects.all()
+
     try:
         if request.method == "POST":
             todo = ToDo()
@@ -572,21 +518,17 @@ def ToDoNew(request):
             todo.compleks = Compleks.objects.get(id=compleks_id)
             user_id = request.POST.get("user_id")
             todo.user = User.objects.get(id=user_id)
-
-            company_id = request.POST.get("company_id")
-            todo.company = Company.objects.get(id=company_id)
             todo.updatedDate = timezone.now()
             todo.author = request.user
-            todo.start = request.GET.get("start", None)
+            todo.start = request.GET.get("start")
             todo.end = request.GET.get("end")
-
+            todo.color = request.POST.get("color")
             todo.status = request.POST.get("status")
             todo.file = request.FILES.get("file", None)
             todo.save()
             return HttpResponseRedirect("../todo")
         else:
-            return render(request, "todo/todoCreate.html", {"users": users, "complekss": complekss,
-                                                            "companys": companys})
+            return render(request, "todo/todoCreate.html", {"users": users, "complekss": complekss})
     except ToDo.DoesNotExist:
         return HttpResponseNotFound("<h2>todo not found</h2>")
 
@@ -603,37 +545,29 @@ def ToDoEdit(request, pk):
         todo.note = request.POST.get("note")
         compleks_id = request.POST.get("compleks_id")
         todo.compleks = Compleks.objects.get(id=compleks_id)
-
         user_id = request.POST.get("user_id")
         todo.user = User.objects.get(id=user_id)
-
-        company_id = request.POST.get("company_id")
-        todo.company = Company.objects.get(id=company_id)
         todo.updatedDate = timezone.now()
         todo.author = request.user
-        todo.start = request.GET.get("start", None)
+        todo.start = request.GET.get("start")
         todo.end = request.GET.get("end")
-        # formatedDate = myDate.strftime("%Y-%m-%d %H:%M:%S")
+        todo.color = request.POST.get("color")
         todo.status = request.POST.get("status")
         todo.file = request.FILES.get("file", None)
         todo.save()
         return HttpResponseRedirect("../.")
     else:
-        return render(request, "todo/todo_edit.html", { "users": users, "complekss": complekss, "companys": companys, "todo": todo})
-        # return render(request, "education/education_edit.html", {"educations": educations, "users": users})
+        return render(request, "todo/todo_edit.html", { "users": users, "complekss": complekss, "todo": todo})
 
 
 # chart
 def chart_view(request):
     partnyor_data = Partnyor.objects.all()
-
     return render(request, 'partnyor.html', {'partnyor_data': partnyor_data})
-
 
 def pie_chart(request):
     labels = []
     data = []
-
     queryset = Partnyor.objects.order_by('-age')[:5]
 
     for partnyorModel in queryset:

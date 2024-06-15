@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='education',
             name='teacher',
-            field=models.ForeignKey(default='01 06 2024', on_delete=django.db.models.deletion.CASCADE, related_name='user_teacher', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='user_teacher', to=settings.AUTH_USER_MODEL),
             preserve_default=False,
         ),
         migrations.AlterField(

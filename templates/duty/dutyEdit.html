@@ -8,21 +8,21 @@
            action="{% url 'duty_edit' pk=duty.id %}">
           {% csrf_token %}
 <div class="form-group col-md-3">
-      <div class="container special-box">
+       <div class="container special-box">
             <label for="user">Select User:</label>
                 <select class="form-control" id="user" name="user_id">
                     {% for user in users %}
                         <option value="{{ user.id }}"> {{user.last_name}} {{user.first_name}}</option>
                     {% endfor %}
                 </select>
-      </div>
-      <div class="container special-box">
+       </div>
+       <div class="container special-box">
             <div data-mdb-input-init class="form-outline">
               <label class="form-label" for="start">Start</label>
               <input type="datetime-local" id="start" value="{{ duty.start }}" class="form-control form-control-lg"
                      name="start"/>
              </div>
-      </div>
+       </div>
        <div class="container special-box">
             <div data-mdb-input-init class="form-outline">
               <label class="form-label" for="end">End</label>
@@ -31,32 +31,16 @@
              </div>
        </div>
 
-
-    <div class="container special-box">
-             <div data-mdb-input-init class="form-outline">
-              <label class="form-label" for="date_duty">ToDate</label>
-              <input type="datetime-local" id="date_duty" value="{{ duty.date_duty }}" class="form-control form-control-lg"
-                     name="date_duty"/>
-             </div>
-      </div>
-    <div class="container special-box">
-    <label for="ticket">Select Ticket:</label>
-       <select class="form-control" id="ticket" name="ticket">
-            {% if tickets %}
-                {% for ticket in tickets %}
-                     <option value="{{ ticket.id }}" >
-                         {{ ticket.name }}</option>
-                {% endfor %}
-            {% else %}
-                <option value=" " disabled selected>bazadan topilmadi</option>
-            {% endif %}
-        </select>
-
-    </div>
       <div class="container special-box">
             <div data-mdb-input-init class="form-outline">
              <label class="form-label" for="description">Description</label>
              <input type="text" id="description" value="{{ duty.description }}" class="form-control form-control-lg" name="description" />
+            </div>
+      </div>
+      <div class="container special-box">
+            <div data-mdb-input-init class="form-outline">
+             <label class="form-label" for="color">Color</label>
+             <input type="color" id="color" value="{{ duty.color }}" class="form-control form-control-lg" name="color" />
             </div>
       </div>
       <div class="form-check form-switch">
@@ -66,10 +50,9 @@
         <label for="d_box2"><input type="radio" name="status" value="0" id="d_box2"> Noactiv</label>
         </div>
       </div>
-
- <div class="form-check form-switch">
- <button type="submit" class="btn btn-primary">Problem +</button>
-  </div>
+     <div class="form-check form-switch">
+        <button type="submit" class="btn btn-primary">Problem +</button>
+     </div>
   </div>
 </form>
 {% endblock  %}

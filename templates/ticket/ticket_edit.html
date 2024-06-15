@@ -66,22 +66,26 @@
                      name="start"/>
              </div>
       </div>
-       <div class="container special-box">
+      <div class="container special-box">
             <div data-mdb-input-init class="form-outline">
               <label class="form-label" for="end">End</label>
               <input type="datetime-local" id="end" value="{{ ticket.end }}" class="form-control form-control-lg"
                      name="end"/>
-             </div>
-       </div>
-
-         <div class="container special-box">
+      </div>
+      <div class="container special-box">
           <label for="file">Current Image:</label><br>
             <img src="{{ ticket.file.url }}" alt="Current Image" width="200"><br>
             <label for="file">Upload New Image:</label><br>
             <input type="file" id="file" class="form-control form-control-lg" value="{{ ticket.file.url }}" name="file"><br>
 
       </div>
-          <div class="form-check form-switch">
+       <div class="container special-box">
+            <div data-mdb-input-init class="form-outline">
+             <label class="form-label" for="color">Color</label>
+             <input type="color" id="color" value="{{ ticket.color }}" class="form-control form-control-lg" name="color" />
+            </div>
+      </div>
+      <div class="form-check form-switch">
           <label  class="form-label" >Status</label>
               <div data-mdb-input-init class="form-outline">
                 <label for="l_box1"><input type="radio" name="status" value="1" id="l_box1">Activ</label>
@@ -89,7 +93,7 @@
               </div>
         </div>
           <div class="container special-box">
-    <button type="submit" class="btn btn-primary">Tahrirlash</button>
+            <button type="submit" class="btn btn-primary">Tahrirlash</button>
         </div>
     </div>
  </div>

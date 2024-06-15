@@ -43,15 +43,14 @@
 <table id="example" class="table table-bordered table-hover">
   <thead>
       <tr>
-          <th>Fio</th>
-          <th>Date_Duty</th>
+          <th>FIO_DUTY</th>
           <th>Start</th>
           <th>End</th>
-          <th>createDate</th>
-          <th>status</th>
-          <th>ticketId</th>
-          <th>description</th>
-          <th>author</th>
+          <th>Description</th>
+          <th>Color</th>
+          <th>Author</th>
+          <th>CreateDate</th>
+          <th>Status</th>
           <th>Operation</th>
      </tr>
   </thead>
@@ -59,14 +58,13 @@
     {% for duty in duty_list %}
       <tr>
         <td>{{ duty.duty }} </td>
-        <td>{{ duty.date_duty }} </td>
         <td>{{ duty.start }}</td>
         <td>{{ duty.end }}</td>
+        <td>{{ duty.description }}</td>
+        <td>{{ duty.color }}</td>
+        <td>{{ duty.author }}</td>
         <td>{{ duty.createDate}}</td>
         <td>{{ duty.status }}</td>
-        <td>{{ duty.ticketId }}</td>
-        <td>{{ duty.description }}</td>
-        <td>{{ duty.author }}</td>
         <td>
               <a href="{% url 'duty_view' duty.id %}"><i style='font-size:24px' class='fas'>&#xf085;</i>Detail</a>
 
