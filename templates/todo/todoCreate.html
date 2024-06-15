@@ -12,12 +12,10 @@
                  <label class="form-label" for="name">Name</label>
                 <input type="text" id="name" value="{{ todo.name }}" class="form-control form-control-lg" name="name"/>
           </div>
-      <div class="container special-box">
-           <div data-mdb-input-init class="form-outline">
-             <label class="form-label" for="note">Note</label>
-            <input type="text" id="note" value="{{ todo.note }}" class="form-control form-control-lg" name="note"/>
-           </div>
-       </div>
+      <label class="form-label" for="note">Note</label>
+       <textarea  value="{{ todo.note }}" id="note"  name="note" class="form-control form-control-lg" rows="3" placeholder="Enter ... note" >
+
+       </textarea>
       <div class="container special-box">
                 <label for="company">Select Compleks:</label>
                     <select class="form-control" id="compleks" name="compleks_id">

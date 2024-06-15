@@ -578,7 +578,7 @@ def ToDoNew(request):
             todo.updatedDate = timezone.now()
             todo.author = request.user
             todo.start = request.GET.get("start", None)
-            todo.end = request.GET.get("end", None)
+            todo.end = request.GET.get("end")
 
             todo.status = request.POST.get("status")
             todo.file = request.FILES.get("file", None)
@@ -612,14 +612,14 @@ def ToDoEdit(request, pk):
         todo.updatedDate = timezone.now()
         todo.author = request.user
         todo.start = request.GET.get("start", None)
-        todo.end = request.GET.get("end", None)
-
+        todo.end = request.GET.get("end")
+        # formatedDate = myDate.strftime("%Y-%m-%d %H:%M:%S")
         todo.status = request.POST.get("status")
         todo.file = request.FILES.get("file", None)
         todo.save()
         return HttpResponseRedirect("../.")
     else:
-        return render(request, "todo/todo_edit.html", {"users": users, "complekss": complekss, "companys": companys, "todo": todo})
+        return render(request, "todo/todo_edit.html", { "users": users, "complekss": complekss, "companys": companys, "todo": todo})
         # return render(request, "education/education_edit.html", {"educations": educations, "users": users})
 
 

@@ -2,6 +2,17 @@
 {% load crispy_forms_tags %}
 
 {% block title %} ToDo Edit! {% endblock title %}
+ {% block extra_js %}
+     <script>
+        var todoEnd = "{{ todo.end }}";
+    </script>
+ <script>
+    var currentFileUrl = "{{ todo.file.url }}";
+    var fileName = currentFileUrl.split('/').pop();
+    document.getElementById('fileName').textContent = "Current File: " + fileName;
+</script>
+
+ {% endblock extra_js %}
 {% block content %}
     <h2 class="text-center">Joriy ToDoni tahrirlash</h2>
 
@@ -13,12 +24,15 @@
                  <label class="form-label" for="name">Name</label>
                 <input type="text" id="name" value="{{ todo.name }}" class="form-control form-control-lg" name="name"/>
       </div>
-      <div class="container special-box">
+       <div class="container special-box">
            <div data-mdb-input-init class="form-outline">
-             <label class="form-label" for="note">Note</label>
-            <textarea rows="3" cols="3" type="text" id="note" value="{{ todo.note }}" class="form-control form-control-lg" id="exampleFormControlTextarea1"  name="note"></textarea>
-           </div>
-      </div>
+     <label class="form-label" for="note">Note</label>
+               <textarea  value="{{ todo.note }}" id="note"  name="note" class="form-control form-control-lg" rows="3" placeholder="Enter ..." >
+               {{ todo.note }}
+               </textarea>
+
+           </div></div>
+
       <div class="container special-box">
                 <label for="company">Select Compleks:</label>
                     <select class="form-control" id="compleks" name="compleks_id">
@@ -47,14 +61,14 @@
       <div class="container special-box">
              <div data-mdb-input-init class="form-outline">
               <label class="form-label" for="start">Start</label>
-              <input type="datetime-local" id="start" value="{{ todo.start }}" class="form-control form-control-lg"
+              <input type="datetime-local" id="start" value="{{ todo.start|date:'Y-m-d\TH:i' }}" class="form-control form-control-lg"
                      name="start"/>
              </div>
       </div>
       <div class="container special-box">
              <div data-mdb-input-init class="form-outline">
               <label class="form-label" for="end">End</label>
-              <input type="datetime-local" id="end" value="{{ todo.end }}" class="form-control form-control-lg"
+              <input type="datetime-local" id="end" value="{{ todo.end|date:'Y-m-d\TH:i' }}" class="form-control form-control-lg"
                      name="end"/>
              </div>
       </div>
@@ -62,8 +76,9 @@
           <label for="file">Current Image:</label><br>
             <img src="{{ todo.file.url }}" alt="Current Image" width="200"><br>
             <label for="file">Upload New Image:</label><br>
-            <input type="file" id="file" class="form-control form-control-lg" value="{{ todo.file.url }}" name="file"><br>
-
+            <input type="file" id="file" class="form-control form-control-lg" accept="image/*, .pdf, .doc, .docx"
+                   value="{{ todo.file.url }}" name="file"><br>
+            <p id="fileName"></p>
       </div>
       <div class="form-check form-switch">
           <label  class="form-label" >Status</label>
