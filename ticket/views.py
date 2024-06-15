@@ -12,8 +12,10 @@ from django_filters import FilterSet
 from rest_framework import viewsets
 from rest_framework.response import Response
 from django.http import JsonResponse
+
+from ticket.forms import BookForm
 from ticket.models import Problem, Compleks, Company, Partnyor, Ticket, Duty, Events, \
-    Education, ToDo
+    Education, ToDo, Book
 from django.contrib.auth.views import LoginView
 import json
 from django.db.models import Count
@@ -419,8 +421,8 @@ def TicketNew(request):
         ticket.file = request.FILES.get("file")
         ticket.name = request.POST.get("name")
         ticket.createDate = timezone.now()
-        ticket.start = request.POST.get("start")
-        ticket.end = request.POST.get("end")
+        ticket.start = request.get("start")
+        ticket.end = request.get("end")
         ticket.status = request.POST.get("status")
         ticket.author = request.user
         ticket.save()
@@ -429,7 +431,6 @@ def TicketNew(request):
         return render(request, "ticket/ticketCreate.html", {"users": users, "complekss": complekss,
                                                             "companys": companys, "problems": problems,
                                                             "partnyors": partnyors})
-
 
 class EducationListView(ListView, FilterView):
     model = Education
@@ -522,8 +523,8 @@ def ToDoNew(request):
             todo.author = request.user
             todo.start = request.GET.get("start")
             todo.end = request.GET.get("end")
-            todo.color = request.POST.get("color")
-            todo.status = request.POST.get("status")
+            todo.color = request.get("color")
+            todo.status = request.get("status")
             todo.file = request.FILES.get("file", None)
             todo.save()
             return HttpResponseRedirect("../todo")
@@ -549,8 +550,8 @@ def ToDoEdit(request, pk):
         todo.user = User.objects.get(id=user_id)
         todo.updatedDate = timezone.now()
         todo.author = request.user
-        todo.start = request.GET.get("start")
-        todo.end = request.GET.get("end")
+        todo.start = request.POST.get("start")
+        todo.end = request.POST.get("end")
         todo.color = request.POST.get("color")
         todo.status = request.POST.get("status")
         todo.file = request.FILES.get("file", None)
@@ -558,7 +559,6 @@ def ToDoEdit(request, pk):
         return HttpResponseRedirect("../.")
     else:
         return render(request, "todo/todo_edit.html", { "users": users, "complekss": complekss, "todo": todo})
-
 
 # chart
 def chart_view(request):
@@ -579,7 +579,6 @@ def pie_chart(request):
         'data': data,
     })
 
-
 def ticket_class_view(request):
     dataset = Partnyor.objects \
         .values('age') \
@@ -587,7 +586,6 @@ def ticket_class_view(request):
                   not_status_count=Count('age', filter=Q(status=0))) \
         .order_by('age')
     return render(request, 'chart.html', {'dataset': dataset})
-
 
 def chart_view(request):
     # Получаем данные из модели
@@ -605,7 +603,6 @@ def chart_view(request):
 
     return render(request, 'chart.html', context)
 
-
 def ticket_chart(request):
     problems = Problem.objects.all()
     problem_names = [problem.name for problem in problems]
@@ -617,7 +614,6 @@ def ticket_chart(request):
     }
     return render(request, 'ticket_chart.html', context)
 
-
 def ticket_Compleks_chart(request):
     complekss = Compleks.objects.all()
     complek_names = [complek.name for complek in complekss]
@@ -627,7 +623,6 @@ def ticket_Compleks_chart(request):
         'ticket_counts': json.dumps(ticket_counts),
     }
     return render(request, 'ticket_chart1.html', context)
-
 
 def chart_data(request):
     events = Events.objects.all()
@@ -639,7 +634,42 @@ def chart_data(request):
         'data': data,
     })
 
-
 def chart_view(request):
     return render(request, 'chart1.html')
-# 
+# modal Form
+
+def book_list(request):
+    books = Book.objects.all()
+    return render(request, 'book/book_list.html', {'books': books})
+
+def book_create(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST)
+        if form.is_valid():
+            book = form.save()
+            return JsonResponse({'status': 'success', 'book_id': book.id})
+        else:
+            return JsonResponse({'status': 'error', 'errors': form.errors})
+    else:
+        form = BookForm()
+    return render(request, 'book/book_form.html', {'form': form})
+
+def book_update(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+    if request.method == 'POST':
+        form = BookForm(request.POST, instance=book)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'status': 'success', 'book_id': book.id})
+        else:
+            return JsonResponse({'status': 'error', 'errors': form.errors})
+    else:
+        form = BookForm(instance=book)
+    return render(request, 'book/book_form.html', {'form': form})
+
+def book_delete(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+    if request.method == 'POST':
+        book.delete()
+        return JsonResponse({'status': 'success'})
+    return render(request, 'book/book_confirm_delete.html', {'book': book})

@@ -63,7 +63,10 @@ urlpatterns = [
     path("education/edit/<int:pk>", EducationEdit, name='education_edit'),
     path("education/create", EducationNew, name='education_create'),
 
-
+    path('book/',  book_list, name='book_list'),
+    path('book/create/',  book_create, name='book_create'),
+    path('book/<int:pk>/update/',  book_update, name='book_update'),
+    path('book/<int:pk>/delete/',  book_delete, name='book_delete'),
 
     path("partnyor1/", pie_chart, name="pie-chart"),
 
