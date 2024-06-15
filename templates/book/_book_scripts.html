@@ -1,0 +1,98 @@
+{% load static %}
+
+{% block extra_js %}
+<script>
+        $(document).ready(function() {
+            // Submit create book form via Ajax
+            $('#createBookForm').submit(function(event) {
+                event.preventDefault();
+                var formData = $(this).serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url 'book_create' %}',
+                    data: formData,
+                    success: function(response) {
+                        if (response.status == 'success') {
+                            $('#createBookModal').modal('hide');
+                            // Reload page or update book list dynamically
+                            location.reload();
+                        } else {
+                            // Display errors, if any
+                            console.log(response.errors);
+                        }
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            });
+
+            // Populate edit book modal and handle form submission via Ajax
+            $('.edit-btn').click(function() {
+                var url = $(this).data('url');
+                $.get(url, function(data) {
+                    $('#editBookModal .modal-body').html(data);
+                });
+            });
+
+            $('#editBookModal').on('submit', '#editBookForm', function(event) {
+                event.preventDefault();
+                var formData = $(this).serialize();
+                var url = $(this).attr('action');
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: formData,
+                    success: function(response) {
+                        if (response.status == 'success') {
+                            $('#editBookModal').modal('hide');
+                            // Reload page or update book list dynamically
+                            location.reload();
+                        } else {
+                            // Display errors, if any
+                            console.log(response.errors);
+                        }
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            });
+
+            // Populate delete book modal and handle form submission via Ajax
+            $('.delete-btn').click(function() {
+                    var url = $(this).data('url');
+                    $.get(url, function(data) {
+                        $('#deleteBookModal .modal-body').html(data);
+                        $('#deleteBookModal').modal('show'); // Show the modal after loading content
+                    });
+                });
+
+            $('#deleteBookModal').on('submit', '#deleteBookForm', function(event) {
+                event.preventDefault();
+                var formData = $(this).serialize();
+                var url = $(this).attr('action');
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: formData,
+                    success: function(response) {
+                        if (response.status == 'success') {
+                            $('#deleteBookModal').modal('hide'); // Hide the modal on success
+                            // Optionally, update book list or show success message
+                            // Example: Reload the page
+                            location.reload();
+                        } else {
+                            // Handle errors, if any
+                            console.log(response.errors);
+                        }
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+</script>
+{% endblock extra_js %}
+
