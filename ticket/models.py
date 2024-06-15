@@ -140,7 +140,6 @@ class Duty(models.Model):
 
 
 class ToDo(models.Model):
-    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, null=True, blank=True)
     note = models.CharField(max_length=250, null=True, blank=True)
     compleks = models.ForeignKey(Compleks, on_delete=models.CASCADE)

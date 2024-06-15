@@ -15,7 +15,7 @@ urlpatterns = [
     path('admin/login/', CustomLoginView.as_view(), name='login'),
 
     path("problems/", ProblemListView.as_view(), name="problem_list"),
-    path('problems/view/<int:pk>',  ProblemDetail.as_view(), name='problem_view'),
+    path('problems/view/<int:pk>', ProblemDetail.as_view(), name='problem_view'),
     path('problem/delete/<int:pk>', ProblemDelete.as_view(), name='problem_delete'),
     path("problems/edit/<int:pk>", edit, name='problem_edit'),
     path("problems/create", ProblemNew, name='problem_create'),
@@ -56,7 +56,6 @@ urlpatterns = [
     path("todo/edit/<int:pk>", ToDoEdit, name='todo_edit'),
     path("todo/create", ToDoNew, name='todo_create'),
 
-
     path("education/", EducationListView.as_view(), name="education_list"),
     path('education/view/<int:pk>', EducationDetail.as_view(), name='education_view'),
     path('education/delete/<int:pk>', EducationDelete.as_view(), name='education_delete'),
@@ -70,15 +69,20 @@ urlpatterns = [
 
     path("partnyor1/", pie_chart, name="pie-chart"),
 
-    path('chart/',  chart_view, name='chart_view'),
+    path('chart/', chart_view, name='chart_view'),
     path('ticket_chart/', ticket_chart, name='problem_chart'),
     path('ticket_chart1/', ticket_Compleks_chart, name='compleks_chart'),
 
-    path('calendar1/',  index, name='index'),
-    path('all_events/',  all_events, name='all_events'),
-    path('add_event/',  add_event, name='add_event'),
-    path('update/',  update, name='update'),
-    path('remove/',  remove, name='remove'),
-    path('chart1/',  chart_data, name='chart_data'),
-    path('chart2/',  chart_view, name='chart_view'),
+    path('calendar1/', index, name='index'),
+    path('all_events/', all_events),
+    path('all_duties/', all_duties),
+    path('all_tickets/', all_tickets),
+    path('add_event/', add_event, name='add_event'),
+    path('add_duty/', add_duty, name='add_duty'),
+    path('update/', update, name='update'),
+    path('update_duty/', update_duty, name='update_duty'),
+    path('remove/', remove, name='remove'),
+    path('remove_duty', remove_duty, name='remove_duty'),
+    path('chart1/', chart_data, name='chart_data'),
+    path('chart2/', chart_view, name='chart_view'),
 ]

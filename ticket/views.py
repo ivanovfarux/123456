@@ -32,6 +32,7 @@ def index(request):
     }
     return render(request, 'calendar1.html', context)
 
+
 def all_events(request):
     all_events = Events.objects.all()
 
@@ -46,6 +47,39 @@ def all_events(request):
 
     return JsonResponse(out, safe=False)
 
+
+def all_duties(request):
+    duties = Duty.objects.all()
+    out = []
+    for duty in duties:
+        out.append({
+            'id': duty.id,
+            'title': duty.duty.username,
+            'start': duty.start.strftime("%Y-%m-%d"),
+            'end': duty.end.strftime("%Y-%m-%d"),
+            'color': duty.color if duty.color else 'green',
+            'duty': True
+        })
+
+    return JsonResponse(out, safe=False)
+
+
+def all_tickets(request):
+    tickets = Ticket.objects.all()
+    out = []
+    for ticket in tickets:
+        out.append({
+            'id': ticket.id,
+            'title': ticket.name,
+            'start': ticket.start.strftime("%Y-%m-%d"),
+            'end': ticket.end.strftime("%Y-%m-%d"),
+            'color': ticket.color if ticket.color else 'blue',
+            'ticket': True
+        })
+
+    return JsonResponse(out, safe=False)
+
+
 def add_event(request):
     start = request.GET.get("start", None)
     end = request.GET.get("end", None)
@@ -53,6 +87,17 @@ def add_event(request):
     event = Events(name=str(title), start=start, end=end)
     event.save()
     return JsonResponse({})
+
+
+def add_duty(request):
+    start = request.GET.get("start", None)
+    end = request.GET.get("end", None)
+    user_id = int(request.GET.get("user_id", 0))
+    user = User.objects.get(pk=user_id)
+    duty = Duty(duty=user, author=user, start=start, end=end)
+    duty.save()
+    return JsonResponse({})
+
 
 def update(request):
     start = request.GET.get("start", None)
@@ -67,12 +112,38 @@ def update(request):
     data = {}
     return JsonResponse(data)
 
-def remove(request):
+
+def update_duty(request):
+    start = request.GET.get("start", None)
+    end = request.GET.get("end", None)
     id = request.GET.get("id", None)
-    event = Events.objects.get(id=id)
-    event.delete()
+    duty = Duty.objects.get(id=id)
+    duty.start = start
+    duty.end = end
+    duty.save()
     data = {}
     return JsonResponse(data)
+
+
+def remove(request):
+    id = request.GET.get("id", None)
+    ticket = request.GET.get("ticket", None)
+    duty = request.GET.get("duty", None)
+
+    if ticket:
+        Ticket.objects.get(id=id).delete()
+    if duty:
+        Duty.objects.get(id=id).delete()
+
+    return JsonResponse({})
+
+
+def remove_duty(request):
+    id = request.GET.get("id", None)
+    duty = Duty.objects.get(id=id)
+    duty.delete()
+    return JsonResponse({})
+
 
 class CustomLoginView(LoginView):
     template_name = 'base/login.html'
@@ -82,11 +153,13 @@ class CustomLoginView(LoginView):
     def get_success_url(self):
         return reverse_lazy('tasks')
 
+
 class DutyViewSet(viewsets.ViewSet):
     def list(self, request):
         duty = Duty.objects.all()
         serializer = DutySerializer(duty, many=True)
         return Response(serializer.data)
+
 
 class ProblemViewSet(viewsets.ViewSet):
     def list(self, request):
@@ -94,18 +167,22 @@ class ProblemViewSet(viewsets.ViewSet):
         serializer = ProblemSerializer(stu, many=True)
         return Response(serializer.data)
 
+
 class ProblemListView(ListView, FilterView):
     model = Problem
     template_name = 'problems/problem.html'
+
 
 class ProblemDetail(DetailView):
     model = Problem
     template_name = "problems/problem_detail.html"
 
+
 class ProblemDelete(DeleteView):
     model = Problem
     template_name = 'problems/problemDelete.html'
     success_url = reverse_lazy('problem_list')
+
 
 @login_required(login_url='/accounts/login/')
 def edit(request, pk):
@@ -124,6 +201,7 @@ def edit(request, pk):
     except Problem.DoesNotExist:
         return HttpResponseNotFound("<h2>Person not found</h2>")
 
+
 def ProblemNew(request):
     try:
         if request.method == "POST":
@@ -139,18 +217,22 @@ def ProblemNew(request):
     except Problem.DoesNotExist:
         return HttpResponseNotFound("<h2>Person not found</h2>")
 
+
 class CompanyListView(ListView, FilterView):
     model = Company
     template_name = 'company/company.html'
+
 
 class CompanyDetail(DetailView):
     model = Company
     template_name = "company/company_detail.html"
 
+
 class CompanyDelete(DeleteView):
     model = Company
     template_name = 'company/companyDelete.html'
     success_url = reverse_lazy('company_list')
+
 
 @login_required(login_url='/accounts/login/')
 def Companyedit(request, pk):
@@ -169,6 +251,7 @@ def Companyedit(request, pk):
     except Company.DoesNotExist:
         return HttpResponseNotFound("<h2>Person not found</h2>")
 
+
 def CompanyNew(request):
     try:
         if request.method == "POST":
@@ -184,18 +267,22 @@ def CompanyNew(request):
     except Company.DoesNotExist:
         return HttpResponseNotFound("<h2>Person not found</h2>")
 
+
 class PartnyorListView(ListView, FilterView):
     model = Partnyor
     template_name = 'partnyor/partnyor.html'
+
 
 class PartnyorDetail(DetailView):
     model = Partnyor
     template_name = "partnyor/partnyor_detail.html"
 
+
 class PartnyorDelete(DeleteView):
     model = Partnyor
     template_name = 'partnyor/partnyorDelete.html'
     success_url = reverse_lazy('partnyor_list')
+
 
 @login_required(login_url='/accounts/login/')
 def PartnyorNew(request):
@@ -222,6 +309,7 @@ def PartnyorNew(request):
     except Duty.DoesNotExist:
         return HttpResponseNotFound("<h2>Person not found</h2>")
 
+
 @login_required(login_url='/accounts/login/')
 def PartnyorEdit(request, pk):
     partnyors = Partnyor.objects.get(pk=pk)
@@ -244,24 +332,29 @@ def PartnyorEdit(request, pk):
     else:
         return render(request, "partnyor/partnyor_edit.html", {"partnyors": partnyors, "companys": companys})
 
+
 class CompleksFilter(FilterSet):
     class Meta:
         model = Compleks
         fields = {"name": ["exact", "contains"], "status": ["exact"]}
+
 
 class CompleksListView(ListView, FilterView):
     model = Compleks
     template_name = 'compleks/compleks.html'
     filterset_class = CompleksFilter
 
+
 class CompleksDetail(DetailView):
     model = Compleks
     template_name = "compleks/compleks_detail.html"
+
 
 class CompleksDelete(DeleteView):
     model = Compleks
     template_name = 'compleks/compleksDelete.html'
     success_url = reverse_lazy('compleks_list')
+
 
 def Compleksedit(request, pk):
     compleks = get_object_or_404(Compleks, pk=pk)
@@ -277,6 +370,7 @@ def Compleksedit(request, pk):
     else:
         return render(request, "compleks/compleks_edit.html", {"compleks": compleks})
 
+
 def Compleks_New(request):
     if request.method == "POST":
         compleks = Compleks()
@@ -291,18 +385,22 @@ def Compleks_New(request):
     else:
         return render(request, "compleks/compleksCreate.html")
 
+
 class DutyListView(ListView, FilterView):
     model = Duty
     template_name = 'duty/duty.html'
+
 
 class DutyDetail(DetailView):
     model = Duty
     template_name = "duty/duty_detail.html"
 
+
 class DutyDelete(DeleteView):
     model = Duty
     template_name = 'duty/dutyDelete.html'
     success_url = reverse_lazy('duty_list')
+
 
 def DutyNew(request):
     users = User.objects.all()
@@ -325,6 +423,7 @@ def DutyNew(request):
     except Duty.DoesNotExist:
         return HttpResponseNotFound("<h2>Person not found</h2>")
 
+
 def Dutyedit(request, pk):
     duty = get_object_or_404(Duty, pk=pk)
     users = User.objects.all()
@@ -344,18 +443,22 @@ def Dutyedit(request, pk):
     else:
         return render(request, "duty/dutyEdit.html", {"duty": duty, "users": users})
 
+
 class TicketListView(ListView, FilterView):
     model = Ticket
     template_name = 'ticket/ticket.html'
+
 
 class TicketDetail(DetailView):
     model = Ticket
     template_name = "ticket/ticket_detail.html"
 
+
 class TicketDelete(DeleteView):
     model = Ticket
     template_name = 'ticket/ticketDelete.html'
     success_url = reverse_lazy('ticket_list')
+
 
 @login_required(login_url='/accounts/login/')
 def TicketEdit(request, pk):
@@ -392,6 +495,7 @@ def TicketEdit(request, pk):
                                                            "compleks": compleks, "partnyors": partnyors,
                                                            "companys": companys, "problems": problems})
 
+
 def TicketNew(request):
     users = User.objects.all()
     complekss = Compleks.objects.all()
@@ -421,8 +525,8 @@ def TicketNew(request):
         ticket.file = request.FILES.get("file")
         ticket.name = request.POST.get("name")
         ticket.createDate = timezone.now()
-        ticket.start = request.get("start")
-        ticket.end = request.get("end")
+        ticket.start = request.POST.get("start")
+        ticket.end = request.POST.get("end")
         ticket.status = request.POST.get("status")
         ticket.author = request.user
         ticket.save()
@@ -432,18 +536,22 @@ def TicketNew(request):
                                                             "companys": companys, "problems": problems,
                                                             "partnyors": partnyors})
 
+
 class EducationListView(ListView, FilterView):
     model = Education
     template_name = 'education/education.html'
+
 
 class EducationDetail(DetailView):
     model = Education
     template_name = "education/education_detail.html"
 
+
 class EducationDelete(DeleteView):
     model = Education
     template_name = 'education/educationDelete.html'
     success_url = reverse_lazy('education_list')
+
 
 @login_required(login_url='/accounts/login/')
 def EducationNew(request):
@@ -470,6 +578,7 @@ def EducationNew(request):
     except Education.DoesNotExist:
         return HttpResponseNotFound("<h2>education not found</h2>")
 
+
 @login_required(login_url='/accounts/login/')
 def EducationEdit(request, pk):
     educations = Education.objects.get(pk=pk)
@@ -492,21 +601,25 @@ def EducationEdit(request, pk):
     else:
         return render(request, "education/education_edit.html", {"educations": educations, "users": users})
 
+
 class TodoListView(ListView, FilterView):
     model = ToDo
     template_name = 'todo/todo.html'
 
+
 class TodoDetail(DetailView):
     model = ToDo
     template_name = "todo/todo_detail.html"
+
 
 class TodoDelete(DeleteView):
     model = ToDo
     template_name = 'todo/todoDelete.html'
     success_url = reverse_lazy('todo_list')
 
+
 @login_required(login_url='/accounts/login/')
-def ToDoNew(request):
+def ToDoNew(request, mode: str = None):
     users = User.objects.all()
     complekss = Compleks.objects.all()
 
@@ -521,8 +634,8 @@ def ToDoNew(request):
             todo.user = User.objects.get(id=user_id)
             todo.updatedDate = timezone.now()
             todo.author = request.user
-            todo.start = request.GET.get("start")
-            todo.end = request.GET.get("end")
+            todo.start = request.POST.get("start")
+            todo.end = request.POST.get("end")
             todo.color = request.get("color")
             todo.status = request.get("status")
             todo.file = request.FILES.get("file", None)
@@ -532,6 +645,12 @@ def ToDoNew(request):
             return render(request, "todo/todoCreate.html", {"users": users, "complekss": complekss})
     except ToDo.DoesNotExist:
         return HttpResponseNotFound("<h2>todo not found</h2>")
+
+
+def todoAjax(request):
+    users = User.objects.all()
+    complekss = Compleks.objects.all()
+    return render("todo/todoCreate.html", {"users": users, "complekss": complekss}, def_name='modal')
 
 
 @login_required(login_url='/accounts/login/')
@@ -558,12 +677,14 @@ def ToDoEdit(request, pk):
         todo.save()
         return HttpResponseRedirect("../.")
     else:
-        return render(request, "todo/todo_edit.html", { "users": users, "complekss": complekss, "todo": todo})
+        return render(request, "todo/todo_edit.html", {"users": users, "complekss": complekss, "todo": todo})
+
 
 # chart
 def chart_view(request):
     partnyor_data = Partnyor.objects.all()
     return render(request, 'partnyor.html', {'partnyor_data': partnyor_data})
+
 
 def pie_chart(request):
     labels = []
@@ -579,6 +700,7 @@ def pie_chart(request):
         'data': data,
     })
 
+
 def ticket_class_view(request):
     dataset = Partnyor.objects \
         .values('age') \
@@ -586,6 +708,7 @@ def ticket_class_view(request):
                   not_status_count=Count('age', filter=Q(status=0))) \
         .order_by('age')
     return render(request, 'chart.html', {'dataset': dataset})
+
 
 def chart_view(request):
     # Получаем данные из модели
@@ -603,6 +726,7 @@ def chart_view(request):
 
     return render(request, 'chart.html', context)
 
+
 def ticket_chart(request):
     problems = Problem.objects.all()
     problem_names = [problem.name for problem in problems]
@@ -614,6 +738,7 @@ def ticket_chart(request):
     }
     return render(request, 'ticket_chart.html', context)
 
+
 def ticket_Compleks_chart(request):
     complekss = Compleks.objects.all()
     complek_names = [complek.name for complek in complekss]
@@ -623,6 +748,7 @@ def ticket_Compleks_chart(request):
         'ticket_counts': json.dumps(ticket_counts),
     }
     return render(request, 'ticket_chart1.html', context)
+
 
 def chart_data(request):
     events = Events.objects.all()
@@ -634,13 +760,17 @@ def chart_data(request):
         'data': data,
     })
 
+
 def chart_view(request):
     return render(request, 'chart1.html')
+
+
 # modal Form
 
 def book_list(request):
     books = Book.objects.all()
     return render(request, 'book/book_list.html', {'books': books})
+
 
 def book_create(request):
     if request.method == 'POST':
@@ -654,6 +784,7 @@ def book_create(request):
         form = BookForm()
     return render(request, 'book/book_form.html', {'form': form})
 
+
 def book_update(request, pk):
     book = get_object_or_404(Book, pk=pk)
     if request.method == 'POST':
@@ -666,6 +797,7 @@ def book_update(request, pk):
     else:
         form = BookForm(instance=book)
     return render(request, 'book/book_form.html', {'form': form})
+
 
 def book_delete(request, pk):
     book = get_object_or_404(Book, pk=pk)
