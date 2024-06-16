@@ -1,10 +1,14 @@
 from django.contrib import admin
+from django.contrib.auth.models import User
+
 from .models import Problem, Compleks, Company, Partnyor, Duty, Education, Ticket, Events
 
 admin.site.register(Education)
 admin.site.register(Compleks)
 admin.site.register(Duty)
 admin.site.register(Events)
+# admin.site.register(User)
+
 
 @admin.register(Ticket)
 class TicketsAdmin(admin.ModelAdmin):

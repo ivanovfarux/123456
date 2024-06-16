@@ -13,9 +13,8 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from django.http import JsonResponse
 
-from ticket.forms import BookForm
 from ticket.models import Problem, Compleks, Company, Partnyor, Ticket, Duty, Events, \
-    Education, ToDo, Book
+    Education, ToDo
 from django.contrib.auth.views import LoginView
 import json
 from django.db.models import Count
@@ -34,8 +33,8 @@ def index(request):
 
 
 def all_events(request):
-    all_events = Events.objects.all()
 
+    all_events = Events.objects.all()
     out = []
     for event in all_events:
         out.append({
@@ -463,6 +462,7 @@ class TicketDelete(DeleteView):
 @login_required(login_url='/accounts/login/')
 def TicketEdit(request, pk):
     ticket = get_object_or_404(Ticket, pk=pk)
+    ticket.start = ticket.start.strftime("%d.%m.%Y %H:%M")
     users = User.objects.all()
     compleks = Compleks.objects.all()
     companys = Company.objects.all()
@@ -766,42 +766,42 @@ def chart_view(request):
 
 
 # modal Form
-
-def book_list(request):
-    books = Book.objects.all()
-    return render(request, 'book/book_list.html', {'books': books})
-
-
-def book_create(request):
-    if request.method == 'POST':
-        form = BookForm(request.POST)
-        if form.is_valid():
-            book = form.save()
-            return JsonResponse({'status': 'success', 'book_id': book.id})
-        else:
-            return JsonResponse({'status': 'error', 'errors': form.errors})
-    else:
-        form = BookForm()
-    return render(request, 'book/book_form.html', {'form': form})
-
-
-def book_update(request, pk):
-    book = get_object_or_404(Book, pk=pk)
-    if request.method == 'POST':
-        form = BookForm(request.POST, instance=book)
-        if form.is_valid():
-            form.save()
-            return JsonResponse({'status': 'success', 'book_id': book.id})
-        else:
-            return JsonResponse({'status': 'error', 'errors': form.errors})
-    else:
-        form = BookForm(instance=book)
-    return render(request, 'book/book_form.html', {'form': form})
-
-
-def book_delete(request, pk):
-    book = get_object_or_404(Book, pk=pk)
-    if request.method == 'POST':
-        book.delete()
-        return JsonResponse({'status': 'success'})
-    return render(request, 'book/book_confirm_delete.html', {'book': book})
+#
+# def book_list(request):
+#     books = Book.objects.all()
+#     return render(request, 'book/book_list.html', {'books': books})
+#
+#
+# def book_create(request):
+#     if request.method == 'POST':
+#         form = BookForm(request.POST)
+#         if form.is_valid():
+#             book = form.save()
+#             return JsonResponse({'status': 'success', 'book_id': book.id})
+#         else:
+#             return JsonResponse({'status': 'error', 'errors': form.errors})
+#     else:
+#         form = BookForm()
+#     return render(request, 'book_form.html', {'form': form})
+#
+#
+# def book_update(request, pk):
+#     book = get_object_or_404(Book, pk=pk)
+#     if request.method == 'POST':
+#         form = BookForm(request.POST, instance=book)
+#         if form.is_valid():
+#             form.save()
+#             return JsonResponse({'status': 'success', 'book_id': book.id})
+#         else:
+#             return JsonResponse({'status': 'error', 'errors': form.errors})
+#     else:
+#         form = BookForm(instance=book)
+#     return render(request, 'book_form.html', {'form': form})
+#
+#
+# def book_delete(request, pk):
+#     book = get_object_or_404(Book, pk=pk)
+#     if request.method == 'POST':
+#         book.delete()
+#         return JsonResponse({'status': 'success'})
+#     return render(request, 'book_confirm_delete.html', {'book': book})
