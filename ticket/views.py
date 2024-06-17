@@ -668,8 +668,8 @@ def ToDoNew(request, mode: str = None):
             todo.author = request.user
             todo.start = request.POST.get("start")
             todo.end = request.POST.get("end")
-            todo.color = request.get("color")
-            todo.status = request.get("status")
+            todo.color = request.POST.get("color")
+            todo.status = request.POST.get("status")
             todo.file = request.FILES.get("file", None)
             todo.save()
             return HttpResponseRedirect("../todo")
