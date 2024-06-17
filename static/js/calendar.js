@@ -1,7 +1,7 @@
 $(function () {
     const Calendar = FullCalendar.Calendar;
     const Draggable = FullCalendar.Draggable;
-
+    console.log(Calendar)
     const containerEl = document.getElementById('external-events');
     const checkbox = document.getElementById('drop-remove');
     const calendarEl = document.getElementById('calendar');
@@ -45,11 +45,11 @@ $(function () {
         });
     }
 
-    function updateDuty(id, start, end) {
+    function update(id, start, end, model) {
         $.ajax({
             type: "GET",
-            url: '/update_duty',
-            data: {id, start, end},
+            url: '/update',
+            data: {id, start, end, model},
             dataType: "json",
             success: function (data) {
                 calendar.refetchEvents()
@@ -69,26 +69,17 @@ $(function () {
         },
         events: function (info, successCallback, failureCallback) {
             let res = []
-            $.get('/all_duties', (data, status) => {
-                res = res.concat(data.map(duty => ({
-                    id: duty.id,
-                    title: duty.title,
-                    end: duty.end,
-                    start: duty.start,
-                    color: duty.color,
-                    duty: true
-                })))
-                $.get('/all_tickets', (data, status) => {
-                    res = res.concat(data.map(duty => ({
-                        id: duty.id,
-                        title: duty.title,
-                        end: duty.end,
-                        start: duty.start,
-                        color: duty.color,
-                        ticket: true
+            $.get('/all_events', (data, status) => {
+                successCallback(data.map(event =>
+                    ({
+                        id: event.id,
+                        title: event.title,
+                        url: '/' + event.model + '/edit/' + event.id,
+                        end: event.end,
+                        start: event.start,
+                        color: event.color,
+                        model: event.model
                     })))
-                    successCallback(res)
-                })
             })
         },
         selectable: true,
@@ -122,7 +113,8 @@ $(function () {
             const start = moment(event.start).format('YYYY-MM-DD');
             const end = moment(event.end).format('YYYY-MM-DD');
             const id = event.id;
-            updateDuty(id, start, end);
+            const model = _event.event.extendedProps.model;
+            update(id, start, end, model);
         },
 
         eventDrop: function (_event) {
@@ -131,28 +123,17 @@ $(function () {
             const start = moment(event.start).format('YYYY-MM-DD');
             const end = moment(event.end).format('YYYY-MM-DD');
             const id = event.id;
-            updateDuty(id, start, end);
+            const model = _event.event.extendedProps.model;
+            update(id, start, end, model);
         },
 
         eventClick: function (_event) {
-            console.log('Event', _event)
-            if (confirm("Are you sure you want to remove it?")) {
-                const id = _event.event.id;
-                const ticket = _event.event.extendedProps.ticket;
-                const duty = _event.event.extendedProps.duty;
-                $.ajax({
-                    type: "GET",
-                    url: '/remove',
-                    data: {'id': id, ticket, duty},
-                    dataType: "json",
-                    success: function (data) {
-                        calendar.refetchEvents()
-                    },
-                    error: function (data) {
-                        alert('There is a problem!!!');
-                    }
-                });
-            }
+            new Tooltip(_event.el, {
+                title: _event.event.title,
+                placement: 'top',
+                trigger: 'hover',
+                container: 'body'
+            });
         },
     });
 

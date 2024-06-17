@@ -79,7 +79,7 @@ urlpatterns = [
     path('all_tickets/', all_tickets),
     path('add_event/', add_event, name='add_event'),
     path('add_duty/', add_duty, name='add_duty'),
-    path('update/', update, name='update'),
+    path('update', update, name='update'),
     path('update_duty/', update_duty, name='update_duty'),
     path('remove/', remove, name='remove'),
     path('remove_duty', remove_duty, name='remove_duty'),

@@ -34,14 +34,39 @@ def index(request):
 
 def all_events(request):
 
-    all_events = Events.objects.all()
+    duties = Duty.objects.all()
+    tickets = Ticket.objects.all()
+    todos = ToDo.objects.all()
     out = []
-    for event in all_events:
+
+    for duty in duties:
         out.append({
-            'title': event.name,
-            'id': event.id,
-            'start': event.start.strftime("%Y-%m-%d"),
-            'end': event.end.strftime("%Y-%m-%d"),
+            'id': duty.id,
+            'title': duty.duty.username,
+            'start': duty.start.strftime("%Y-%m-%d"),
+            'end': duty.end.strftime("%Y-%m-%d"),
+            'color': duty.color if duty.color else '#198754',
+            'model': 'duty'
+        })
+
+    for ticket in tickets:
+        out.append({
+            'id': ticket.id,
+            'title': ticket.name,
+            'start': ticket.start.strftime("%Y-%m-%d"),
+            'end': ticket.end.strftime("%Y-%m-%d"),
+            'color': ticket.color if ticket.color else '#0d6efd',
+            'model': 'ticket'
+        })
+
+    for todo in todos:
+        out.append({
+            'id': todo.id,
+            'title': todo.name,
+            'start': todo.start.strftime("%Y-%m-%d"),
+            'end': todo.end.strftime("%Y-%m-%d"),
+            'color': todo.color if todo.color else '#ffc107',
+            'model': 'todo'
         })
 
     return JsonResponse(out, safe=False)
@@ -56,10 +81,9 @@ def all_duties(request):
             'title': duty.duty.username,
             'start': duty.start.strftime("%Y-%m-%d"),
             'end': duty.end.strftime("%Y-%m-%d"),
-            'color': duty.color if duty.color else 'green',
+            'color': duty.color if duty.color else '#198754',
             'duty': True
         })
-
     return JsonResponse(out, safe=False)
 
 
@@ -72,7 +96,7 @@ def all_tickets(request):
             'title': ticket.name,
             'start': ticket.start.strftime("%Y-%m-%d"),
             'end': ticket.end.strftime("%Y-%m-%d"),
-            'color': ticket.color if ticket.color else 'blue',
+            'color': ticket.color if ticket.color else '#0d6efd',
             'ticket': True
         })
 
@@ -101,15 +125,23 @@ def add_duty(request):
 def update(request):
     start = request.GET.get("start", None)
     end = request.GET.get("end", None)
-    title = request.GET.get("title", None)
     id = request.GET.get("id", None)
-    event = Events.objects.get(id=id)
+    model_name = request.GET.get("model", None)
+    model = Events
+
+    match model_name:
+        case 'duty':
+            model = Duty
+        case 'ticket':
+            model = Ticket
+        case 'todo':
+            model = ToDo
+
+    event = get_object_or_404(model, pk=id)
     event.start = start
     event.end = end
-    event.name = title
     event.save()
-    data = {}
-    return JsonResponse(data)
+    return JsonResponse({})
 
 
 def update_duty(request):

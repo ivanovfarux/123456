@@ -7,21 +7,31 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-md-3">
+        <div id="external-events" class="col-md-3">
             <div class="sticky-top mb-3">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Users</h4>
                     </div>
                     <div class="card-body">
-                        <div id="external-events">
+                        <div>
                             {% for user in users %}
                                 <div data-user-id="{{ user.id }}"
                                      class="external-event bg-success ui-draggable ui-draggable-handle"
                                      style="position: relative;">{{ user.username }}
                                 </div>
                             {% endfor %}
-
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sticky-top mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">ToDo</h4>
+                    </div>
+                    <div class="card-body">
+                        <div>
                             <div class="external-event bg-warning ui-draggable ui-draggable-handle"
                                  style="position: relative;">Go home
                             </div>
@@ -33,12 +43,6 @@
                             </div>
                             <div class="external-event bg-danger ui-draggable ui-draggable-handle"
                                  style="position: relative;">Sleep tight
-                            </div>
-                            <div class="checkbox">
-                                <label for="drop-remove">
-                                    <input type="checkbox" id="drop-remove">
-                                    remove after drop
-                                </label>
                             </div>
                         </div>
                     </div>
