@@ -1,8 +1,7 @@
 from django import forms
-from .models import *
-
+from .models import Problem
 
 class ProblemForm(forms.ModelForm):
     class Meta:
         model = Problem
-        fields = "__all__"
+        fields = ('name', 'created', 'creatorId', 'status')
