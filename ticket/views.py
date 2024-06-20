@@ -33,7 +33,6 @@ def index(request):
 
 
 def all_events(request):
-
     duties = Duty.objects.all()
     tickets = Ticket.objects.all()
     todos = ToDo.objects.all()
@@ -42,7 +41,7 @@ def all_events(request):
     for duty in duties:
         out.append({
             'id': duty.id,
-            'title': duty.duty.username,
+            'title': duty.duty.first_name + ' ' + duty.duty.last_name,
             'start': duty.start.strftime("%Y-%m-%d"),
             'end': duty.end.strftime("%Y-%m-%d"),
             'color': duty.color if duty.color else '#198754',
@@ -795,7 +794,6 @@ def chart_data(request):
 
 def chart_view(request):
     return render(request, 'chart1.html')
-
 
 # modal Form
 #
