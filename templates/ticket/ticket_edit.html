@@ -1,0 +1,132 @@
+{% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Ticket Edit! {% endblock title %}
+{% block content %}
+<div class="row">
+    <div class="col-10 offset-1">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center"> Ticket Edit Form</h2>
+            </div>
+            <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6 form-group">
+                            <div data-mdb-input-init class="form-outline">
+                                <label class="form-label" for="name">Name</label>
+                                <textarea id="name" name="name"
+                                          class="form-control form-control-lg" rows="3"
+                                          placeholder="Enter ...">{{ ticket.name }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-6 form-group">
+                            <div data-mdb-input-init class="form-outline">
+                                <label class="form-label" for="note">Note</label>
+                                <textarea value="{{ ticket.note }}" id="note" name="note"
+                                          class="form-control form-control-lg" rows="3"
+                                          placeholder="Enter ...">{{ ticket.note }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-6 form-group">
+                            <div data-mdb-input-init class="form-outline">
+                                <label for="company">Select Compleks:</label>
+                                <select class="form-control" id="compleks" name="compleks_id">
+                                    {% for compleks in compleks %}
+                                    <option value="{{ compleks.id }}">{{ compleks.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6 form-group">
+                            <div data-mdb-input-init class="form-outline">
+                                <label for="problem">Select Problem:</label>
+                                <select class="form-control" id="problem" name="problem_id">
+                                    {% for problem in problems %}
+                                    <option value="{{ problem.id }}">{{ problem.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6 form-group">
+                            <div data-mdb-input-init class="form-outline">
+                                <label for="company">Select Company:</label>
+                                <select class="form-control" id="company" name="company_id">
+                                    {% for company in companys %}
+                                    <option value="{{ company.id }}">{{ company.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        {% for user3 in ticket_users %}
+                        <p>{{ user3.name }}</p>
+                        {% endfor %}
+                        <div class="col-4 form-group">
+                            <label for="user">Select User:</label>
+                       <select name="user_id" id=user class="form-select form-select-solid is-valid" data-control="select2" data-placeholder="Select an option" data-allow-clear="true" multiple="multiple">
+       <!--             <select name="user_id" class="form-control select"  style="width:100%">-->
+                                {% for user in users %}
+                                <option {% if user in ticket_users %} selected {% endif %} value="{{ user.id }}"> {{user.last_name }} {{ user.first_name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-6 form-group">
+                            <div data-mdb-input-init class="form-outline">
+                                <label for="partnyor">Select Partnyor:</label>
+                                <select class="form-control" id="partnyor" name="partnyor_id">
+                                    {% for partnyor in partnyors %}
+                                    <option value="{{ partnyor.id }}">{{ partnyor.fio }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6 form-group">
+                            <div data-mdb-input-init class="form-outline">
+                                <label class="form-label" for="color">Color</label>
+                                <input type="color" id="color" value="{{ ticket.color }}"
+                                       class="form-control form-control-lg" name="color"/>
+                            </div>
+                        </div>
+                        <div class="col-6 form-group">
+                            <div data-mdb-input-init class="form-outline">
+                                <label class="form-label" for="start">Start</label>
+                                <input type="datetime-local" id="start" value="{{ ticket.start|date:'Y-m-d\TH:i' }}"
+                                       class="form-control form-control-lg"
+                                       name="start"/>
+                            </div>
+                        </div>
+                        <div class="col-6 form-group">
+                            <div data-mdb-input-init class="form-outline">
+                                <label class="form-label" for="end">End</label>
+                                <input type="datetime-local" id="end" value="{{ ticket.end|date:'Y-m-d\TH:i' }}"
+                                       class="form-control form-control-lg"
+                                       name="end"/>
+                            </div>
+                        </div>
+                        <div class="col-6 form-group">
+                            <label for="file">Current Image:</label><br>
+                            <img src="{{ ticket.file.url }}" alt="Current Image" width="100"><br>
+                            <label for="file">Upload New Image:</label><br>
+                            <input type="file" id="file" class="form-control form-control-lg"
+                                   accept="image/*, .pdf, .doc, .docx"
+                                   value="{{ ticket.file.url }}" name="file"><br>
+                            <p id="fileName">{{ ticket.file.name }}</p>
+                        </div>
+                        <div class="col-6 form-group">
+                            <div class="form-control-lg custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input"
+                                       id="statusCheckbox" name="status" {% if ticket.status %}checked{% endif %}>
+                                <label class="custom-control-label"
+                                       for="statusCheckbox">Status </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 form-group">
+                        <button type="submit" class="btn btn-primary">Tahrirlash</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock  %}

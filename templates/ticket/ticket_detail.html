@@ -1,0 +1,24 @@
+{% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %} Ticket! {% endblock title %}
+{% block content %}
+
+
+<div id="container" style="width: 100%;">
+    <h1>Ticket Detail</h1>
+    <h3>Name:       {{ ticket.name }}</h3>
+    <h3>Note:       {{ ticket.note }}</h3>
+    <h3>Compleks:   {{ ticket.compleks }}</h3>
+    <h3>problem:    {{ ticket.problem.name }}</h3>
+    <h3>Company:    {{ ticket.company }}</h3>
+    <h3>Author:     {{ ticket.user }}</h3>
+    <h3>Partnyor:   {{ ticket.partnyor.fio }}</h3>
+    <h3>CreateDate: {{ ticket.createDate }}</h3>
+    <h3>EndDate:    {{ ticket.endDate }}</h3>
+    <h3>UpdatedDate:{{ ticket.updatedDate }}</h3>
+    <h3>File:       {{ ticket.file.url }}</h3>
+    <h3>Status:     {{ ticket.status  }}</h3>
+    <h3>Author:     {{ ticket.author }}</h3>
+</div>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Problem Edit! {% endblock title %}
+{% block content %}
+<div class="container-fluid">
+    <div class="col d-flex justify-content-center" align="right">
+        <div class="col-md-6" align="right">
+            <div class="card" align="center">
+                <div class="card-header">
+                    <h3 class="card-title">FORM Edit Compleks</h3>
+                </div>
+                <form class="row gy-2 gx-3 align-items-center" method="post" enctype="multipart/form-data"
+                      action="{% url 'compleks_edit' pk=compleks.id %}">
+                    {% csrf_token %}
+                    <div class="card-body" align="center">
+                        <div class="form-group" align="left">
+                            <label for="name">Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="name"
+                                       placeholder="compleks1"
+                                       value="{{ compleks.name }}"
+                                       name="name">
+                                <div>
+                                    </input>
+                                </div>
+                            </div>
+
+                            <div class="container special-box">
+                                <div data-mdb-input-init class="form-outline">
+                                    <label for="schema_net">Current Image:</label><br>
+                                    <img src="{{ compleks.schema_net.url }}" alt="Current Image" width="200"><br>
+                                    <label class="form-label" for="schema_net">Upload New Schema</label>
+                                    <input type="file" id="schema_net" value="{{ compleks.schema_net.url }}"
+                                           class="form-control form-control-lg" name="schema_net"/>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group" align="left">
+                                <div data-mdb-input-init class="form-outline">
+                                    <label for="documents">Upload New schema_net:</label><br>
+                                    <img src="{{ compleks.documents.url }}" alt="Current Image" width="200"><br>
+                                    <label class="form-label" for="schema_net">Upload New documents</label>
+                                    <input type="file" id="documents" value="{{ compleks.documents.url }}"
+                                           class="form-control form-control-lg" name="documents"/>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-control-lg custom-control custom-switch">
+
+                                <input type="checkbox" class="custom-control-input" id="statusCheckbox" name="status" {% if compleks.status %}checked{% endif %}>
+
+                                <label class="custom-control-label" for="statusCheckbox">Status </label>
+
+                            </div>
+                            <div class="card-body" align="left">
+                                <button type="submit" class="btn btn-primary">Tahrirlash</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

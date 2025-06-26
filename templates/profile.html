@@ -1,0 +1,17 @@
+{% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Postlar! {% endblock title %}
+{% block content %}
+  <h2>Profile</h2>
+  <p>Username: {{ user.username }}</p>
+  <p>Email: {{ user.email }}</p>
+  <p>First name: {{ user.first_name }}</p>
+  <p>Last name: {{ user.last_name }}</p>
+  <p>Date of birth: {{ user.userprofile.date_of_birth }}</p>
+  <p>Bio: {{ user.userprofile.bio }}</p>
+  <p>Location: {{ user.userprofile.location }}</p>
+  {% if user.userprofile.photo %}
+    <img src="{{ user.userprofile.photo.url }}" alt="Profile photo">
+  {% endif %}
+  <a href="{% url 'edit_profile' %}">Edit profile</a>
+{% endblock %}

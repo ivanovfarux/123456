@@ -1,0 +1,156 @@
+{% extends 'adminlte/base.html' %}
+{% block title %}Python Django Ajax FullCalender For Tickets (Create, Read, Update and Delete){% endblock title %}
+{% block extra_head %}
+{% include '_calendar_styles.html' %}
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div id="external-events" class="col-md-3">
+        <div class="mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Users</h4>
+                </div>
+                <div class="card-body">
+                    <div>
+                        {% for user in users %}
+                            {% if user.userprofile.role == null %}
+                                <div data-user-id="{{ user.id }}"
+                                     class="external-event bg-success ui-draggable ui-draggable-handle"
+                                     style="position: relative;">
+                                    {{ user.first_name }} {{ user.username }} {{ user.last_name }}
+
+                                    {% if user.userprofile.photo %}
+                                        <img src="{{ user.userprofile.photo.url }}" alt="User Avatar"
+                                             style="width: 30px; height: 40px;">
+                                    {% else %}
+                                        <img src="https://via.placeholder.com/128" alt="User Avatar">
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+                <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Todo Active</h4>
+            </div>
+            <div class="card-body">
+                <div>
+                    {% if todos %}
+                        <h2>My Todos</h2>
+                        {% for todo in todos %}
+                            <div data-todo-id="{{ todo.id }}"
+                                 class="external-event bg-success ui-draggable ui-draggable-handle"
+                                 style="position: relative;">
+                                {{ todo.name }}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>Please log in to view your todos.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Ticket Active</h4>
+            </div>
+            <div class="card-body">
+                <div>
+                    {% if user.is_authenticated %}
+                    <h1>My Tickets</h1>
+                    {% for ticket in user.tickets.all %}
+                    <div data-ticket-id="{{ ticket.id }}"
+                         class="external-event bg-success ui-draggable ui-draggable-handle"
+                         style="position: relative;">
+                        {{ ticket.name }}
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <p>Please log in to view your tickets.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Event Active</h4>
+            </div>
+            <div class="card-body">
+                <div>
+                    {% for event in events %}
+                    {% if user.is_authenticated and event.author.id == request.user.id %}
+                    <div data-ticket-id="{{ event.id }}"
+                         class="external-event bg-success ui-draggable ui-draggable-handle"
+                         style="position: relative;"> {{ event.name }}{{ " " }}{{ event.author }}
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-body p-0">
+                <div id='calendar'></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-check">
+    <input class="form-check-input" type="checkbox" id="ticketCheckbox">
+    <label class="form-check-label" for="ticketCheckbox">
+        Ticket
+    </label>
+</div>
+
+<!-- Button to trigger the modal -->
+<button type="button" class="btn btn-primary" id="openModalBtn">
+    Open Modal
+</button>
+
+<!-- Modal structure -->
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Forms for creating or editing -->
+                <form id="ticketForm" action="{% url 'create_ticket' %}" method="post" enctype="multipart/form-data" style="display: none;">
+                    {% csrf_token %}
+                    {{ ticket_form.as_p }}
+                    <button type="submit" class="btn btn-primary">Save Ticket</button>
+                </form>
+
+                <form id="evenForm" action="{% url 'create_event' %}" method="post" style="display: none;">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Save Event</button>
+                </form>
+
+                <form id="todoForm" action="{% url 'create_todo' %}" method="post" enctype="multipart/form-data" style="display: none;">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Save To-Do</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block extra_js %}
+{% include '_calendar_scripts.html' %}
+{% include 'calen.html' %}
+{% endblock %}

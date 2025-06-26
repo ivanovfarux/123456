@@ -1,0 +1,16 @@
+{% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %} Company! {% endblock title %}
+{% block content %}
+
+
+<div id="container" style="width: 100%;">
+    <h1>Company Detail</h1>
+    <h3>Name : {{ company.name }}</h3>
+    <h3>Date : {{ company.createDate }}</h3>
+    <h3>Status : {{ company.status }}</h3>
+    <h3>Author : {{ company.author }}</h3>
+</div>
+
+{% endblock %}

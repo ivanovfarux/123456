@@ -1,0 +1,110 @@
+{% extends 'adminlte/base.html' %}
+{% block title %} Navbatchilar! {% endblock title %}
+{% block extra_js %}
+<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/static/css/jquery.dataTables.css">
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/static/js/popper.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" charset="utf8" src="/static/js/jquery.dataTables.js"></script>
+<script>
+        $(document).ready(function() {
+            $('#example').DataTable({
+                searching: true,
+                paging: true
+            });
+        });
+</script>
+{% endblock extra_js %}
+
+{% block content %}
+ <h1>All Duty list</h1>
+
+<section class="content">
+<div class="container-fluid">
+<div class="row">
+<div class="col-12">
+<div class="card">
+<div class="card-header">
+         <li class="list-inline-item">
+               <a href="{%url 'duty_create'%}" class="btn btn-primary"><i class="fa-sharp fa-solid fa-plus"></i>&nbsp;Add Duty</a>
+         </li>
+
+</div>
+<!-- /.card-header -->
+<div class="card-body">
+
+<table id="example" class="table table-bordered table-hover">
+  <thead>
+      <tr>
+          <th>FIO_DUTY</th>
+          <th>Start</th>
+          <th>End</th>
+          <th>Description</th>
+          <th>Color</th>
+          <th>Author</th>
+          <th>CreateDate</th>
+          <th>Status</th>
+          <th>Operation</th>
+     </tr>
+  </thead>
+  <tbody>
+    {% for duty in duty_list %}
+      <tr>
+        <td>{{ duty.duty }} </td>
+        <td>{{ duty.start }}</td>
+        <td>{{ duty.end }}</td>
+        <td>{{ duty.description }}</td>
+        <td>{{ duty.color }}</td>
+        <td>{{ duty.author }}</td>
+        <td>{{ duty.createDate}}</td>
+        <td>{{ duty.status }}</td>
+        <td>
+              <a href="{% url 'duty_view' duty.id %}"><i style='font-size:24px' class='fas'>&#xf085;</i>Detail</a>
+
+              <a href="{% url 'duty_delete' duty.id %}"><i class='far fa-trash-alt'></i>Delete</a>
+
+              <a href="{% url 'duty_edit' pk=duty.id %}">
+                  {% if user.is_authenticated %}
+                  <i style='font-size:24px' class='fas'>&#xf303;</i>Edit
+                  {% else %}
+                <a class="nav-item nav-link" href="{% url 'login' %}">
+                    <i style='font-size:24px' class='fas'>&#xf303;</i>Вход</a>
+                  {% endif %}
+              </a>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+     <nav aria-label="Page navigation">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+
+                <li class="page-item">
+                    <a class="page-link" href="?page=1" tabindex="-1" aria-disabled="true">First</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                </li>
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="#">{{ page_obj.number }}</a></li>
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+</div>
+{% endblock content %}
+</div>
+</div>
+</div>
+</div>
+</section>

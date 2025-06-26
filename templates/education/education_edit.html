@@ -1,0 +1,125 @@
+{% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %} Education Edit! {% endblock title %}
+{% block content %}
+<div class="container-fluid">
+    <div class="col d-flex justify-content-center" align="right">
+        <div class="col-md-6" align="right">
+            <div class="card" align="center">
+                <div class="card-header">
+                    <h3 class="card-title">FORM Edit Education</h3>
+                </div>
+                <form class="row gy-2 gx-3 align-items-center" method="post" enctype="multipart/form-data"
+                      action="{% url 'education_edit' pk=educations.id %}">
+                    {% csrf_token %}
+                    <div class="card-body" align="center">
+                        <div class="form-group" align="left">
+                            <label for="name">Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="name"
+                                       placeholder="education name"
+                                       value="{{ educations.name }}"
+                                       name="name"/>
+                            </div>
+                        </div>
+                        <div class="form-group" align="left">
+                            <label for="user">Teacher</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="user" name="user_id">
+                                    {% for user in users %}
+                                        <option value="{{ user.id }}"> {{user.last_name}} {{user.first_name}}</option>
+                                    {% endfor %}
+                                </select>
+                                <div>
+
+                                </div>
+                            </div>
+                            <div class="form-group" align="left">
+                                <label for="info">Info</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="info" value="{{ educations.info }}"
+                                           class="form-control form-control-lg" name="info"/>
+                                    <div>
+                                        </input>
+                                    </div>
+                                </div>
+                                <div class="form-group" align="left">
+                                    <label for="date">Date to spend</label>
+                                    <div class="col-sm-10">
+                                        <input type="datetime-local" id="date"
+                                               value="{{ educations.date|date:'Y-m-d\TH:i' }}" class="form-control form-control-lg"
+                                               name="date"/>
+                                        <div>
+                                            </input>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" align="left">
+                                     <label for="file">Upload File:</label>
+                                        <div class="col-sm-10">
+                                            <input type="file" id="file" class="form-control" name="file">
+                                            {% if educations.file %}
+                                            <p>Current File: <a href="{{ educations.file.url }}"  alt="Current file"> {{ educations.file }}</a></p>
+                                            {% else %}
+                                            <p>No file uploaded</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" align="left">
+                                        <label for="file">read user file </label>
+                                        <div class="col-sm-10">
+                                            <input type="text" id="read" value="{{ educations.read }}"
+                                                   class="form-control form-control-lg" name="read"/>
+                                            <div>
+                                                </input>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="form-group" align="left">
+                                            <label for="toDate">To Date </label>
+                                            <div class="col-sm-10">
+                                                <input type="datetime-local" id="toDate"
+                                                       value="{{ educations.toDate|date:'Y-m-d\TH:i' }}"
+                                                       class="form-control form-control-lg">
+                                                <div>
+                                                    </input>
+                                                </div>
+                                            </div>
+                                            <br>
+
+                                            <div class="form-group" align="left">
+                                                <label for="endDate">End Date </label>
+                                                <div class="col-sm-10">
+                                                    <input type="datetime-local" id="endDate"
+                                                           value="{{ educations.endDate|date:'Y-m-d\TH:i' }}"
+                                                           class="form-control form-control-lg" name="endDate"/>
+                                                    <div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="form-control-lg custom-control custom-switch">
+
+                                                    <input type="checkbox" class="custom-control-input"
+                                                           id="statusCheckbox" name="status" {% if educations.status %}checked{% endif %}>
+                                                    <label class="custom-control-label"
+                                                           for="statusCheckbox">Status </label>
+
+                                                </div>
+                                                <div class="col-sm-10" align="center">
+                                                    <button type="submit" class="btn btn-primary">Partnyor</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+           </div>
+        </div>
+    </div>
+ </div>
+{% endblock %}

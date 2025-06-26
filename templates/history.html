@@ -1,0 +1,11 @@
+{% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Postlar! {% endblock title %}
+{% block content %}
+    <h1>History</h1>
+    <ul>
+        {% for record in history %}
+            <li>{{ record.history_date }} - {{ record.history_user }} - {{ record.history_change_reason }} - {{ record.history_ip }}</li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

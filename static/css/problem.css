@@ -1,0 +1,38 @@
+/* Hide the default checkbox */
+.toggle-switch input[type="checkbox"] {
+  display: none;
+}
+
+/* Style the slider */
+.toggle-switch .slider {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  background-color: #ccc;
+  border-radius: 20px; /* round slider */
+  transition: background-color 0.3s;
+}
+
+/* Style the slider when checked */
+.toggle-switch input[type="checkbox"]:checked + .slider {
+  background-color: #2196F3;
+}
+
+/* Indicator (knob) inside the slider */
+.toggle-switch .slider::before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+/* Move the indicator when checked */
+.toggle-switch input[type="checkbox"]:checked + .slider::before {
+  transform: translateX(20px);
+}

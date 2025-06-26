@@ -1,0 +1,24 @@
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#openModalBtn').on('click', function() {
+            const isChecked = $('#ticketCheckbox').is(':checked');
+
+            if (isChecked) {
+                $('.modal-title').text('Ticket Form');
+                $('#ticketForm').show(); // Correctly select by ID
+                $('#evenForm').hide();
+                $('#todoForm').hide();
+            } else {
+                $('.modal-title').text('Even Form');
+                $('#ticketForm').hide();
+                $('#evenForm').show(); // Correctly select by ID
+                $('#todoForm').hide();
+            }
+
+            $('#myModal').modal('show');
+        });
+    });
+</script>

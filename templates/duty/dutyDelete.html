@@ -1,0 +1,12 @@
+ {% extends 'adminlte/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %} Companiy Delete! {% endblock title %}
+{% block content %}
+    <h2 class="text-center">Joriy Navbatchini o'chirish</h2>
+    <form method="post">{% csrf_token %}
+    <p>{{ duty.duty | truncatewords:4 }}... Navbatchini o'chirmoqchimisiz? </p>
+    <button type="submit" class="btn btn-danger ml-2">Tasdiqlayman</button>
+    </form>
+
+{% endblock %}
