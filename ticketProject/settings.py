@@ -49,19 +49,21 @@ INSTALLED_APPS = [
     'django_tables2',
     'django_htmx',
     'ticket',
+    'easyaudit',
+
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django_htmx.middleware.HtmxMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'easyaudit.middleware.easyaudit.EasyAuditMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
 ROOT_URLCONF = 'ticketProject.urls'
 
 TEMPLATES = [
@@ -87,10 +89,20 @@ WSGI_APPLICATION = 'ticketProject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME':  'Ticket_DB',
+        'USER':  'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -130,8 +142,11 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / 'static/']
+STATIC_URL = '/static/'
+# STATICFILES_DIRS = [BASE_DIR / 'static/']
+STATICFILES_DIRS = [
+    BASE_DIR / 'static'
+]
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
 # Default primary key field type
@@ -144,3 +159,7 @@ MEDIA_URL = '/media/'
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_RESTRICT_BY_USER = True
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = '/calendar1/'  # Перенаправление после логина
+LOGOUT_REDIRECT_URL = 'login'  # Перенаправление после выхода

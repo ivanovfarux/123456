@@ -1,5 +1,21 @@
 {% extends 'adminlte/lib/_main_sidebar.html' %}
 
+{% block logo_text %}<span class="brand-text font-weight-bolder">Ticket</span>{% endblock %}
+<div class="sidebar">
+        <!-- Sidebar user panel -->
+        {% block user_panel %}
+        <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+ <img src="{{ request.user.userprofile.photo.url }}" alt="User Avatar" class="img-size-40 mr-3 img-circle" width="128" height="128">
+
+        </div>
+        <div class="info">
+          <a href="#" class="d-block">{{user.first_name}} {{  user.username }} {{  user.last_name }}</a>
+        </div>
+      </div>
+        {% endblock %}
+
 {% block nav_links %}
 
 <li class="nav-item">
@@ -8,88 +24,145 @@
         <p>Calendar</p>
     </a>
 </li>
-<ul class="nav nav-pills nav-sidebar nav-child-indent flex-column" data-widget="treeview" role="menu">
 
-<li class="nav-item has-treeview menu-open">
-    <a href="/problems" class="nav-link">
-        <i class="nav-icon fa fa-envelope-open"></i>
-        <p>Problems</p>
-    </a>
-</li>
 <li class="nav-item">
-    <a href="/company" class="nav-link">
-        <i class="nav-icon  fa fa-list-alt" aria-hidden="true"></i>
-        <p>company </p>
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-circle"></i>
+        <p>
+            CC
+            <i class="fas fa-angle-left right"></i>
+        </p>
     </a>
-</li>
-</li><li class="nav-item">
-    <a href="/partnyor" class="nav-link">
-        <i class="nav-icon far fa-address-card"></i>
-        <p>Partnyor</p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="/compleks" class="nav-link">
-        <i class="nav-icon fab fa-accusoft"></i>
-        <p>compleks </p>
-    </a>
-</li>
+    {% if user.is_authenticated %}
+    <ul class="nav nav-treeview" style="display: none;">
+        <li class="nav-item">
+            <a href="/problems" class="nav-link">
+                <i class="nav-icon fa fa-envelope-open"></i>
+                <p>Problems</p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="/company" class="nav-link">
+                <i class="nav-icon  fa fa-list-alt" aria-hidden="true"></i>
+                <p>company </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/compleks" class="nav-link">
+                <i class="nav-icon fab fa-accusoft"></i>
+                <p>compleks </p>
+            </a>
+        </li>
     </ul>
+    {% else %}
+                <a href="#" class="nav-link disabled">Inactive Link</a>
+  {% endif %}
+</li>
 
-</li><li class="nav-item">
-    <a href="/duty" class="nav-link">
-        <i class="nav-icon 	fas fa-blender-phone"></i>
-        <p>Navbatchilik</p>
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-circle"></i>
+        <p>
+            PEE
+            <i class="fas fa-angle-left right"></i>
+        </p>
     </a>
+    <ul class="nav nav-treeview" style="display: none;">
+        <li class="nav-item">
+            <a href="/partnyor" class="nav-link">
+                <i class="nav-icon far fa-address-card"></i>
+                <p>Partnyor</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/education" class="nav-link">
+                <i class="nav-icon fas fa-graduation-cap"></i>
+                <p>Education</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/event" class="nav-link">
+                <i class="nav-icon fas fa-graduation-cap"></i>
+                <p>Event</p>
+            </a>
+        </li>
+    </ul>
 </li>
-</li><li class="nav-item">
-    <a href="/education" class="nav-link">
-        <i class="nav-icon fas fa-graduation-cap"></i>
-        <p>Education</p>
+
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-circle"></i>
+        <p>
+            DTT
+            <i class="fas fa-angle-left right"></i>
+        </p>
     </a>
+    <ul class="nav nav-treeview" style="display: none;">
+        <li class="nav-item">
+            <a href="/duty" class="nav-link">
+                <i class="nav-icon 	fas fa-blender-phone"></i>
+                <p>Navbatchilik</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/ticket" class="nav-link">
+                <i class='fas fa-ticket-alt' style='font-size:24px'></i>
+                <p>Ticket</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/todo" class="nav-link">
+                <i class='fas fa-desktop	' style='font-size:24px'></i>
+                <p>ToDo</p>
+            </a>
+        </li>
+    </ul>
 </li>
-</li><li class="nav-item">
-    <a href="/ticket" class="nav-link">
-       <i class='fas fa-ticket-alt' style='font-size:24px'></i>
-        <p>Ticket</p>
-    </a>
-</li>
-</li><li class="nav-item">
-    <a href="/todo" class="nav-link">
-       <i class='fas fa-desktop	' style='font-size:24px'></i>
-        <p>ToDo</p>
-    </a>
-</li>
-</li><li class="nav-item">
-    <a href="/partnyor1" class="nav-link">
-        <i class="nav-icon fas fa-chart-pie"></i>
-        <p>ChartPartnyor</p>
-    </a>
-</li>
-</li><li class="nav-item">
-    <a href="/chart" class="nav-link">
-        <i class="nav-icon fas fa-chart-bar	"></i>
-        <p>ChartCompaniya</p>
-    </a>
-</li>
-</li><li class="nav-item">
-    <a href="/ticket_chart" class="nav-link">
+
+
+<li class="nav-item">
+    <a href="#" class="nav-link">
         <i class="nav-icon far fa-chart-bar"></i>
-        <p>ChartProblems</p>
+        <p>
+            Charts
+            <i class="fas fa-angle-left right"></i>
+        </p>
     </a>
-</li>
-</li><li class="nav-item">
-    <a href="/ticket_chart1" class="nav-link">
-        <i class="nav-icon fas fas fa-chart-line	"></i>
-        <p>ChartTickets</p>
-    </a>
+    <ul class="nav nav-treeview" style="display: none;">
+        <li class="nav-item">
+            <a href="/partnyor1" class="nav-link">
+                <i class="nav-icon fas fa-chart-pie"></i>
+                <p>ChartPartnyor</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/chart" class="nav-link">
+                <i class="nav-icon fas fa-chart-bar	"></i>
+                <p>ChartCompaniya</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/ticket_chart" class="nav-link">
+                <i class="nav-icon far fa-chart-bar"></i>
+                <p>ChartProblems</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/ticket_chart1" class="nav-link">
+                <i class="nav-icon fas fas fa-chart-line	"></i>
+                <p>ChartTickets</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/chart2" class="nav-link">
+                <i class="nav-icon fas far fa-chart-bar	"></i>
+                <p>Chart Event</p>
+            </a>
+        </li>
+    </ul>
 </li>
 
-</li><li class="nav-item">
-    <a href="/chart2" class="nav-link">
-        <i class="nav-icon fas far fa-chart-bar	"></i>
-        <p>Chart Event</p>
-    </a>
-</li>
 
 {% endblock nav_links %}
+ </div>

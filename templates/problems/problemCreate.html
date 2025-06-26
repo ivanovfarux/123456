@@ -1,24 +1,40 @@
- {% extends 'adminlte/base.html' %}
+{% extends 'adminlte/base.html' %}
+{% load static %}
 {% load crispy_forms_tags %}
-
 {% block title %} Problem CREATE! {% endblock title %}
 {% block content %}
-     <h2 class="text-center">Problem qo'shish</h2>
-    <form method="POST" class="row gy-2 gx-3 align-items-center">{% csrf_token %}
-        <div class="col-auto">
-         <div data-mdb-input-init class="form-outline">
-           <label class="form-label" for="name">Name</label>
-             <input type="text" id="name" value="{{ problem.name }}" class="form-control" name="name" />
-         </div>
+<div class="container-fluid">
+    <div class="col d-flex justify-content-center" align="right">
+        <div class="col-md-6" align="right">
+            <div class="card" align="center">
+                <div class="card-header">
+                    <h3 class="card-title">FORM Create Problem</h3>
+                </div>
+                <form method="POST" class="row gy-2 gx-3 align-items-center">{% csrf_token %}
+                    <div class="card-body" align="center">
+                        <div class="form-group" align="left">
+                            <label for="name">Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="name"
+                                       placeholder="Problem1"
+                                       value="{{ problem.name }}"
+                                       name="name">
+                                <div>
+                                    </input>
+                                </div>
+                            </div>
+                            <div class="form-control-lg custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="statusCheckbox" name="status">
+                                <label class="custom-control-label" for="statusCheckbox">Status</label>
+                            </div>
+                            <div class="card-body" align="left">
+                                <button type="submit" class="btn btn-primary">Tahrirlash</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-      <div class="form-check form-switch">
-        <label  class="form-label" >Status</label>
-          <div data-mdb-input-init class="form-outline">
-            <label for="l_box1"><input type="radio" name="status" value="1" id="l_box1">Activ</label>
-            <label for="d_box2"><input type="radio" name="status" value="0" id="d_box2"> Noactiv</label>
-          </div>
-     </div>
- <button type="submit" class="btn btn-primary">Problem +</button>
-  </div>
-</form>
+    </div>
+</div>
 {% endblock%}
