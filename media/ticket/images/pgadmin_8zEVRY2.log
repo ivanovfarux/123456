@@ -1,0 +1,274 @@
+2022-06-24 10:35:20 ERROR  : ERROR:  insert or update on table "user_role" violates foreign key constraint "fkoqn0vpy8dpjr6u7kk4lqh15cq"
+DETAIL:  Key (user_id)=(3) is not present in table "tbl_user".
+2022-06-24 10:35:21 ERROR  : ERROR:  insert or update on table "user_role" violates foreign key constraint "fkoqn0vpy8dpjr6u7kk4lqh15cq"
+DETAIL:  Key (user_id)=(3) is not present in table "tbl_user".
+2022-06-24 10:35:28 ERROR  : ERROR:  insert or update on table "user_role" violates foreign key constraint "fkoqn0vpy8dpjr6u7kk4lqh15cq"
+DETAIL:  Key (user_id)=(3) is not present in table "tbl_user".
+2022-06-28 16:52:48 ERROR  : ERROR:  update or delete on table "tbl_employee" violates foreign key constraint "fkny9e25c1fflf6mk875shl1pwy" on table "spr_acces"
+DETAIL:  Key (id)=(11) is still referenced from table "spr_acces".
+2022-06-28 16:52:50 ERROR  : ERROR:  update or delete on table "tbl_employee" violates foreign key constraint "fkny9e25c1fflf6mk875shl1pwy" on table "spr_acces"
+DETAIL:  Key (id)=(11) is still referenced from table "spr_acces".
+2022-06-28 16:52:51 ERROR  : ERROR:  update or delete on table "tbl_employee" violates foreign key constraint "fkny9e25c1fflf6mk875shl1pwy" on table "spr_acces"
+DETAIL:  Key (id)=(11) is still referenced from table "spr_acces".
+2022-06-29 12:52:36 ERROR  : ERROR:  cannot drop schema public because other objects depend on it
+DETAIL:  table users depends on schema public
+table organization depends on schema public
+table role depends on schema public
+table sp_okonx depends on schema public
+table sp_okonx_organization_set depends on schema public
+table spr_acces depends on schema public
+table spr_acces_librarybs depends on schema public
+table spr_district depends on schema public
+table spr_district_employees depends on schema public
+table spr_libraryb depends on schema public
+table spr_position depends on schema public
+table spr_position_employee depends on schema public
+table spr_region depends on schema public
+table spr_region_districts depends on schema public
+table spr_region_employee depends on schema public
+table spr_soato depends on schema public
+table spr_soato_organization_set depends on schema public
+table tbl_book depends on schema public
+table tbl_book_acces depends on schema public
+table tbl_book_librarybs depends on schema public
+table tbl_car depends on schema public
+table tbl_car_employee depends on schema public
+table tbl_department depends on schema public
+table tbl_department_divisions depends on schema public
+table tbl_department_employee depends on schema public
+table tbl_division depends on schema public
+table tbl_division_employee depends on schema public
+table tbl_employee depends on schema public
+table tbl_employee_acces depends on schema public
+table tbl_employee_books depends on schema public
+table tbl_employee_librarybs depends on schema public
+table tbl_organizat depends on schema public
+table tbl_organizat_departments depends on schema public
+table tbl_organizat_divisions depends on schema public
+table tbl_organizat_employee depends on schema public
+table tbl_person depends on schema public
+table tbl_rank depends on schema public
+table tbl_rank_employee depends on schema public
+table tbl_user depends on schema public
+table user_role depends on schema public
+sequence hibernate_sequence depends on schema public
+table spr_equipment depends on schema public
+table spr_equipment_employee depends on schema public
+table spr_amc depends on schema public
+table spr_amc_employee depends on schema public
+table spr_dxc depends on schema public
+table spr_dxc_employee depends on schema public
+table spr_ipm depends on schema public
+table spr_ipm_employee depends on schema public
+table spr_router depends on schema public
+table spr_router_employee depends on schema public
+table spr_sigs depends on schema public
+table spr_sigs_employee depends on schema public
+table spr_stm depends on schema public
+table spr_stm_employee depends on schema public
+table spr_umd depends on schema public
+table spr_umd_employee depends on schema public
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2022-06-29 12:54:11 ERROR  : ERROR:  null value in column "role_id" violates not-null constraint
+DETAIL:  Failing row contains (null, admin).
+2022-06-29 12:54:12 ERROR  : ERROR:  null value in column "role_id" violates not-null constraint
+DETAIL:  Failing row contains (null, admin).
+2022-06-29 12:54:15 ERROR  : ERROR:  null value in column "role_id" violates not-null constraint
+DETAIL:  Failing row contains (null, admin).
+2022-06-29 15:35:37 ERROR  : ERROR:  cannot drop schema public because other objects depend on it
+DETAIL:  table organization depends on schema public
+table role depends on schema public
+table sp_okonx depends on schema public
+table sp_okonx_organization_set depends on schema public
+table spr_acces depends on schema public
+table spr_acces_librarybs depends on schema public
+table spr_amc depends on schema public
+table spr_amc_employee depends on schema public
+table spr_district depends on schema public
+table spr_district_employees depends on schema public
+table spr_equipment depends on schema public
+table spr_equipment_employee depends on schema public
+table spr_ipm depends on schema public
+table spr_ipm_employee depends on schema public
+table spr_libraryb depends on schema public
+table spr_position depends on schema public
+table spr_position_employee depends on schema public
+table spr_region depends on schema public
+table spr_region_districts depends on schema public
+table spr_region_employee depends on schema public
+table spr_router depends on schema public
+table spr_router_employee depends on schema public
+table spr_sigs depends on schema public
+table spr_sigs_employee depends on schema public
+table spr_soato depends on schema public
+table spr_soato_organization_set depends on schema public
+table spr_stm depends on schema public
+table spr_stm_employee depends on schema public
+table spr_umd depends on schema public
+table spr_umd_employee depends on schema public
+table spr_dxc depends on schema public
+table spr_dxc_employee depends on schema public
+table tbl_book depends on schema public
+table tbl_book_acces depends on schema public
+table tbl_book_librarybs depends on schema public
+table tbl_car depends on schema public
+table tbl_car_employee depends on schema public
+table tbl_department depends on schema public
+table tbl_department_divisions depends on schema public
+table tbl_department_employee depends on schema public
+table tbl_division depends on schema public
+table tbl_division_employee depends on schema public
+table tbl_employee depends on schema public
+table tbl_employee_acces depends on schema public
+table tbl_employee_books depends on schema public
+table tbl_employee_librarybs depends on schema public
+table tbl_organizat depends on schema public
+table tbl_organizat_departments depends on schema public
+table tbl_organizat_divisions depends on schema public
+table tbl_organizat_employee depends on schema public
+table tbl_person depends on schema public
+table tbl_rank depends on schema public
+table tbl_rank_employee depends on schema public
+table tbl_user depends on schema public
+table user_role depends on schema public
+sequence hibernate_sequence depends on schema public
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2022-06-29 17:42:59 ERROR  : ERROR:  null value in column "role_id" violates not-null constraint
+DETAIL:  Failing row contains (null, admin).
+2022-06-29 17:43:01 ERROR  : ERROR:  null value in column "role_id" violates not-null constraint
+DETAIL:  Failing row contains (null, admin).
+2022-06-29 17:54:19 ERROR  : ERROR:  cannot drop table spr_amc because other objects depend on it
+DETAIL:  constraint fkc6utbadm0oyee7hvuevskjm8w on table spr_amc_user depends on table spr_amc
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2022-06-29 17:54:28 ERROR  : ERROR:  cannot drop table spr_amc because other objects depend on it
+DETAIL:  constraint fkc6utbadm0oyee7hvuevskjm8w on table spr_amc_user depends on table spr_amc
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2022-06-30 16:06:35 ERROR  : Error connecting to the server: FATAL:  password authentication failed for user "postgres"
+
+2022-06-30 17:34:15 ERROR  : ERROR:  null value in column "id" violates not-null constraint
+DETAIL:  Failing row contains (null, null, null, null, null, null, null, null, null, 1).
+2022-06-30 17:34:17 ERROR  : ERROR:  null value in column "id" violates not-null constraint
+DETAIL:  Failing row contains (null, null, null, null, null, null, null, null, null, 1).
+2022-07-07 11:31:34 ERROR  : ERROR:  null value in column "id" violates not-null constraint
+DETAIL:  Failing row contains (null, 1, 1, 2022.01.10, 10.20.30.1, sigs1, null, null, null).
+2022-07-07 11:31:42 ERROR  : ERROR:  null value in column "id" violates not-null constraint
+DETAIL:  Failing row contains (null, 1, 1, 2022.01.10, 10.20.30.1, sigs1, 1, 1, 1).
+2022-07-07 11:31:46 ERROR  : ERROR:  null value in column "id" violates not-null constraint
+DETAIL:  Failing row contains (null, 1, 1, 2022.01.10, 10.20.30.1, sigs1, 1, 1, 1).
+2022-07-27 14:47:54 ERROR  : Error connecting to the server: FATAL:  password authentication failed for user "postgres"
+
+2022-08-10 17:00:36 ERROR  : ERROR:  invalid input syntax for type timestamp: "Huawei"
+LINE 1: UPDATE public.spr_atc SET version_soft='Huawei'::timestamp w...
+                                               ^
+2022-08-10 17:00:53 ERROR  : ERROR:  invalid input syntax for type timestamp: "Huawei"
+LINE 1: UPDATE public.spr_atc SET version_soft='Huawei'::timestamp w...
+                                               ^
+2022-08-10 17:01:42 ERROR  : ERROR:  invalid input syntax for type timestamp: "Huawei"
+LINE 1: UPDATE public.spr_atc SET version_soft='Huawei'::timestamp w...
+                                               ^
+2022-08-10 17:01:44 ERROR  : ERROR:  invalid input syntax for type timestamp: "Huawei"
+LINE 1: UPDATE public.spr_atc SET version_soft='Huawei'::timestamp w...
+                                               ^
+2022-08-10 17:01:57 ERROR  : ERROR:  invalid input syntax for type timestamp: "Huawei"
+LINE 1: ...00+05'::timestamp without time zone, version_soft='Huawei'::...
+                                                             ^
+2022-08-10 17:02:26 ERROR  : ERROR:  invalid input syntax for type timestamp: "Huawei"
+LINE 1: ...00+05'::timestamp without time zone, version_soft='Huawei'::...
+                                                             ^
+2022-08-10 17:02:31 ERROR  : ERROR:  invalid input syntax for type timestamp: "Huawei"
+LINE 1: ...00+05'::timestamp without time zone, version_soft='Huawei'::...
+                                                             ^
+2022-08-10 17:03:16 ERROR  : ERROR:  insert or update on table "spr_atc" violates foreign key constraint "fk34w892dc3xp4kwo61vb6hsbms"
+DETAIL:  Key (stm_id)=(1) is not present in table "spr_stm".
+2022-08-10 17:03:43 ERROR  : ERROR:  insert or update on table "spr_atc" violates foreign key constraint "fkggcvi2nyee7rrdbb43qlt18vt"
+DETAIL:  Key (router_id)=(1) is not present in table "spr_router".
+2022-08-10 17:03:46 ERROR  : ERROR:  insert or update on table "spr_atc" violates foreign key constraint "fkggcvi2nyee7rrdbb43qlt18vt"
+DETAIL:  Key (router_id)=(1) is not present in table "spr_router".
+2022-08-10 17:04:28 ERROR  : ERROR:  insert or update on table "spr_atc" violates foreign key constraint "fk34w892dc3xp4kwo61vb6hsbms"
+DETAIL:  Key (stm_id)=(1) is not present in table "spr_stm".
+2022-08-10 17:04:35 ERROR  : ERROR:  insert or update on table "spr_atc" violates foreign key constraint "fk34w892dc3xp4kwo61vb6hsbms"
+DETAIL:  Key (stm_id)=(1) is not present in table "spr_stm".
+2022-08-10 17:05:46 ERROR  : ERROR:  insert or update on table "spr_atc" violates foreign key constraint "fkkp3xuxyg1no240dhmuclv4dl0"
+DETAIL:  Key (ipm_id)=(1) is not present in table "spr_ipm1".
+2022-08-10 17:05:54 ERROR  : ERROR:  insert or update on table "spr_atc" violates foreign key constraint "fkkp3xuxyg1no240dhmuclv4dl0"
+DETAIL:  Key (ipm_id)=(1) is not present in table "spr_ipm1".
+2022-08-10 17:06:21 ERROR  : ERROR:  cannot drop table spr_ipm because other objects depend on it
+DETAIL:  constraint fk7elmcshjsvd51nvd49qiduylj on table spr_ipm_user depends on table spr_ipm
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2022-08-10 17:11:01 ERROR  : ERROR:  insert or update on table "spr_atc" violates foreign key constraint "fkdfphghtut598tdjn9hxwg6cb7"
+DETAIL:  Key (sigs_id)=(1) is not present in table "spr_sigs1".
+2022-08-10 17:11:03 ERROR  : ERROR:  insert or update on table "spr_atc" violates foreign key constraint "fkdfphghtut598tdjn9hxwg6cb7"
+DETAIL:  Key (sigs_id)=(1) is not present in table "spr_sigs1".
+2022-08-10 17:12:35 ERROR  : ERROR:  invalid input syntax for type timestamp: "Huawei"
+LINE 1: UPDATE public.spr_atc SET version_soft='Huawei'::timestamp w...
+                                               ^
+2022-08-10 17:12:49 ERROR  : ERROR:  invalid input syntax for type timestamp: "Huawei"
+LINE 1: UPDATE public.spr_atc SET version_soft='Huawei'::timestamp w...
+                                               ^
+2022-08-10 17:13:02 ERROR  : ERROR:  invalid input syntax for type timestamp: "Huawei"
+LINE 1: UPDATE public.spr_atc SET version_soft='Huawei'::timestamp w...
+                                               ^
+2022-08-11 11:41:54 ERROR  : ERROR:  update or delete on table "spr_amc" violates foreign key constraint "fk9su9i4vt8ua05o56j1mq6ktoo" on table "spr_atc"
+DETAIL:  Key (id)=(2) is still referenced from table "spr_atc".
+2022-08-11 11:41:56 ERROR  : ERROR:  update or delete on table "spr_amc" violates foreign key constraint "fk9su9i4vt8ua05o56j1mq6ktoo" on table "spr_atc"
+DETAIL:  Key (id)=(2) is still referenced from table "spr_atc".
+2022-08-11 11:42:00 ERROR  : ERROR:  update or delete on table "spr_amc" violates foreign key constraint "fk9su9i4vt8ua05o56j1mq6ktoo" on table "spr_atc"
+DETAIL:  Key (id)=(2) is still referenced from table "spr_atc".
+2022-08-11 11:42:03 ERROR  : ERROR:  update or delete on table "spr_amc" violates foreign key constraint "fk9su9i4vt8ua05o56j1mq6ktoo" on table "spr_atc"
+DETAIL:  Key (id)=(2) is still referenced from table "spr_atc".
+2022-08-11 11:42:12 ERROR  : ERROR:  update or delete on table "spr_amc" violates foreign key constraint "fk9su9i4vt8ua05o56j1mq6ktoo" on table "spr_atc"
+DETAIL:  Key (id)=(2) is still referenced from table "spr_atc".
+2022-08-11 16:18:15 ERROR  : ERROR:  insert or update on table "spr_atc" violates foreign key constraint "fkjeexjffjywf31f2kdnp5xlqxj"
+DETAIL:  Key (region_id)=(25) is not present in table "spr_region".
+2022-08-11 16:18:18 ERROR  : ERROR:  insert or update on table "spr_atc" violates foreign key constraint "fkjeexjffjywf31f2kdnp5xlqxj"
+DETAIL:  Key (region_id)=(25) is not present in table "spr_region".
+2022-08-11 16:19:42 ERROR  : ERROR:  update or delete on table "spr_amc" violates foreign key constraint "fk9su9i4vt8ua05o56j1mq6ktoo" on table "spr_atc"
+DETAIL:  Key (id)=(15) is still referenced from table "spr_atc".
+2022-08-11 16:20:03 ERROR  : ERROR:  update or delete on table "spr_amc" violates foreign key constraint "fk9su9i4vt8ua05o56j1mq6ktoo" on table "spr_atc"
+DETAIL:  Key (id)=(15) is still referenced from table "spr_atc".
+2022-08-11 16:20:06 ERROR  : ERROR:  update or delete on table "spr_amc" violates foreign key constraint "fk9su9i4vt8ua05o56j1mq6ktoo" on table "spr_atc"
+DETAIL:  Key (id)=(2) is still referenced from table "spr_atc".
+2022-08-23 16:18:32 ERROR  : ERROR:  update or delete on table "spr_equipment" violates foreign key constraint "fk9n6loc127hnmo7jt5d7dj9kdv" on table "spr_atc"
+DETAIL:  Key (id)=(35) is still referenced from table "spr_atc".
+2023-09-27 19:01:24 ERROR  : ERROR:  syntax error at or near ")"
+LINE 11: )
+         ^
+2023-09-27 19:22:35 ERROR  : ERROR:  syntax error at or near "("
+LINE 1: create table(
+                    ^
+2023-10-31 17:33:39 ERROR  : ERROR:  syntax error at or near "createdb"
+LINE 1: createdb django_db;
+        ^
+2023-10-31 17:37:19 ERROR  : ERROR:  new collation (C) is incompatible with the collation of the template database (Uzbek (Cyrillic)_Uzbekistan.1251)
+HINT:  Use the same collation as in the template database, or use template0 as template.
+2023-10-31 17:37:36 ERROR  : ERROR:  new collation (C) is incompatible with the collation of the template database (Uzbek (Cyrillic)_Uzbekistan.1251)
+HINT:  Use the same collation as in the template database, or use template0 as template.
+2023-10-31 17:38:17 ERROR  : ERROR:  invalid locale name: "POSIX"
+2023-11-09 17:30:57 ERROR  : ERROR:  column "id" is of type integer[] but expression is of type integer
+LINE 3:     VALUES (1, 'asd');
+                    ^
+HINT:  You will need to rewrite or cast the expression.
+2023-11-09 17:31:19 ERROR  : ERROR:  syntax error at or near "'asd'"
+LINE 3:     VALUES (12   'asd');
+                         ^
+2023-11-09 17:31:27 ERROR  : ERROR:  column "id" is of type integer[] but expression is of type integer
+LINE 3:     VALUES (12,   'a');
+                    ^
+HINT:  You will need to rewrite or cast the expression.
+2023-11-09 17:33:09 ERROR  : ERROR:  column "id" is of type integer[] but expression is of type integer
+LINE 3:     VALUES (1,   'a');
+                    ^
+HINT:  You will need to rewrite or cast the expression.
+2023-11-09 17:33:13 ERROR  : ERROR:  INSERT has more target columns than expressions
+LINE 2:             id, name)
+                        ^
+2023-11-09 17:33:22 ERROR  : ERROR:  null value in column "id" violates not-null constraint
+DETAIL:  Failing row contains (null, a).
+2023-11-09 17:33:40 ERROR  : ERROR:  column "id" is of type integer[] but expression is of type integer
+LINE 2:     VALUES ( 1, 'a');
+                     ^
+HINT:  You will need to rewrite or cast the expression.
+2023-11-09 17:34:27 ERROR  : ERROR:  malformed array literal: "1"
+LINE 2:     VALUES ( '1' , 'a');
+                     ^
+DETAIL:  Array value must start with "{" or dimension information.
