@@ -1,20 +1,20 @@
 {% extends 'adminlte/base.html' %}
 {% load crispy_forms_tags %}
-{% block title %} Company Edit! {% endblock title %}
+{% block title %} Компанияни ўзгартириш! {% endblock title %}
 {% block content %}
 <div class="container-fluid">
     <div class="col d-flex justify-content-center" align="right">
         <div class="col-md-6" align="right">
             <div class="card" align="center">
                 <div class="card-header">
-                    <h3 class="card-title">FORM Edit Company</h3>
+                    <h3 class="card-title">Компанияни ўзгартириш ойнаси</h3>
                 </div>
         <form class="row gy-2 gx-3 align-items-center" method="post" enctype="multipart/form-data"
                       action="{% url 'company_edit' pk=company.id %}">
                     {% csrf_token %}
                     <div class="card-body" align="center">
                         <div class="form-group" align="left">
-                            <label for="name">Name</label>
+                            <label for="name">номи</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="name"
                                        placeholder="Company1"
@@ -28,7 +28,7 @@
 
                                 <input type="checkbox" class="custom-control-input" id="statusCheckbox" name="status" {% if company.status %}checked{% endif %}>
 
-                                   <label class="custom-control-label" for="statusCheckbox">Status </label>
+                                   <label class="custom-control-label" for="statusCheckbox">Ҳолати </label>
 
                             </div>
                         <div class="card-body" align="left">

@@ -4,12 +4,12 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+Django = "~=4.2.13"
+djangorestframework = "~=3.14.0"
+django-filter = "~=24.2"
+django-easy-audit = "*"
 
 [dev-packages]
 
 [requires]
 python_version = "3.9"
-
-Django~=4.2.13
-djangorestframework~=3.14.0
-django-filter~=24.2

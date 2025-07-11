@@ -9,7 +9,7 @@
         <div class="mb-3">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Users</h4>
+                    <h4 class="card-title">Навбатчилар рўйхати</h4>
                 </div>
                 <div class="card-body">
                     <div>
@@ -35,12 +35,12 @@
         </div>
                 <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Todo Active</h4>
+                <h4 class="card-title">Ишлар рўйхати</h4>
             </div>
             <div class="card-body">
                 <div>
                     {% if todos %}
-                        <h2>My Todos</h2>
+                        <h2>Менинг ишларим</h2>
                         {% for todo in todos %}
                             <div data-todo-id="{{ todo.id }}"
                                  class="external-event bg-success ui-draggable ui-draggable-handle"
@@ -49,19 +49,19 @@
                             </div>
                         {% endfor %}
                     {% else %}
-                        <p>Please log in to view your todos.</p>
+                        <p>Ишлар мавжуд эмас!</p>
                     {% endif %}
                 </div>
             </div>
         </div>
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Ticket Active</h4>
+                <h4 class="card-title">Вазифалар рўйхати</h4>
             </div>
             <div class="card-body">
                 <div>
                     {% if user.is_authenticated %}
-                    <h1>My Tickets</h1>
+                    <h1>Менинг вазифаларим</h1>
                     {% for ticket in user.tickets.all %}
                     <div data-ticket-id="{{ ticket.id }}"
                          class="external-event bg-success ui-draggable ui-draggable-handle"
@@ -70,81 +70,33 @@
                     </div>
                     {% endfor %}
                     {% else %}
-                    <p>Please log in to view your tickets.</p>
+                    <p>Вазифалар мавжуд эмас!</p>
                     {% endif %}
                 </div>
             </div>
         </div>
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Event Active</h4>
-            </div>
-            <div class="card-body">
-                <div>
-                    {% for event in events %}
-                    {% if user.is_authenticated and event.author.id == request.user.id %}
-                    <div data-ticket-id="{{ event.id }}"
-                         class="external-event bg-success ui-draggable ui-draggable-handle"
-                         style="position: relative;"> {{ event.name }}{{ " " }}{{ event.author }}
-                    </div>
-                    {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
+<!--        <div class="card">-->
+<!--            <div class="card-header">-->
+<!--                <h4 class="card-title">Мухим тадбирлар</h4>-->
+<!--            </div>-->
+<!--            <div class="card-body">-->
+<!--                <div>-->
+<!--                    {% for event in events %}-->
+<!--                    {% if user.is_authenticated and event.author.id == request.user.id %}-->
+<!--                    <div data-ticket-id="{{ event.id }}"-->
+<!--                         class="external-event bg-success ui-draggable ui-draggable-handle"-->
+<!--                         style="position: relative;"> {{ event.name }}{{ " " }}{{ event.author }}-->
+<!--                    </div>-->
+<!--                    {% endif %}-->
+<!--                    {% endfor %}-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
     <div class="col-md-9">
         <div class="card">
             <div class="card-body p-0">
                 <div id='calendar'></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" id="ticketCheckbox">
-    <label class="form-check-label" for="ticketCheckbox">
-        Ticket
-    </label>
-</div>
-
-<!-- Button to trigger the modal -->
-<button type="button" class="btn btn-primary" id="openModalBtn">
-    Open Modal
-</button>
-
-<!-- Modal structure -->
-<div id="myModal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Forms for creating or editing -->
-                <form id="ticketForm" action="{% url 'create_ticket' %}" method="post" enctype="multipart/form-data" style="display: none;">
-                    {% csrf_token %}
-                    {{ ticket_form.as_p }}
-                    <button type="submit" class="btn btn-primary">Save Ticket</button>
-                </form>
-
-                <form id="evenForm" action="{% url 'create_event' %}" method="post" style="display: none;">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit" class="btn btn-primary">Save Event</button>
-                </form>
-
-                <form id="todoForm" action="{% url 'create_todo' %}" method="post" enctype="multipart/form-data" style="display: none;">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit" class="btn btn-primary">Save To-Do</button>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

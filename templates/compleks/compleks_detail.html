@@ -1,18 +1,18 @@
 {% extends 'adminlte/base.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %} Compleks! {% endblock title %}
+{% block title %} Комплекс! {% endblock title %}
 {% block content %}
 
 
 <div id="container" style="width: 100%;">
-    <h1>Compleks Detail</h1>
-    <h3>Name: {{ compleks.name }}</h3>
-    <h3>Schema_net: {{ compleks.schema_net }}</h3>
-    <h3>Documents: {{ compleks.documents }}</h3>
-    <h3>Date: {{ compleks.createDate }}</h3>
-    <h3>Author: {{ compleks.author }}</h3>
-    <h3>Status: {{ compleks.status }}</h3>
+    <h1>Комплексни кўриш</h1>
+    <h3>Номи: <b> {{ compleks.name }}</b></h3>
+    <h3>тармоқ схемаси: <b> {{ compleks.schema_net }}</b></h3>
+    <h3>ҳужжати: <b> {{ compleks.documents }}</b></h3>
+    <h3>яратилган вақти: <b> {{ compleks.createDate }}</b></h3>
+    <h3>муаллиф: <b> {{ compleks.author }}</b></h3>
+    <h3>ҳолати: <b> {{ compleks.status }}</b></h3>
 </div>
 
 {% endblock %}

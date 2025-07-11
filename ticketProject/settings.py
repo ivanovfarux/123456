@@ -31,9 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    # General use templates & template tags (should appear first)
     'adminlte3',
-    # Optional: Django admin theme (must be before django.contrib.admin)
     'adminlte3_theme',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'easyaudit',
     'ckeditor',
     'ckeditor_uploader',
     'django_filters',
@@ -49,7 +48,6 @@ INSTALLED_APPS = [
     'django_tables2',
     'django_htmx',
     'ticket',
-    'easyaudit',
 
 ]
 
@@ -57,13 +55,13 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django_htmx.middleware.HtmxMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'easyaudit.middleware.easyaudit.EasyAuditMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 ROOT_URLCONF = 'ticketProject.urls'
 
 TEMPLATES = [
@@ -139,6 +137,7 @@ USE_TZ = True
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
@@ -147,8 +146,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
-MEDIA_URL = 'media/'
-MEDIA_ROOT = BASE_DIR / 'media/'
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

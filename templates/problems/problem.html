@@ -1,6 +1,6 @@
 {% extends 'adminlte/base.html' %}
 {% load crispy_forms_tags %}
-{% block title %} Problemlar! {% endblock title %}
+{% block title %} Муаммолар рўйхати! {% endblock title %}
 {% block styles %}
 {% endblock %}
 {% block extra_js %}
@@ -21,10 +21,8 @@
         });
 </script>
 {% endblock extra_js %}
-
 {% block content %}
- <h1>All Problem list</h1>
-
+ <h1>Муаммолар рўйхати</h1>
 <section class="content">
 <div class="container-fluid">
 <div class="row">
@@ -34,17 +32,17 @@
 <div class="card-body">
     <ul class="list-inline">
         <li class="list-inline-item">
-            <a href="{%url 'problem_create'%}" class="btn btn-primary"><i class="fa-sharp fa-solid fa-plus"></i>&nbsp;Add Problems</a>
+            <a href="{%url 'problem_create'%}" class="btn btn-primary"><i class="fa-sharp fa-solid fa-plus"></i> Муаммо яратиш</a>
         </li>
     </ul>
 <table id="example" class="table table-bordered table-hover">
   <thead>
       <tr>
-          <th>name</th>
-          <th>date</th>
-          <th>author</th>
-          <th>status</th>
-          <th>Operation</th>
+          <th>номи</th>
+          <th>яратилган вақти</th>
+          <th>муаллиф</th>
+          <th>ҳолати</th>
+          <th>амалиёт</th>
       </tr>
    </thead>
 
@@ -60,62 +58,56 @@
                         Noactiv
                     {% endif %}
             </td>
-          <td><a href="{% url 'problem_view' problem.id %}"><i style='font-size:24px' class='fas'>&#xf085;</i>Detail</a>
+          <td><a href="{% url 'problem_view' problem.id %}"><i style='font-size:24px' class='fas'>&#xf085;</i>кўриш</a>
 
-              <a href="{% url 'problem_delete' problem.id %}"><i class='far fa-trash-alt'></i>Delete</a>
+              <a href="{% url 'problem_delete' problem.id %}"><i class='far fa-trash-alt'></i>ўчириш</a>
 
               <a href="{% url 'problem_edit' pk=problem.id %}">
                   {% if user.is_authenticated %}
-                  <i style='font-size:24px' class='fas'>&#xf303;</i>Edit
+                  <i style='font-size:24px' class='fas'>&#xf303;</i>ўзгартириш
                   {% else %}
                 <a class="nav-item nav-link" href="{% url 'login' %}">
-                    <i style='font-size:24px' class='fas'>&#xf303;</i>Вход</a>
+                    <i style='font-size:24px' class='fas'>&#xf303;</i>кириш</a>
                   {% endif %}
               </a>
-
-
-
           </td>
-
-
       </tr>
     {% endfor %}
-    <tfoot>
-    <tr>
-         <th>name</th>
-          <th>date</th>
-          <th>author</th>
-          <th>status</th>
-          <th>deystviya</th>
-    </tr>
-    </tfoot>
+<!--    <tfoot>-->
+<!--    <tr>-->
+<!--          <th>номи</th>-->
+<!--          <th>яратилган вақти</th>-->
+<!--          <th>муаллиф</th>-->
+<!--          <th>ҳолати</th>-->
+<!--          <th>амалиёт</th>-->
+<!--    </tr>-->
+<!--    </tfoot>-->
 </table>
-     <nav aria-label="Page navigation">
-            <ul class="pagination">
-                {% if page_obj.has_previous %}
-                <li class="page-item">
-                    <a class="page-link" href="?page=1" tabindex="-1" aria-disabled="true">First</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-                </li>
-                {% endif %}
-                <li class="page-item"><a class="page-link" href="#">{{ page_obj.number }}</a></li>
-                {% if page_obj.has_next %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-                </li>
-                {% endif %}
-            </ul>
-        </nav>
+<!--     <nav aria-label="Page navigation">-->
+<!--            <ul class="pagination">-->
+<!--                {% if page_obj.has_previous %}-->
+<!--                <li class="page-item">-->
+<!--                    <a class="page-link" href="?page=1" tabindex="-1" aria-disabled="true">First</a>-->
+<!--                </li>-->
+<!--                <li class="page-item">-->
+<!--                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">олдинги</a>-->
+<!--                </li>-->
+<!--                {% endif %}-->
+<!--&lt;!&ndash;                <li class="page-item"><a class="page-link" href="#">{{ page_obj.number }}</a>авақ</li>&ndash;&gt;-->
+<!--                {% if page_obj.has_next %}-->
+<!--                <li class="page-item">-->
+<!--                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">навбатдаги</a>-->
+<!--                </li>-->
+<!--                <li class="page-item">-->
+<!--                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">охирги</a>-->
+<!--                </li>-->
+<!--                {% endif %}-->
+<!--            </ul>-->
+<!--        </nav>-->
 </div>
 </div>
 </div>
 </div>
 </div>
-
 </section>
 {% endblock %}

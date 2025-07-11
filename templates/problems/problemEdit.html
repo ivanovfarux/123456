@@ -7,14 +7,14 @@
         <div class="col-md-6" align="right">
             <div class="card" align="center">
                 <div class="card-header">
-                    <h3 class="card-title">FORM Edit Problem</h3>
+                    <h3 class="card-title">Муаммони ўзгартириш ойнаси</h3>
                 </div>
         <form class="row gy-2 gx-3 align-items-center" method="post" enctype="multipart/form-data"
                       action="{% url 'problem_edit' pk=problem.id %}">
                     {% csrf_token %}
                     <div class="card-body" align="center">
                         <div class="form-group" align="left">
-                            <label for="name">Name</label>
+                            <label for="name">Номи</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="name"
                                        placeholder="Problem1"
@@ -28,11 +28,11 @@
 
                                 <input type="checkbox" class="custom-control-input" id="statusCheckbox" name="status" {% if problem.status %}checked{% endif %}>
 
-                                   <label class="custom-control-label" for="statusCheckbox">Status </label>
+                                   <label class="custom-control-label" for="statusCheckbox">Ҳолати </label>
 
                             </div>
                         <div class="card-body" align="left">
-                            <button type="submit" class="btn btn-primary">Tahrirlash</button>
+                            <button type="submit" class="btn btn-primary">Ўзгартириш</button>
                         </div>
                         </div>
                     </div>

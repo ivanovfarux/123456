@@ -1,20 +1,20 @@
 {% extends 'adminlte/base.html' %}
 {% load crispy_forms_tags %}
-{% block title %} Problem Edit! {% endblock title %}
+{% block title %} Комплекс ўзгартириш! {% endblock title %}
 {% block content %}
 <div class="container-fluid">
     <div class="col d-flex justify-content-center" align="right">
         <div class="col-md-6" align="right">
             <div class="card" align="center">
                 <div class="card-header">
-                    <h3 class="card-title">FORM Edit Compleks</h3>
+                    <h3 class="card-title">комплекс ўзгартириш ойнаси</h3>
                 </div>
                 <form class="row gy-2 gx-3 align-items-center" method="post" enctype="multipart/form-data"
                       action="{% url 'compleks_edit' pk=compleks.id %}">
                     {% csrf_token %}
                     <div class="card-body" align="center">
                         <div class="form-group" align="left">
-                            <label for="name">Name</label>
+                            <label for="name">номи</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="name"
                                        placeholder="compleks1"
@@ -27,9 +27,9 @@
 
                             <div class="container special-box">
                                 <div data-mdb-input-init class="form-outline">
-                                    <label for="schema_net">Current Image:</label><br>
+                                    <label for="schema_net">ҳозирги тармоқ схемаси:</label><br>
                                     <img src="{{ compleks.schema_net.url }}" alt="Current Image" width="200"><br>
-                                    <label class="form-label" for="schema_net">Upload New Schema</label>
+                                    <label class="form-label" for="schema_net">янги тармоқ схемаси</label>
                                     <input type="file" id="schema_net" value="{{ compleks.schema_net.url }}"
                                            class="form-control form-control-lg" name="schema_net"/>
                                 </div>
@@ -37,9 +37,9 @@
                             <br>
                             <div class="form-group" align="left">
                                 <div data-mdb-input-init class="form-outline">
-                                    <label for="documents">Upload New schema_net:</label><br>
+                                    <label for="documents">ҳозирги ҳужжати:</label><br>
                                     <img src="{{ compleks.documents.url }}" alt="Current Image" width="200"><br>
-                                    <label class="form-label" for="schema_net">Upload New documents</label>
+                                    <label class="form-label" for="documents">янги ҳужжати</label>
                                     <input type="file" id="documents" value="{{ compleks.documents.url }}"
                                            class="form-control form-control-lg" name="documents"/>
                                 </div>
@@ -49,11 +49,11 @@
 
                                 <input type="checkbox" class="custom-control-input" id="statusCheckbox" name="status" {% if compleks.status %}checked{% endif %}>
 
-                                <label class="custom-control-label" for="statusCheckbox">Status </label>
+                                <label class="custom-control-label" for="statusCheckbox">ҳолати</label>
 
                             </div>
                             <div class="card-body" align="left">
-                                <button type="submit" class="btn btn-primary">Tahrirlash</button>
+                                <button type="submit" class="btn btn-primary">комплекс ўзгартириш</button>
                             </div>
                         </div>
                     </div>

@@ -94,7 +94,11 @@
                         </div>
                         <div class="col-6 form-group">
                             <label for="file">Current Image:</label><br>
-                            <img src="{{ todo.file.url }}" alt="Current Image" width="80"><br>
+                           {% if todo.file %}
+                                <img src="{{ todo.file.url }}" alt="Current Image" width="80"><br>
+                           {% else %}
+                                <p>No image uploaded.</p>
+                           {% endif %}
                             <label for="file">Upload New Image:</label><br>
                             <input type="file" id="file" class="form-control form-control-lg"
                                    accept="image/*, .pdf, .doc, .docx"
