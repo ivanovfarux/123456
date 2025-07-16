@@ -1,12 +1,12 @@
  {% extends 'adminlte/base.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %} Ticket Delete! {% endblock title %}
+{% block title %} Вазифани ўчириш! {% endblock title %}
 {% block content %}
-    <h2 class="text-center">Joriy Ticketni o'chirish</h2>
+    <h2 class="text-center">жорий вазифани ўчириш</h2>
     <form method="post">{% csrf_token %}
-    <p>{{ Ticket.name | truncatewords:4 }}... Ticketni o'chirmoqchimisiz? </p>
-    <button type="submit" class="btn btn-danger ml-2">Tasdiqlayman</button>
+    <p>{{ Ticket.name | truncatewords:4 }}... вазифани ўчирмоқчимисиз? </p>
+    <button type="submit" class="btn btn-danger ml-2">тасдиқлайман</button>
     </form>
 
 {% endblock %}

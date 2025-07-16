@@ -1,27 +1,27 @@
 {% extends 'adminlte/base.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %} Education! {% endblock title %}
+{% block title %} мутахасислик бўйича ўқув дарси! {% endblock title %}
 {% block content %}
 
 
 <div id="container" style="width: 100%;">
-    <h1>Education Detail</h1>
-    <h3>Name:       {{ education.name }}</h3>
-    <h3>Info:       {{ education.info }}</h3>
-    <h3>Teacher:    {{ education.teacher }}</h3>
-    <h3>Date:       {{ education.date }}</h3>
-    <h3>CreateDate: {{ education.createDate }}</h3>
-    <h3>Status:     {{ education.status }}</h3>
-    <h3>Author:     {{ education.author }}</h3>
-    <h3>Image:      {{ education.file.url }}</h3>
-    <h3>Read:
+    <h1>мутахасислик бўйича ўқув дарси</h1>
+    <h3>дарс номи:      <b> {{ education.name }}</b></h3>
+    <h3>мавзу:       <b> {{ education.info }}</b></h3>
+    <h3>ўқитувчи ходим:  <b>   {{ education.teacher }}</b></h3>
+    <h3>вақти:      <b>  {{ education.date }}</b></h3>
+    <h3>яратилган вақти:<b>  {{ education.createDate }}</b></h3>
+    <h3>ҳолати:     <b> {{ education.status }}</b></h3>
+    <h3>муаллиф:    <b>  {{ education.author }}</b></h3>
+    <h3>файл:      <b> <a href=""> {{ education.file.url }}</a></b></h3>
+    <h3>танишган ходимллар:<b>
     {% for user in education.read.all %}
         {{ user.username }}{% if not forloop.last %}, {% endif %}
     {% endfor %}
 <!--    {{  education.read }}-->
-    </h3>
-    <h3>toDate:     {{ education.toDate  }}</h3>
-    <h3>endDate:    {{ education.endDate  }}</h3>
+    </b></h3>
+    <h3>қачондан:   <b>   {{ education.toDate  }}</b></h3>
+    <h3>қачонгача:   <b>  {{ education.endDate  }}</b></h3>
 </div>
 {% endblock %}

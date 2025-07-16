@@ -1,21 +1,21 @@
 {% extends 'adminlte/base.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %} ToDo! {% endblock title %}
+{% block title %} Ишлар! {% endblock title %}
 {% block content %}
 
 
 <div id="container" style="width: 100%;">
-    <h1>ToDo Detail</h1>
-    <h3>Name:       {{ todo.name }}</h3>
-    <h3>Note:       {{ todo.note }}</h3>
-    <h3>Compleks:   {{ todo.compleks }}</h3>
-    <h3>User:       {{ todo.user }}</h3>
-    <h3>Company:    {{ todo.company }}</h3>
-    <h3>UpdateTime: {{ todo.updatedDate }}</h3>
-    <h3>Author:     {{ todo.user }}</h3>
-    <h3>StartDate:   {{ todo.start }}</h3>
-    <h3>EndDate:    {{ todo.end }}</h3>
-    <h3>Status:    {{ todo.status }}</h3>
+    <h1>иш ғақида</h1>
+    <h3>номи:      <b> {{ todo.name }}</b></h3>
+    <h3>изох:       <b>{{ todo.note }}</b></h3>
+    <h3>комплекс:   <b>{{ todo.compleks }}</b></h3>
+    <h3>ходимлар:       <b>{{ todo.user }}</b></h3>
+    <h3>компания:    <b>{{ todo.company }}</b></h3>
+    <h3>ўзгартирилган вақти: <b>{{ todo.updatedDate }}</b></h3>
+    <h3>муалиф:     <b>{{ todo.user }}</b></h3>
+    <h3>бошланиш вақти:   <b>{{ todo.start }}</b></h3>
+    <h3>тугаш вақти:    <b>{{ todo.end }}</b></h3>
+    <h3>тугаш вақти:    <b>{{ todo.status }}</b></h3>
 </div>
 {% endblock %}

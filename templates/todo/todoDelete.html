@@ -1,12 +1,12 @@
  {% extends 'adminlte/base.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %} ToDo Delete! {% endblock title %}
+{% block title %} Ишни ўчириш! {% endblock title %}
 {% block content %}
-    <h2 class="text-center">Joriy ToDoni o'chirish</h2>
+    <h2 class="text-center">Жорий ишни ўчириш</h2>
     <form method="post">{% csrf_token %}
-    <p>{{ ToDo.name | truncatewords:4 }}... ToDoni o'chirmoqchimisiz? </p>
-    <button type="submit" class="btn btn-danger ml-2">Tasdiqlayman</button>
+    <p>{{ ToDo.name | truncatewords:4 }}... ишни ўчирмоқчимисиз? </p>
+    <button type="submit" class="btn btn-danger ml-2">тасдиқлайман</button>
     </form>
 
 {% endblock %}

@@ -1,24 +1,24 @@
 {% extends 'adminlte/base.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %} Ticket! {% endblock title %}
+{% block title %} Вазифалар ҳақида ! {% endblock title %}
 {% block content %}
 
 
 <div id="container" style="width: 100%;">
-    <h1>Ticket Detail</h1>
-    <h3>Name:       {{ ticket.name }}</h3>
-    <h3>Note:       {{ ticket.note }}</h3>
-    <h3>Compleks:   {{ ticket.compleks }}</h3>
-    <h3>problem:    {{ ticket.problem.name }}</h3>
-    <h3>Company:    {{ ticket.company }}</h3>
-    <h3>Author:     {{ ticket.user }}</h3>
-    <h3>Partnyor:   {{ ticket.partnyor.fio }}</h3>
-    <h3>CreateDate: {{ ticket.createDate }}</h3>
-    <h3>EndDate:    {{ ticket.endDate }}</h3>
-    <h3>UpdatedDate:{{ ticket.updatedDate }}</h3>
-    <h3>File:       {{ ticket.file.url }}</h3>
-    <h3>Status:     {{ ticket.status  }}</h3>
-    <h3>Author:     {{ ticket.author }}</h3>
+    <h1>Вазифа ҳақида</h1>
+    <h3>номи:       <b>{{ ticket.name }}</b></h3>
+    <h3>изох:       <b>{{ ticket.note }}</b></h3>
+    <h3>компексни танлаш:   <b>{{ ticket.compleks }}</b></h3>
+    <h3>муаммони танаш:    <b>{{ ticket.problem.name }}</b></h3>
+    <h3>компанияни танлаш:    <b>{{ ticket.company }}</b></h3>
+    <h3>бириктирилган ходимлар:     <b>{{ ticket.user }}</b></h3>
+    <h3>ҳамкор танаш:   <b>{{ ticket.partnyor.fio }}</b></h3>
+    <h3>яратилган вақти: <b>{{ ticket.createDate }}</b></h3>
+    <h3>тугаш вақти:    <b>{{ ticket.endDate }}</b></h3>
+    <h3>ўзгартирилган вақти:<b>{{ ticket.updatedDate }}</b></h3>
+    <h3>файл биритириш:       <b>{{ ticket.file.url }}</b></h3>
+    <h3>ҳолати:     <b>{{ ticket.status  }}</b></h3>
+    <h3>муаллиф:     <b>{{ ticket.author }}</b></h3>
 </div>
 {% endblock %}

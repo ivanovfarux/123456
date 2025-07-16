@@ -1,12 +1,12 @@
  {% extends 'adminlte/base.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %} Educationni Delete! {% endblock title %}
+{% block title %} мутахасислик ўқув дарсини ўчириш! {% endblock title %}
 {% block content %}
-    <h2 class="text-center">Joriy Educationni o'chirish</h2>
+    <h2 class="text-center">мутахасислик ўқув дарсини ўчириш ойнаси</h2>
     <form method="post">{% csrf_token %}
-    <p>{{ education.name | truncatewords:4 }}... Educationni o'chirmoqchimisiz? </p>
-    <button type="submit" class="btn btn-danger ml-2">Tasdiqlayman</button>
+    <p>{{ education.name | truncatewords:4 }}... ўқув дарсини ўчирасизми ? </p>
+    <button type="submit" class="btn btn-danger ml-2">тасдиқлайман!</button>
     </form>
 
 {% endblock %}

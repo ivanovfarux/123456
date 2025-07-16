@@ -1,19 +1,19 @@
 {% extends 'adminlte/base.html' %}
 {% load crispy_forms_tags %}
-{% block title %} ToDo CREATE! {% endblock title %}
+{% block title %} Иш яратиш! {% endblock title %}
 {% block content %}
     <div class="row">
         <div class="col-10 offset-1">
             <div class="card">
                 <div class="card-header">
-                    <h2 class="text-center">ToDo Create Form</h2>
+                    <h2 class="text-center">Ишни яратиш ойнаси!</h2>
                 </div>
                 <form method="POST" enctype="multipart/form-data">{% csrf_token %}
                     <div class="card-body">
                         <div class="row">
                              <div class="col-6 form-group">
                             <div data-mdb-input-init class="form-outline">
-                                <label class="form-label" for="name">Name</label>
+                                <label class="form-label" for="name">номи</label>
                                 <textarea value="{{ todo.name }}" id="name" name="name"
                                           class="form-control form-control-lg"
                                           placeholder="Enter ...">
@@ -24,7 +24,7 @@
 
                              <div class="col-6 form-group">
                             <div data-mdb-input-init class="form-outline">
-                                <label class="form-label" for="note">Note</label>
+                                <label class="form-label" for="note">изох</label>
                                 <textarea value="{{ todo.note }}" id="note" name="note"
                                           class="form-control form-control-lg"
                                           placeholder="Enter ..note..">
@@ -33,7 +33,7 @@
                             </div>
                         </div>
                             <div class="col-6 form-group">
-                                <label for="compleks">Select Compleks:</label>
+                                <label for="compleks">комплексни танаш:</label>
                                 <select class="form-control" id="compleks" name="compleks_id">
                                     {% for compleks in complekss %}
                                         <option value="{{ compleks.id }}">{{ compleks.name }}</option>
@@ -49,7 +49,7 @@
 <!--                                </select>-->
 <!--                            </div>-->
                             <div class="col-4 form-group">
-                                    <label for="user">Select User:</label>
+                                    <label for="user">ходимларни танлаш:</label>
                                     <select class="form-control" id="user" name="user_id" multiple>
                                         {% for user in users %}
                                         <option value="{{ user.id }}"> {{ user.last_name }} {{ user.first_name }}</option>
@@ -58,38 +58,38 @@
                             </div>
                             <div class="col-6 form-group">
                                 <div data-mdb-input-init class="form-outline">
-                                    <label class="form-label" for="start">Start</label>
+                                    <label class="form-label" for="start">бошлаш вақти</label>
                                     <input type="datetime-local" id="start" value="{{ todo.start }}"
                                            class="form-control form-control-lg"
                                            name="start"/>
                                 </div>
                             </div>
                             <div class="col-6 form-group">
-                                    <label class="form-label" for="end">End</label>
+                                    <label class="form-label" for="end">тугаш вақти</label>
                                     <input type="datetime-local" id="end" value="{{ todo.end }}"
                                            class="form-control form-control-lg"
                                            name="end"/>
                             </div>
                             <div class="col-6 form-group">
-                                    <label class="form-label" for="color">Color</label>
+                                    <label class="form-label" for="color">ранги</label>
                                     <input type="color" id="color" value="{{ todo.color }}"
                                            class="form-control form-control-lg"
                                            name="color"/>
                             </div>
                             <div class="col-6 form-group">
-                                <label for="file">Upload image:</label><br>
+                                <label for="file">расмни танлаш :</label><br>
                                 <input type="file" id="file" class="form-control form-control-lg"
                                        value="{{ todo.file.url }}"
                                        name="file"><br>
                             </div>
                             <div class="form-control-lg custom-control custom-switch">
                                       <input type="checkbox" class="custom-control-input" id="statusCheckbox" name="status" {% if todo.status %}checked{% endif %}>
-                                       <label class="custom-control-label"  for="statusCheckbox">Status </label>
+                                       <label class="custom-control-label"  for="statusCheckbox">ҳолати </label>
                             </div>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Todo +</button>
+                        <button type="submit" class="btn btn-primary">иш яратиш</button>
                     </div>
                 </form>
             </div>

@@ -29,7 +29,7 @@
 <div class="card">
 <div class="card-header">
          <li class="list-inline-item">
-               <a href="{%url 'duty_create'%}" class="btn btn-primary"><i class="fa-sharp fa-solid fa-plus"></i>&nbsp;Add Duty</a>
+               <a href="{%url 'duty_create'%}" class="btn btn-primary"><i class="fa-sharp fa-solid fa-plus"></i>&nbsp;навбатчини яратиш</a>
          </li>
 
 </div>
@@ -62,13 +62,13 @@
         <td>{{ duty.createDate}}</td>
         <td>{{ duty.status }}</td>
         <td>
-              <a href="{% url 'duty_view' duty.id %}"><i style='font-size:24px' class='fas'>&#xf085;</i>Detail</a>
+              <a href="{% url 'duty_view' duty.id %}"><i style='font-size:24px' class='fas'>&#xf085;</i>кўриш</a>
 
-              <a href="{% url 'duty_delete' duty.id %}"><i class='far fa-trash-alt'></i>Delete</a>
+              <a href="{% url 'duty_delete' duty.id %}"><i class='far fa-trash-alt'></i>ўчириш</a>
 
               <a href="{% url 'duty_edit' pk=duty.id %}">
                   {% if user.is_authenticated %}
-                  <i style='font-size:24px' class='fas'>&#xf303;</i>Edit
+                  <i style='font-size:24px' class='fas'>&#xf303;</i>ўзгартириш
                   {% else %}
                 <a class="nav-item nav-link" href="{% url 'login' %}">
                     <i style='font-size:24px' class='fas'>&#xf303;</i>Вход</a>

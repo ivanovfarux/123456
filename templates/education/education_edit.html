@@ -1,21 +1,21 @@
 {% extends 'adminlte/base.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %} Education Edit! {% endblock title %}
+{% block title %} мутахасислик ўқув дарсини ўзгартириш! {% endblock title %}
 {% block content %}
 <div class="container-fluid">
     <div class="col d-flex justify-content-center" align="right">
         <div class="col-md-6" align="right">
             <div class="card" align="center">
                 <div class="card-header">
-                    <h3 class="card-title">FORM Edit Education</h3>
+                    <h3 class="card-title"> <b>мутахасислик ўқув дарсини ўзгартириш ойнаси!</b></h3>
                 </div>
                 <form class="row gy-2 gx-3 align-items-center" method="post" enctype="multipart/form-data"
                       action="{% url 'education_edit' pk=educations.id %}">
                     {% csrf_token %}
                     <div class="card-body" align="center">
                         <div class="form-group" align="left">
-                            <label for="name">Name</label>
+                            <label for="name">дарс номи</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="name"
                                        placeholder="education name"
@@ -24,7 +24,7 @@
                             </div>
                         </div>
                         <div class="form-group" align="left">
-                            <label for="user">Teacher</label>
+                            <label for="user">ўқитувчи ходим</label>
                             <div class="col-sm-10">
                                 <select class="form-control" id="user" name="user_id">
                                     {% for user in users %}
@@ -36,7 +36,7 @@
                                 </div>
                             </div>
                             <div class="form-group" align="left">
-                                <label for="info">Info</label>
+                                <label for="info">мавзу</label>
                                 <div class="col-sm-10">
                                     <input type="text" id="info" value="{{ educations.info }}"
                                            class="form-control form-control-lg" name="info"/>
@@ -45,7 +45,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group" align="left">
-                                    <label for="date">Date to spend</label>
+                                    <label for="date">дарс вақти</label>
                                     <div class="col-sm-10">
                                         <input type="datetime-local" id="date"
                                                value="{{ educations.date|date:'Y-m-d\TH:i' }}" class="form-control form-control-lg"
@@ -55,7 +55,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group" align="left">
-                                     <label for="file">Upload File:</label>
+                                     <label for="file">файл:</label>
                                         <div class="col-sm-10">
                                             <input type="file" id="file" class="form-control" name="file">
                                             {% if educations.file %}
@@ -67,7 +67,7 @@
                                     </div>
 
                                     <div class="form-group" align="left">
-                                        <label for="file">read user file </label>
+                                        <label for="file">танишган ходимллар </label>
                                         <div class="col-sm-10">
                                             <input type="text" id="read" value="{{ educations.read }}"
                                                    class="form-control form-control-lg" name="read"/>
@@ -77,7 +77,7 @@
                                         </div>
                                         <br>
                                         <div class="form-group" align="left">
-                                            <label for="toDate">To Date </label>
+                                            <label for="toDate">қачондан </label>
                                             <div class="col-sm-10">
                                                 <input type="datetime-local" id="toDate"
                                                        value="{{ educations.toDate|date:'Y-m-d\TH:i' }}"
@@ -89,7 +89,7 @@
                                             <br>
 
                                             <div class="form-group" align="left">
-                                                <label for="endDate">End Date </label>
+                                                <label for="endDate">қачонгача</label>
                                                 <div class="col-sm-10">
                                                     <input type="datetime-local" id="endDate"
                                                            value="{{ educations.endDate|date:'Y-m-d\TH:i' }}"
@@ -104,11 +104,11 @@
                                                     <input type="checkbox" class="custom-control-input"
                                                            id="statusCheckbox" name="status" {% if educations.status %}checked{% endif %}>
                                                     <label class="custom-control-label"
-                                                           for="statusCheckbox">Status </label>
+                                                           for="statusCheckbox">ҳолати </label>
 
                                                 </div>
                                                 <div class="col-sm-10" align="center">
-                                                    <button type="submit" class="btn btn-primary">Partnyor</button>
+                                                    <button type="submit" class="btn btn-primary">мутахасислик ўқув дарсини ўзгартириш</button>
                                                 </div>
                                             </div>
                                         </div>

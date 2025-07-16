@@ -1,22 +1,22 @@
 {% extends 'adminlte/base.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %} Partnyor! {% endblock title %}
+{% block title %} Ҳамкор ходим! {% endblock title %}
 {% block content %}
 
 
 <div id="container" style="width: 100%;">
-    <h1>Partnyor Detail</h1>
-    <h3>FIO: {{ partnyor.fio }}</h3>
-    <h3>Login: {{ partnyor.login }}</h3>
-    <h3>Password: {{ partnyor.password }}</h3>
-    <h3>Date: {{ partnyor.createDate }}</h3>
-    <h3>Author: {{ partnyor.author }}</h3>
-    <h3>Image: {{ partnyor.image }}</h3>
-    <h3>Contacts: {{ partnyor.contacts }}</h3>
-    <h3>Status: {{ partnyor.status }}</h3>
-    <h3>Company: {{ partnyor.companyId }}</h3>
-    <h3>Yoshi: {{ partnyor.age }}</h3>
+    <h1>Ҳамкор ходим хақида</h1>
+    <h3>ф.и.о: <b>{{ partnyor.fio }}</b></h3>
+    <h3>логин: <b>{{ partnyor.login }}</b></h3>
+    <h3>пароль: <b>{{ partnyor.password }}</b></h3>
+    <h3>яратилган вақти: <b>{{ partnyor.createDate }}</b></h3>
+    <h3>муаллиф: <b>{{ partnyor.author }}</b></h3>
+    <h3>расми: <b>{{ partnyor.image }}</b></h3>
+    <h3>тел рақами: <b>{{ partnyor.contacts }}</b></h3>
+    <h3>ҳолати: <b>{{ partnyor.status }}</b></h3>
+    <h3>компаия: <b>{{ partnyor.companyId }}</b></h3>
+    <h3>ёши: <b>{{ partnyor.age }}</b></h3>
 </div>
 
 {% endblock %}
