@@ -95,7 +95,7 @@ $(function () {
             calendar.refetchEvents()
 
             // is the "remove after drop" checkbox checked?
-            if (checkbox.checked) {
+            if (checkbox?.checked) {
                 // if so, remove the element from the "Draggable Events" list
                 info.draggedEl.parentNode.removeChild(info.draggedEl);
             }
